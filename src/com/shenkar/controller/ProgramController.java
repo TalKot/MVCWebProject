@@ -44,6 +44,11 @@ public class ProgramController extends HttpServlet {
 				dispatcher = getServletContext().getRequestDispatcher("/ToDoListForm.jsp");
 				dispatcher.forward(request, response);
 				break;
+			//also in lower case
+			case "/todolistform":
+				dispatcher = getServletContext().getRequestDispatcher("/ToDoListForm.jsp");
+				dispatcher.forward(request, response);
+				break;
 			default:
 				dispatcher = getServletContext().getRequestDispatcher("/errorpage.jsp");
 				dispatcher.forward(request, response);

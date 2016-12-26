@@ -1,0 +1,5 @@
+/com/
+/hibernate.cfg.xml
+/hibernateTask.cfg.xml
+/storeinventory.hbm.xml
+/storeinventoryTask.hbm.xml
