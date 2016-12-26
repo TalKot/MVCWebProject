@@ -1,0 +1,23 @@
+<component name="libraryTable">
+  <library name="jars_this_code_sample_uses">
+    <CLASSES>
+      <root url="file://$USER_HOME$/Downloads/hibernate_sample/jars_this_code_sample_uses" />
+      <root url="jar://$USER_HOME$/Downloads/apache-tomcat-6.0.48-windows-x64.zip!/" />
+      <root url="file://$USER_HOME$/Downloads/apache-tomcat-6.0.48" />
+      <root url="file://$USER_HOME$/Downloads/javax.servlet.jar" />
+    </CLASSES>
+    <JAVADOC />
+    <SOURCES>
+      <root url="jar://$USER_HOME$/Downloads/apache-tomcat-6.0.48-windows-x64.zip!/apache-tomcat-6.0.48/webapps/docs/appdev/sample/src" />
+      <root url="jar://$USER_HOME$/Downloads/apache-tomcat-6.0.48-windows-x64.zip!/apache-tomcat-6.0.48/webapps/examples/WEB-INF/classes" />
+      <root url="jar://$USER_HOME$/Downloads/apache-tomcat-6.0.48-windows-x64.zip!/apache-tomcat-6.0.48/webapps/examples/WEB-INF/jsp/applet" />
+      <root url="jar://$USER_HOME$/Downloads/apache-tomcat-6.0.48-windows-x64.zip!/apache-tomcat-6.0.48/webapps/examples/jsp/plugin/applet" />
+      <root url="file://$USER_HOME$/Downloads/apache-tomcat-6.0.48/webapps/docs/appdev/sample/src" />
+      <root url="file://$USER_HOME$/Downloads/apache-tomcat-6.0.48/webapps/examples/WEB-INF/classes" />
+      <root url="file://$USER_HOME$/Downloads/apache-tomcat-6.0.48/webapps/examples/WEB-INF/jsp/applet" />
+      <root url="file://$USER_HOME$/Downloads/apache-tomcat-6.0.48/webapps/examples/jsp/plugin/applet" />
+    </SOURCES>
+    <jarDirectory url="file://$USER_HOME$/Downloads/hibernate_sample/jars_this_code_sample_uses" recursive="false" />
+    <jarDirectory url="file://$USER_HOME$/Downloads/javax.servlet.jar" recursive="false" />
+  </library>
+</component>
