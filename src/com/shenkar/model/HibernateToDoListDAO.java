@@ -53,7 +53,6 @@ public class HibernateToDoListDAO implements IToDoListDAO {
 		{
 			session.close();
 		}
-	
 	}
 	
 	public void PrintDB()

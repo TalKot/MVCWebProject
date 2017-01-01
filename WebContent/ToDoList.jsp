@@ -4,48 +4,21 @@
 <html>
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=windows-1255">
-<title>Insert title here</title>
+<title>TODO List</title>
 </head>
 <body>
 <%
-	String taskName = request.getParameter("taskname");
-	String taskDescription = request.getParameter("taskdescription");
-	if (taskDescription!=null || taskName!=null)
-	{
-		taskName=taskName.trim();
-		taskDescription=taskDescription.trim();
-		if(session.getAttribute("tasks")==null)
-		{
-			session.setAttribute("tasks", new LinkedList<String>());
-		}
-		LinkedList<String> list = (LinkedList)session.getAttribute("tasks");
-		
-		list.add(taskName +"===>"+ taskDescription);
-		///////////////////
-		String strUserAgent = request.getHeader("User-Agent");
-		//out.print("strUserAgent - " + strUserAgent);
-		if(strUserAgent.contains("Chrome"))
-		{
-			strUserAgent = "Chrome";
-		}
-		else if(strUserAgent.contains("OS"))
-		{
-			strUserAgent = "Safari";
-		}
-		else if(strUserAgent.contains("Firefox"))
-		{
-			strUserAgent = "Firefox";
-		}
-		else strUserAgent = "Explorer/Edge";
-		
-		new ProgramController().addTask2DB(session.getId(),taskName,taskDescription,strUserAgent);
 
-		Iterator<String> iterator =  list.iterator();
-		while(iterator.hasNext())
-		{
-			out.print("<br>"+iterator.next());
-		}
+	LinkedList<String> list = (LinkedList)request.getAttribute("tasks");	
+	Iterator<String> iterator =  list.iterator();
+	while(iterator.hasNext())
+	{
+		out.print("<br>"+iterator.next());
 	}
+
+	
+	out.print("<br>The First name is - "+request.getAttribute("Name"));
+	out.print("<br>The Last name is - "+request.getAttribute("LastName"));
 %>
 
 </body>

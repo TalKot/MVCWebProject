@@ -4,10 +4,10 @@
 <html>
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=windows-1255">
-<title>Insert title here</title>
+<title>TODO List Form</title>
 </head>
 <body>
-	<form method="get" action="ToDoList.jsp">
+	<form method="get" action="/MVCWebProject/controller/">
 	task name: <input type="text" name="taskname"/><br>
 	task description: <input type="text" name="taskdescription"/><br>
 	<input type="submit">

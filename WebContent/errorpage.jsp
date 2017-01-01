@@ -4,7 +4,7 @@
 <html>
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=windows-1255">
-<title>Insert title here</title>
+<title>Error Page</title>
 </head>
 <body>
 	<h1>error page!</h1><br><br>
