@@ -7,23 +7,20 @@ public class User {
 	private int id; 
 	private int phoneNumber;
 	private String email;
+	private String password;
 	
-	public User()
-	{
-		setEmail(email);
-		setFirstName(firstName);
-		setLastName(lastName);
-		setId(id);
-		setPhoneNumber(phoneNumber);
-	}
-	
-	public User(String firstName, String lastName, int id, int phoneNumber, String email) {
+	public User(){}
+
+	public User(String firstName, String lastName, int id, int phoneNumber, String email, String password) {
 		this.firstName = firstName;
 		this.lastName = lastName;
 		this.id = id;
 		this.phoneNumber = phoneNumber;
 		this.email = email;
+		this.password = password;
 	}
+
+
 
 	public String getFirstName() {
 		return firstName;
@@ -55,6 +52,15 @@ public class User {
 	public void setEmail(String email) {
 		this.email = email;
 	}
+
+	public String getPassword() {
+		return password;
+	}
+
+	public void setPassword(String password) {
+		this.password = password;
+	}
+	
 	@Override
 	public String toString() {
 		return firstName + " " + lastName + ", id=" + id + ", phoneNumber=" + phoneNumber + ", email=" + email;

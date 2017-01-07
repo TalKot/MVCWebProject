@@ -18,5 +18,9 @@
 		<property name="email">
 			<column name="EmailAdress"/>
 		</property>
+		
+		<property name="password">
+			<column name="Password"/>
+		</property>
 	</class>
 </hibernate-mapping>

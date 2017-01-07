@@ -17,12 +17,10 @@ public class HibernateToDoListDAO implements IToDoListDAO {
 	private Session session = null;
 	
 	private SessionFactory factory;
-	private SessionFactory factoryTask;
 	
 	private HibernateToDoListDAO() 
 	{ 
 		factory = new AnnotationConfiguration().configure().buildSessionFactory();
-		factoryTask	= new AnnotationConfiguration().configure("hibernateTask.cfg.xml").buildSessionFactory();
 
 	}
 	
@@ -55,65 +53,17 @@ public class HibernateToDoListDAO implements IToDoListDAO {
 		}
 	}
 	
-	public void PrintDB()
-	{
-		try
-		{
-			session = factory.openSession();
-			session.beginTransaction();
-			
-			List users = session.createQuery("from User").list();
-
-			for (int i = 0; i < 120; i++) {
-				System.out.print("*");
-			}
-			System.out.println("");
-			System.out.println("There are " + users.size() + " users(s)");
-			
-			Iterator i = users.iterator();
-			while(i.hasNext()) 
-			{
-				System.out.println(i.next());
-			}
-			
-			session.getTransaction().commit();
-		}
-		catch (HibernateException e)
-		{
-			e.printStackTrace();
-	    	if ( session.getTransaction() != null )session.getTransaction().rollback();
-		}
-		finally
-		{
-			session.close();
-		}
-	}
 
 
 	public List getUsers()
 	{
+		List users = null;
+		try{
 		session = factory.openSession();
 		session.beginTransaction();
-		List users = session.createQuery("from User").list();
+		users = session.createQuery("from User").list();
 		session.getTransaction().commit();
-		session.close();
 		return users;
-	}
-	
-	public void addTask(String id,String task,String Description,String strUserAgent)
-	{
-		try
-		{
-			Task obj = new Task();
-			obj.setDescription(Description);
-			obj.setTask(task);
-			obj.setId(0);
-			obj.setConnectionID(id);
-			obj.setStrUserAgent(strUserAgent);
-			session = factoryTask.openSession();
-			session.beginTransaction();
-			session.save(obj);
-			session.getTransaction().commit();
 		}
 		catch (HibernateException e)
 		{
@@ -122,8 +72,38 @@ public class HibernateToDoListDAO implements IToDoListDAO {
 		}
 		finally
 		{
+			
 			session.close();
 		}
+		return users;
+	}
+
+	@Override
+	public void PrintDB() {
+		// TODO Auto-generated method stub
+		
 	}
 	
+	@Override
+	public User getUser(int userID, String Password) {
+		try {
+			session = factory.openSession();
+            session.beginTransaction();
+            User DBUser = (User) session.get(User.class, userID);
+            if (DBUser.getPassword().equals(Password)){
+                session.getTransaction().commit();
+                return DBUser;
+            }
+        }
+        catch (HibernateException e) {
+            e.printStackTrace();
+            session.getTransaction().rollback();
+        }
+		return null;
+	}
+	
+	public String getHelloWorld()
+	{
+		return "Hello world";
+	}
 }

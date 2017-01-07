@@ -7,7 +7,7 @@
 <title>TODO List Form</title>
 </head>
 <body>
-	<form method="get" action="/MVCWebProject/controller/">
+	<form method="get" action="controller/ToDoList.jsp">
 	task name: <input type="text" name="taskname"/><br>
 	task description: <input type="text" name="taskdescription"/><br>
 	<input type="submit">
