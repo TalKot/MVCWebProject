@@ -4,20 +4,17 @@
 "http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
 <hibernate-mapping>
 	<class name="com.shenkar.model.Task" table="TASKS">
-		<id name="id" type="int" column="ID" >
+		<id name="taskNumber" type="int" column="taskNumber" >
 		<generator class="increment"/>
 		</id>
-		<property name="ConnectionID">
-			<column name="ConnectioID"/>
-		</property>	
+		<property name="ClientID">
+			<column name="ClientID"/>
+		</property>			
 		<property name="task">
 			<column name="Task"/>
 		</property>	
 		<property name="description">
 			<column name="Description"/>
-		</property>
-		<property name="strUserAgent">
-			<column name="UserAgent"/>
 		</property>
 	</class>
 </hibernate-mapping>

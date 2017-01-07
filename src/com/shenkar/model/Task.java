@@ -1,21 +1,20 @@
 package com.shenkar.model;
 
 public class Task {
+	private int ClientID;
 	private String task;
 	private String description;
-	private int id;
-	private String ConnectionID;
-	private String strUserAgent;
+	private int taskNumber;
+	
 	public Task(){}
 	
-	public int getId() 
-	{
-		return id;
+	public Task(int clientID, String task, String description) {
+		this.ClientID = clientID;
+		this.task = task;
+		this.description = description;
 	}
-	public void setId(int id) 
-	{
-		this.id = id;
-	}
+
+	
 	public String getTask() {
 		return task;
 	}
@@ -32,26 +31,28 @@ public class Task {
 		this.description = description;
 	}
 
-
-
-	public String getConnectionID() {
-		return ConnectionID;
+	public int getClientID() {
+		return ClientID;
 	}
 
-	public void setConnectionID(String connectionID) {
-		ConnectionID = connectionID;
+
+	public void setClientID(int clientID) {
+		ClientID = clientID;
 	}
 
-	public String getStrUserAgent() {
-		return strUserAgent;
+
+	public int getTaskNumber() {
+		return taskNumber;
 	}
 
-	public void setStrUserAgent(String strUserAgent) {
-		this.strUserAgent = strUserAgent;
+
+	public void setTaskNumber(int taskNumber) {
+		this.taskNumber = taskNumber;
 	}
+	
 	@Override
 	public String toString() {
-		return "Task [task=" + task + ", description=" + description + ", id=" + id + ", ConnectionID=" + ConnectionID
-				+ ", strUserAgent=" + strUserAgent + "]";
+		return "Task [ClientID=" + ClientID + ", task=" + task + ", description=" + description + "]";
 	}
+
 }

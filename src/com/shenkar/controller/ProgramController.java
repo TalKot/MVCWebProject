@@ -57,10 +57,11 @@ public class ProgramController extends HttpServlet {
 		//System.out.println(HibernateToDoListDAO.Instance().getUser(1,"123").toString());
 		//String str = (String)HibernateToDoListDAO.Instance().getHelloWorld();
 		//System.out.println(str);
+		
 		String path = request.getPathInfo();
 		if(path.contains("controller"))
 		{
-			path=path.substring(12,path.length()-4);
+			path=path.substring(11,path.length()-4);
 			System.out.println("after change - Path is - "+path);
 		}
 		switch (path) 
@@ -72,7 +73,7 @@ public class ProgramController extends HttpServlet {
 				dispatcher.forward(request, response);
 				break;
 				
-			case "ToDoList":
+			case "/ToDoList":
 				dispatcher = getServletContext().getRequestDispatcher("/ToDoList.jsp");
 				String taskName = (String)request.getParameter("taskname");
 				String taskDescription = (String)request.getParameter("taskdescription");
@@ -83,9 +84,10 @@ public class ProgramController extends HttpServlet {
 				dispatcher.forward(request, response);
 				break;
 			
-			case "UserTask":			
+			case "/UserTask":			
 				try{
 					dispatcher = getServletContext().getRequestDispatcher("/UserTask.jsp");
+					/*
 					String Pawword = request.getParameter("Password");				
 					int userid = Integer.parseInt(request.getParameter("UserID"));
 					//com.shenkar.model.User user = HibernateToDoListDAO.Instance().getUser(userid,Pawword);
@@ -98,7 +100,8 @@ public class ProgramController extends HttpServlet {
 					{
 						System.out.println("User is in the DB");
 					}
-					request.setAttribute("MyUser",user);
+					*/
+					//request.setAttribute("MyUser",user);
 				}
 				catch (Exception e)
 				{

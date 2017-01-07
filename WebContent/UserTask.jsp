@@ -18,6 +18,8 @@
 	}
 
 	*/
+	
+	
 	User user = (User)request.getAttribute("MyUser");
 	out.print("<br>The First name is - "+user.getFirstName());
 	out.print("<br>The Last name is - "+user.getLastName());
