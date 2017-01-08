@@ -14,10 +14,9 @@ import org.hibernate.cfg.AnnotationConfiguration;
 
 
 public class HibernateToDoListDAO implements IToDoListDAO {
+	
 	private static HibernateToDoListDAO DAO;
 	private Session session = null;
-	
-	
 	private SessionFactory factory;
 	private SessionFactory factoryTask;
 	
@@ -35,7 +34,7 @@ public class HibernateToDoListDAO implements IToDoListDAO {
 	    }
 	    return DAO;
 	}
-	
+/*********************************Users methods*********************************/
 	public void addUser(User obj)
 	{
 		try
@@ -47,8 +46,7 @@ public class HibernateToDoListDAO implements IToDoListDAO {
 		}
 		catch (HibernateException e)
 		{
-	    	if ( session.getTransaction() != null )
-	    	session.getTransaction().rollback();
+	    	if ( session.getTransaction() != null )session.getTransaction().rollback();
 		}
 		finally
 		{
@@ -56,6 +54,48 @@ public class HibernateToDoListDAO implements IToDoListDAO {
 		}
 	}
 	
+	public List getUsers()
+	{
+		List users = null;
+		try{
+		session = factory.openSession();
+		session.beginTransaction();
+		users = session.createQuery("from User").list();
+		session.getTransaction().commit();
+		return users;
+		}
+		catch (HibernateException e)
+		{
+			e.printStackTrace();
+	    	if ( session.getTransaction() != null )session.getTransaction().rollback();
+		}
+		finally
+		{
+			
+			session.close();
+		}
+		return users;
+	}
+
+	public User getUser(int userID, String Password) {
+		try {
+			session = factory.openSession();
+            session.beginTransaction();
+            User DBUser = (User) session.get(User.class, userID);
+            if (DBUser.getPassword().equals(Password)){
+                session.getTransaction().commit();
+                return DBUser;
+            }
+        }
+        catch (HibernateException e) {
+            e.printStackTrace();
+            session.getTransaction().rollback();
+        }
+		return null;
+	}
+/*******************************************************************************/
+
+/*********************************Tasks methods*********************************/
 	public void addTask(Task obj)
 	{
 		try
@@ -67,8 +107,7 @@ public class HibernateToDoListDAO implements IToDoListDAO {
 		}
 		catch (HibernateException e)
 		{
-	    	if ( session.getTransaction() != null )
-	    	session.getTransaction().rollback();
+	    	if ( session.getTransaction() != null )session.getTransaction().rollback();
 		}
 		finally
 		{
@@ -140,54 +179,7 @@ public class HibernateToDoListDAO implements IToDoListDAO {
 			session.close();
 		}
 	}	
-	
-	public List getUsers()
-	{
-		List users = null;
-		try{
-		session = factory.openSession();
-		session.beginTransaction();
-		users = session.createQuery("from User").list();
-		session.getTransaction().commit();
-		return users;
-		}
-		catch (HibernateException e)
-		{
-			e.printStackTrace();
-	    	if ( session.getTransaction() != null )session.getTransaction().rollback();
-		}
-		finally
-		{
-			
-			session.close();
-		}
-		return users;
-	}
-
-	@Override
-	public void PrintDB() {
-		// TODO Auto-generated method stub
-		
-	}
-	
-	@Override
-	public User getUser(int userID, String Password) {
-		try {
-			session = factory.openSession();
-            session.beginTransaction();
-            User DBUser = (User) session.get(User.class, userID);
-            if (DBUser.getPassword().equals(Password)){
-                session.getTransaction().commit();
-                return DBUser;
-            }
-        }
-        catch (HibernateException e) {
-            e.printStackTrace();
-            session.getTransaction().rollback();
-        }
-		return null;
-	}
-	
+	//testing
 	public String getHelloWorld()
 	{
 		return "Hello world";

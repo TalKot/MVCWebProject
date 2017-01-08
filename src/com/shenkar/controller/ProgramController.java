@@ -7,6 +7,7 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
+import java.util.LinkedList;
 import java.util.List;
 
 
@@ -66,6 +67,30 @@ public class ProgramController extends HttpServlet {
 		}
 		switch (path) 
 		{
+
+			case "/Register":
+				dispatcher = getServletContext().getRequestDispatcher("/UserTask.jsp");
+				String firstName = (String)request.getParameter("FirstName");
+				String lastName = (String)request.getParameter("LastName");
+				String password = (String)request.getParameter("Password");
+				String Email = (String)request.getParameter("Email");
+				int phoneNumer = Integer.parseInt(request.getParameter("PhoneNumber"));
+				int id = Integer.parseInt(request.getParameter("UserID"));
+				User userReg = new User(firstName, lastName, id, phoneNumer, Email, password);
+				HibernateToDoListDAO.Instance().addUser(userReg);
+				request.setAttribute("MyUser",userReg);
+				//request.setAttribute("TasksLists", HibernateToDoListDAO.Instance().getTasksForUser(333));
+				Task task11 = new Task(333, "ah", "guy");
+				Task task22 = new Task(444, "ama", "orit");
+				Task task33 = new Task(555, "ahot", "noga");
+				LinkedList<Task> list = new LinkedList<Task>();
+				list.add(task11);
+				list.add(task22);
+				list.add(task33);
+				request.setAttribute("TasksLists",list);
+				dispatcher.forward(request, response);
+				break;
+				
 			case "/clientList"://need to fix the code below
 				dispatcher = getServletContext().getRequestDispatcher("/clientList.jsp");
 				List vec = HibernateToDoListDAO.Instance().getUsers();
@@ -87,7 +112,7 @@ public class ProgramController extends HttpServlet {
 			case "/UserTask":			
 				try{
 					dispatcher = getServletContext().getRequestDispatcher("/UserTask.jsp");
-					/*
+					
 					String Pawword = request.getParameter("Password");				
 					int userid = Integer.parseInt(request.getParameter("UserID"));
 					//com.shenkar.model.User user = HibernateToDoListDAO.Instance().getUser(userid,Pawword);
@@ -100,8 +125,17 @@ public class ProgramController extends HttpServlet {
 					{
 						System.out.println("User is in the DB");
 					}
-					*/
-					//request.setAttribute("MyUser",user);
+					request.setAttribute("MyUser",user);
+					Task task1 = new Task(333, "ah", "guy");
+					Task task2 = new Task(444, "ama", "orit");
+					Task task3 = new Task(555, "ahot", "noga");
+					LinkedList<Task> listtemp = new LinkedList<Task>();
+					listtemp.add(task1);
+					listtemp.add(task2);
+					listtemp.add(task3);
+					request.setAttribute("TasksLists",listtemp);
+
+					//request.setAttribute("TasksLists", HibernateToDoListDAO.Instance().getTasksForUser(333));
 				}
 				catch (Exception e)
 				{

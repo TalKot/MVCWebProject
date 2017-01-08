@@ -7,9 +7,21 @@
 <title>TODO List Form</title>
 </head>
 <body>
+	<h1>Loggin</h1>
 	<form method="post" action="controller/UserTask.jsp">
 	User ID: <input type="text" name="UserID"/><br>
 	Password: <input type="text" name="Password"/><br>
+	<input type="submit">
+	</form>
+	
+	<h1>Sign In</h1>
+	<form method="post" action="controller/Register.jsp">
+	ID: <input type="text" name="UserID"/><br>
+	Password: <input type="text" name="Password"/><br>
+	First Name: <input type="text" name="FirstName"/><br>
+	Last Name: <input type="text" name="LastName"/><br>
+	PhoneNumber: <input type="text" name="PhoneNumber"/><br>
+	Email: <input type="text" name="Email"/><br>
 	<input type="submit">
 	</form>
 </body>
