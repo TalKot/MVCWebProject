@@ -120,6 +120,11 @@ public class HibernateToDoListDAO implements IToDoListDAO {
 			{
     			session.delete(ob);
     			session.getTransaction().commit();
+    			List<Task> taskList2Delete = getTasksForUser(ob.getId());
+    			if (!taskList2Delete.isEmpty()){
+    			for (Task task : taskList2Delete) {
+    				deleteTask(task.getTaskNumber());
+				}}
     			return "User has been deleted from DB";
 			}
 			else return "Wrong password for this user - cannnot delete";
@@ -216,9 +221,4 @@ public class HibernateToDoListDAO implements IToDoListDAO {
 			session.close();
 		}
 	}	
-	//testing
-	public String getHelloWorld()
-	{
-		return "Hello world";
-	}
 }
