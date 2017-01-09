@@ -11,21 +11,34 @@
 </head>
 <body>
 <%
-	out.print("<h1>User informaiton</h1>");
+	out.print("<p><h1>User informaiton</h1></p>");
 	User user = (User)request.getAttribute("MyUser");
-	out.print("<br>The First name is - "+user.getFirstName());
-	out.print("<br>The Last name is - "+user.getLastName());
 	out.print("<br>The ID is - "+user.getId());
+	out.print("<br>Name - "+user.getLastName()+" "+user.getFirstName());
 	out.print("<br>The email adress is - "+user.getEmail());
 	out.print("<br>The phone is - "+user.getPhoneNumber());
 	
 	out.print("<h1>Tasks Data</h1><br>");
-	LinkedList tasks = (LinkedList)request.getAttribute("TasksLists");
-	Iterator<Task> iterator =  tasks.iterator();
-	while(iterator.hasNext())
+	List<Task> tasks = (List)request.getAttribute("TasksLists");
+	if (tasks.isEmpty())
 	{
-		out.print(iterator.next().getTaskNumber()+". "+iterator.next().getTask()+"==>"+iterator.next().getDescription()+"<br>");
+		out.print("No tasks in DB for this client<br><br><br>");
 	}
+	else
+	{
+		for(Task tsk:tasks)
+		{
+			out.print(tsk.getTaskNumber()+". "+tsk.getTask()+"==>"+tsk.getDescription()+"<br>");
+		}
+	}
+	request.setAttribute("MyUser1",user);
 %>
+	<br><br><br>
+	Adding task:
+	<form method="get" action="AddingTasks.jsp">
+	task name: <input type="text" name="taskname"/><br>
+	task description: <input type="text" name="taskdescription"/><br>
+	<input type="submit">
+	</form>
 </body>
 </html>

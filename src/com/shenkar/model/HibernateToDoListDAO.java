@@ -93,6 +93,26 @@ public class HibernateToDoListDAO implements IToDoListDAO {
         }
 		return null;
 	}
+	
+	public String deleteUser(int userID, String Password) {
+		try{
+			session = factory.openSession();
+            session.beginTransaction();
+			User ob = (User)session.load(User.class, new Integer(userID));
+			if (ob.getPassword().equals(Password))
+			{
+    			session.delete(ob);
+    			session.getTransaction().commit();
+    			return "User has been deleted from DB";
+			}
+			else return "Wrong password for this user - cannnot delete";
+        }
+        catch (HibernateException e) {
+            e.printStackTrace();
+            session.getTransaction().rollback();
+        }
+		return "User cannot be found in DB";
+	}
 /*******************************************************************************/
 
 /*********************************Tasks methods*********************************/

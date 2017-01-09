@@ -24,5 +24,17 @@
 	Email: <input type="text" name="Email"/><br>
 	<input type="submit">
 	</form>
+	
+	
+	<h1>Delete Account</h1>
+	<form method="post" action="controller/DeleteAccount.jsp">
+	User ID: <input type="text" name="UserID"/><br>
+	Password: <input type="text" name="Password"/><br>
+	<input type="submit">
+	</form>
+	<%
+		if (request.getAttribute("RequestDeleteAnswer")!=null)
+			out.print("<h1>"+request.getAttribute("RequestDeleteAnswer")+"</h1>");
+	%>
 </body>
 </html>

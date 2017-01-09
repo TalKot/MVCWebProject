@@ -16,14 +16,14 @@ public class pr {
 		String str = (String)HibernateToDoListDAO.Instance().getHelloWorld();
 		System.out.println(str);
 		*/
-		/*
+		
 		User user1 = new User("Tal", "Kot", 333, 444, "ae@gmail.com", "Abc123");
 		User user2 = new User("ROFL", "LOL", 444, 444, "ae@gmail.com", "Abc123");
 		User user3 = new User("daddy", "Shimon", 555, 555, "ae@gmail.com", "Abc123");
 		HibernateToDoListDAO.Instance().addUser(user1);
 		HibernateToDoListDAO.Instance().addUser(user2);
 		HibernateToDoListDAO.Instance().addUser(user3);
-		*/
+		
 		
 		/*
 		Task task1 = new Task(333, "ah", "guy");
@@ -37,13 +37,14 @@ public class pr {
 		*/
 	
 		HibernateToDoListDAO.Instance().updateTask(3, "hello", "world");
+		HibernateToDoListDAO.Instance().deleteUser(user1.getId(), user1.getPassword());
 		
-		for (Task task : HibernateToDoListDAO.Instance().getTasksForUser(444)) 
+		for (Task task : HibernateToDoListDAO.Instance().getTasksForUser(user2.getId())) 
 		{
 			System.out.println(task.getTaskNumber()+". "+task.getTask()+"==>"+task.getDescription());
 		}
 			
-		HibernateToDoListDAO.Instance().deleteTask(4);
+		//HibernateToDoListDAO.Instance().deleteTask(4);
 
 		System.out.println("dONE");
 	}
