@@ -36,5 +36,6 @@
 		if (request.getAttribute("RequestDeleteAnswer")!=null)
 			out.print("<h1>"+request.getAttribute("RequestDeleteAnswer")+"</h1>");
 	%>
+	<br><br><br><jsp:include page="FileEnding.jsp" />
 </body>
 </html>

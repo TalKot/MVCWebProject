@@ -36,6 +36,7 @@ public class ProgramController extends HttpServlet {
 		{
 		case "/LoginForm":
 			try{
+				System.out.println("I'm in loggin form");
 				dispatcher = getServletContext().getRequestDispatcher("/LoginForm.jsp");
 				dispatcher.forward(request, response);
 				break;
@@ -64,7 +65,7 @@ public class ProgramController extends HttpServlet {
 				{
 					e.printStackTrace();
 				}
-		case "/clientList"://need to fix the code below
+		case "/clientList":
 				try{
 					dispatcher = getServletContext().getRequestDispatcher("/clientList.jsp");
 					List vec = HibernateToDoListDAO.Instance().getUsers();
@@ -95,15 +96,24 @@ public class ProgramController extends HttpServlet {
 					dispatcher = getServletContext().getRequestDispatcher("/UserTask.jsp");
 					String Pawword = request.getParameter("Password");				
 					int userid = Integer.parseInt(request.getParameter("UserID"));
+					if (HibernateToDoListDAO.Instance().CheckUserInDB(userid,Pawword)==false)
+					{
+						dispatcher = getServletContext().getRequestDispatcher("/LoginForm.jsp");
+						
+						request.setAttribute("RequestDeleteAnswer","User ID or Password are wrong!");
+						dispatcher.forward(request, response);
+						break;
+					}
 					com.shenkar.model.User user = HibernateToDoListDAO.Instance().getUser(userid,Pawword);
 					request.setAttribute("MyUser",user);
 					request.setAttribute("TasksLists", HibernateToDoListDAO.Instance().getTasksForUser(user.getId()));
+					dispatcher.forward(request, response);
+
 				}
 				catch (Exception e)
 				{
 					e.printStackTrace();
 				}			
-				dispatcher.forward(request, response);
 				break;
 				
 		case "/DeleteAccount":
