@@ -17,16 +17,17 @@
 	.h3
 	{
 		font-size:130%;
-		
 	}
+	table, th, td {
+    border: 1px solid black;
+    width:500px;
+    border-collapse: collapse;
+	}
+	th, td {
+    padding: 10px;
+	}
+
 	</style>
-	
-	<script>
-	
-	
-	
-	
-	</script>
 </head>
 <body>
 <%
@@ -45,12 +46,16 @@
 	}
 	else
 	{
+		out.print("<table>");
+		out.print("<caption>Tasks Managment</caption>");
+		out.print("<tr><th>Task Number</th><th>Task Name</th><th>Task Description</th></tr>");
 		for(Task tsk:tasks)
 		{
-			out.print(tsk.getTaskNumber()+". "+tsk.getTask()+"==>"+tsk.getDescription()+"<br>");
+			out.print("<tr><th>"+tsk.getTaskNumber()+".</th><th>"+tsk.getTask()+"</th><th>"+tsk.getDescription()+"</th> </tr>");
 		}
+		out.print("</table>");
 	}
-	request.setAttribute("MyUser1",user);
+	request.setAttribute("WorkingUserID",user.getId());
 %>
 	<br><br>
 	<div class="DivFirstForm">
@@ -58,7 +63,7 @@
 		<form method="get" action="AddingTasks.jsp">
 		task name: <input type="text" name="taskname"/><br>
 		task description: <input type="text" name="taskdescription"/><br>
-		<input type="submit" onclick="validate()">
+		<input type="submit">
 		</form>
 	</div>
 	
