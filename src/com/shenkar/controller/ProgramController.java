@@ -7,7 +7,7 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
-import java.util.LinkedList;
+import java.util.ArrayList;
 import java.util.List;
 
 
@@ -40,7 +40,7 @@ public class ProgramController extends HttpServlet {
 					User userReg = new User(firstName, lastName, id, phoneNumer, Email, password);
 					HibernateToDoListDAO.Instance().addUser(userReg);
 					request.setAttribute("MyUser",userReg);
-					request.setAttribute("TasksLists", HibernateToDoListDAO.Instance().getTasksForUser(userReg.getId()));
+					request.setAttribute("TasksLists",new ArrayList<Task>()); //HibernateToDoListDAO.Instance().getTasksForUser(userReg.getId()));
 			case "/UserTask":			
 					dispatcher = getServletContext().getRequestDispatcher("/UserTask.jsp");
 					String Pawword = request.getParameter("Password");				

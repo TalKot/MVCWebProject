@@ -11,8 +11,9 @@
 	<style>
 	.DivFirstForm 
 	{
-		width: 350px;
+		width: 295px;
 		float: left;
+		margin-right: 40px;
 	}
 	.h3
 	{
@@ -26,7 +27,21 @@
 	th, td {
     padding: 10px;
 	}
-
+	lable
+	{
+	 	float:left;
+	}
+	input
+	{
+		float:right;
+	}
+	input[type=submit]
+	{
+		float: none;
+		margin: 0 auto;
+		display:block;
+		margin-top: 10px;
+	}
 	</style>
 </head>
 <body>
@@ -61,27 +76,27 @@
 	<div class="DivFirstForm">
 		<h3>Adding Task To List:</h3>
 		<form method="get" action="AddingTasks.jsp">
-		task name: <input type="text" name="taskname"/><br>
-		task description: <input type="text" name="taskdescription"/><br>
-		<input type="submit">
+		<br><lable>Task Name: </lable><input type="text" name="taskname"/><br>
+		<br><lable>Task Description:</lable><input type="text" name="taskdescription"/><br>
+		<br><input type="submit">
 		</form>
 	</div>
 	
 	<div class="DivFirstForm">
 	<h3>Changing Task From List:</h3>
 	<form method="get" action="ChangingTasks.jsp">
-	task Number: <input type="text" name="taskNumber"/><br>
-	task name: <input type="text" name="taskname"/><br>
-	task description: <input type="text" name="taskdescription"/><br>
-	<input type="submit">
+	<br><lable>Task Number:  </lable><input type="text" name="taskNumber"/><br>
+	<br><lable>Task Name:  </lable><input type="text" name="taskname"/><br>
+	<br><lable>Task Description:  </lable><input type="text" name="taskdescription"/><br>
+	<br><input type="submit">
 	</form>
 	</div>
 	
 	<div class="DivFirstForm">
 	<h3>Delete Task From List:</h3>
 	<form method="get" action="DeleteTasks.jsp">
-	task Number: <input type="text" name="taskNumber"/><br>
-	<input type="submit">
+	<br><lable>Task Number:  </lable><input type="text" name="taskNumber"/><br>
+	<br><input type="submit">
 	</form>
 	</div>
 	<br><br><br><br><br><br><br><br><br><br><br><br><br><br>
