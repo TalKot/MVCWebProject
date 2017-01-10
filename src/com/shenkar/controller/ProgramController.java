@@ -16,73 +16,58 @@ public class ProgramController extends HttpServlet {
 	private RequestDispatcher dispatcher = null;	
 
 	protected void doGet(HttpServletRequest request,HttpServletResponse response) throws ServletException, IOException {
-		/*
-		Session session =(Session) request.getSession();
-		if(((ServletRequest) session).getAttribute("tasks")==null)
-		{
-			session.setAttribute("tasks", new LinkedList<String>());
-		}
-		LinkedList<String> list = (LinkedList<String>) request.getAttribute("tasks");
-		*/
-		
 				
 		String path = request.getPathInfo();
 		if(path.contains("controller"))
 		{
 			path=path.substring(11,path.length()-4);
-			//System.out.println("after change - Path is - "+path);
+			System.out.println("after change - Path is - "+path);
 		}
 		try{
 		switch (path) 
 		{
 		default:case "/LoginForm":
-			
-				System.out.println("I'm in loggin form");
 				dispatcher = getServletContext().getRequestDispatcher("/LoginForm.jsp");
 				dispatcher.forward(request, response);
 				break;
-
 		case "/Register":
-					dispatcher = getServletContext().getRequestDispatcher("/UserTask.jsp");
-					String firstName = (String)request.getParameter("FirstName");
-					String lastName = (String)request.getParameter("LastName");
-					String password = (String)request.getParameter("Password");
-					String Email = (String)request.getParameter("Email");
-					int phoneNumer = Integer.parseInt(request.getParameter("PhoneNumber"));
-					int id = Integer.parseInt(request.getParameter("UserID"));
-					User userReg = new User(firstName, lastName, id, phoneNumer, Email, password);
-					HibernateToDoListDAO.Instance().addUser(userReg);
-					request.setAttribute("MyUser",userReg);
-					request.setAttribute("TasksLists", HibernateToDoListDAO.Instance().getTasksForUser(userReg.getId()));
+//				dispatcher = getServletContext().getRequestDispatcher("/UserTask.jsp");
+				String firstName = (String)request.getParameter("FirstName");
+				String lastName = (String)request.getParameter("LastName");
+				String password = (String)request.getParameter("Password");
+				String Email = (String)request.getParameter("Email");
+				int phoneNumer = Integer.parseInt(request.getParameter("PhoneNumber"));
+				int id = Integer.parseInt(request.getParameter("UserID"));
+				User userReg = new User(firstName, lastName, id, phoneNumer, Email, password);
+				HibernateToDoListDAO.Instance().addUser(userReg);
+				request.setAttribute("MyUser",userReg);
+				request.setAttribute("TasksLists", HibernateToDoListDAO.Instance().getTasksForUser(userReg.getId()));
+		case "/UserTask":			
+				dispatcher = getServletContext().getRequestDispatcher("/UserTask.jsp");
+				String Pawword = request.getParameter("Password");				
+				int userid = Integer.parseInt(request.getParameter("UserID"));
+				if (HibernateToDoListDAO.Instance().CheckUserInDB(userid,Pawword)==false)
+				{
+					dispatcher = getServletContext().getRequestDispatcher("/LoginForm.jsp");				
+					request.setAttribute("RequestDeleteAnswer","User ID or Password are wrong");
 					dispatcher.forward(request, response);
 					break;
-		case "/UserTask":			
-					dispatcher = getServletContext().getRequestDispatcher("/UserTask.jsp");
-					String Pawword = request.getParameter("Password");				
-					int userid = Integer.parseInt(request.getParameter("UserID"));
-					if (HibernateToDoListDAO.Instance().CheckUserInDB(userid,Pawword)==false)
-					{
-						dispatcher = getServletContext().getRequestDispatcher("/LoginForm.jsp");
-						
-						request.setAttribute("RequestDeleteAnswer","User ID or Password are wrong");
-						dispatcher.forward(request, response);
-						break;
-					}
-					com.shenkar.model.User user = HibernateToDoListDAO.Instance().getUser(userid,Pawword);
-					request.setAttribute("MyUser",user);
-					request.setAttribute("TasksLists", HibernateToDoListDAO.Instance().getTasksForUser(user.getId()));
-					dispatcher.forward(request, response);
+				}
+				com.shenkar.model.User user = HibernateToDoListDAO.Instance().getUser(userid,Pawword);
+				request.setAttribute("MyUser",user);
+				request.setAttribute("TasksLists", HibernateToDoListDAO.Instance().getTasksForUser(user.getId()));
+				dispatcher.forward(request, response);
 				break;				
 		case "/DeleteAccount":
-					dispatcher = getServletContext().getRequestDispatcher("/LoginForm.jsp");
-					String Pawword1 = request.getParameter("Password");				
-					int userid1 = Integer.parseInt(request.getParameter("UserID"));
-					String answer = HibernateToDoListDAO.Instance().deleteUser(userid1, Pawword1);
-					request.setAttribute("RequestDeleteAnswer",answer);
-					dispatcher.forward(request, response);
-					break;
+				dispatcher = getServletContext().getRequestDispatcher("/LoginForm.jsp");
+				String Pawword1 = request.getParameter("Password");				
+				int userid1 = Integer.parseInt(request.getParameter("UserID"));
+				String answer = HibernateToDoListDAO.Instance().deleteUser(userid1, Pawword1);
+				request.setAttribute("RequestDeleteAnswer",answer);
+				dispatcher.forward(request, response);
+				break;
 		case "/AddingTasks":
-				//dispatcher = getServletContext().getRequestDispatcher("/UserTask.jsp");
+				dispatcher = getServletContext().getRequestDispatcher("/UserTask.jsp");
 				String taskName1 = (String)request.getParameter("taskname");
 				String taskDescription1 = (String)request.getParameter("taskdescription");
 				//User thisUser = (User)request.getAttribute("MyUser1");
@@ -92,14 +77,28 @@ public class ProgramController extends HttpServlet {
 				HibernateToDoListDAO.Instance().addTask(newTask);
 				//request.setAttribute("TasksLists", HibernateToDoListDAO.Instance().getTasksForUser(thisUser.getId()));
 				request.setAttribute("TasksLists", HibernateToDoListDAO.Instance().getTasksForUser(123));	
-				//dispatcher.forward(request, response);
-			break;	
+				dispatcher.forward(request, response);
+				break;	
 		case "/clientList":
 				dispatcher = getServletContext().getRequestDispatcher("/clientList.jsp");
 				List vec = HibernateToDoListDAO.Instance().getUsers();
 				request.setAttribute("UsersList", vec);
 				dispatcher.forward(request, response);
 				break;
+		case "/ChangingTasks":
+			dispatcher = getServletContext().getRequestDispatcher("/UserTask.jsp");
+			int taskNumber = Integer.parseInt((String)request.getParameter("taskNumber"));
+			String taskName = (String)request.getParameter("taskname");
+			String description = (String)request.getParameter("taskdescription");
+			HibernateToDoListDAO.Instance().updateTask(taskNumber, taskName, description);
+			dispatcher.forward(request, response);
+			break;	
+		case "/DeleteTasks":
+			dispatcher = getServletContext().getRequestDispatcher("/UserTask.jsp");
+			int taskNumber1 = Integer.parseInt((String)request.getParameter("taskNumber"));
+			HibernateToDoListDAO.Instance().deleteTask(taskNumber1);
+			dispatcher.forward(request, response);
+			break;	
 		/*
 		default:
 				dispatcher = getServletContext().getRequestDispatcher("/errorpage.jsp");

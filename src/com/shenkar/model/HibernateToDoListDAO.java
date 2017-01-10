@@ -135,7 +135,6 @@ public class HibernateToDoListDAO implements IToDoListDAO {
         }
 		return "User cannot be found in DB";
 	}
-/*******************************************************************************/
 
 /*********************************Tasks methods*********************************/
 	public void addTask(Task obj)
