@@ -74,28 +74,29 @@
 	<div class="container">
 	  <div class="row">
 	    <div class="col-sm-4">
-	      <h3>Adding Task To List:</h3>
+	      	<h3>Adding Task To List:</h3>
 			<form method="get" action="AddingTasks.jsp">
 			<br><lable>Task Name: </lable><input class="form-control" type="text" name="taskname"/><br>
 			<br><br><lable>Task Description:</lable><input class="form-control" type="text" name="taskdescription"/><br>
-			<br><br><br><input type="submit">
-			</form>    </div>
+			<br><input class="btn btn-info" type="submit">
+			</form>    
+		</div>
 	    <div class="col-sm-4">
-	      <h3>Changing Task From List:</h3>
+	      	<h3>Changing Task From List:</h3>
 			<form method="get" action="ChangingTasks.jsp">
 			<br><lable>Task Number:  </lable><input class="form-control" type="text" name="taskNumber"/><br>
 			<br><br><lable>Task Name:  </lable><input class="form-control" type="text" name="taskname"/><br>
 			<br><br><lable>Task Description:  </lable><input class="form-control" type="text" name="taskdescription"/><br>
-			<br><br><input type="submit">
+			<br><br><input class="btn btn-info" type="submit">
 			</form>
 	    </div>
 	    <div class="col-sm-4">
-	      <h3>Delete Task From List:</h3>        
+	      	<h3>Delete Task From List:</h3>        
 			<form method="get" action="DeleteTasks.jsp">
 			<br><lable>Task Number:  </lable><br><input class="form-control" type="text" name="taskNumber"/><br>
-			<br><br><input type="submit">
+			<br><input class="btn btn-info" type="submit">
 			</form>
-		    </div>
+		</div>
 	  </div>
 	</div>
 	<jsp:include page="FileEnding.jsp"/>

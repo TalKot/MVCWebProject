@@ -21,7 +21,7 @@ public class ProgramController extends HttpServlet {
 		if(path.contains("controller"))
 		{
 			path=path.substring(11,path.length()-4);
-			System.out.println("after change - Path is - "+path);
+			//System.out.println("after change - Path is - "+path);
 		}
 		try{
 			switch (path) 
@@ -128,7 +128,7 @@ public class ProgramController extends HttpServlet {
 		*/
 	}
 
-	public void doPost(HttpServletRequest request,HttpServletResponse response) throws ServletException, IOException {
+	protected void doPost(HttpServletRequest request,HttpServletResponse response) throws ServletException, IOException {
 		doGet(request, response);
 	}
 
