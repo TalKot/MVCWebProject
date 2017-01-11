@@ -75,7 +75,7 @@
 	  <div class="row">
 	    <div class="col-sm-4">
 	      	<h3>Adding Task To List:</h3>
-			<form method="get" action="AddingTasks.jsp">
+			<form method="get" action="controller/AddingTasks.jsp">
 			<br><lable>Task Name: </lable><input class="form-control" type="text" name="taskname"/><br>
 			<br><br><lable>Task Description:</lable><input class="form-control" type="text" name="taskdescription"/><br>
 			<br><input class="btn btn-info" type="submit">
@@ -83,7 +83,7 @@
 		</div>
 	    <div class="col-sm-4">
 	      	<h3>Changing Task From List:</h3>
-			<form method="get" action="ChangingTasks.jsp">
+			<form method="get" action="controller/ChangingTasks.jsp">
 			<br><lable>Task Number:  </lable><input class="form-control" type="text" name="taskNumber"/><br>
 			<br><br><lable>Task Name:  </lable><input class="form-control" type="text" name="taskname"/><br>
 			<br><br><lable>Task Description:  </lable><input class="form-control" type="text" name="taskdescription"/><br>
@@ -92,7 +92,7 @@
 	    </div>
 	    <div class="col-sm-4">
 	      	<h3>Delete Task From List:</h3>        
-			<form method="get" action="DeleteTasks.jsp">
+			<form method="get" action="controller/DeleteTasks.jsp">
 			<br><lable>Task Number:  </lable><br><input class="form-control" type="text" name="taskNumber"/><br>
 			<br><input class="btn btn-info" type="submit">
 			</form>

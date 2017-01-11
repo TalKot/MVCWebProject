@@ -6,6 +6,9 @@ import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+
+import org.apache.catalina.Session;
+
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
@@ -16,13 +19,24 @@ public class ProgramController extends HttpServlet {
 	private RequestDispatcher dispatcher = null;	
 
 	protected void doGet(HttpServletRequest request,HttpServletResponse response) throws ServletException, IOException {
-				
+			
 		String path = request.getPathInfo();
+		
 		if(path.contains("controller"))
 		{
 			path=path.substring(11,path.length()-4);
 			//System.out.println("after change - Path is - "+path);
 		}
+		if (path.contains("ChangingTasks"))path = "/ChangingTasks";
+		if (path.contains("AddingTasks"))path = "/AddingTasks";
+		
+		/*
+		if (path.contains("LoginForm")  )path = "/LoginForm";
+		else if (path.contains("UserTask")||path.contains("AddingTasks"))path = "/UserTask";
+		//else path = "/clientList";
+		 *
+		 */
+		System.out.println("path is - "+path);
 		try{
 			switch (path) 
 			{
@@ -39,6 +53,7 @@ public class ProgramController extends HttpServlet {
 					int id = Integer.parseInt(request.getParameter("UserID"));
 					User userReg = new User(firstName, lastName, id, phoneNumer, Email, password);
 					HibernateToDoListDAO.Instance().addUser(userReg);
+					
 					request.setAttribute("MyUser",userReg);
 					request.setAttribute("TasksLists",new ArrayList<Task>()); //HibernateToDoListDAO.Instance().getTasksForUser(userReg.getId()));
 			case "/UserTask":			
@@ -69,11 +84,11 @@ public class ProgramController extends HttpServlet {
 					dispatcher = getServletContext().getRequestDispatcher("/UserTask.jsp");
 					String taskName1 = (String)request.getParameter("taskname");
 					String taskDescription1 = (String)request.getParameter("taskdescription");
-				/*need to fix*/		
-					System.out.println("I'm inside the adding task section");
-					/*
-					int thisUser = Integer.parseInt((String) request.getAttribute("WorkingUserID"));
-					Task newTask = new Task(thisUser, taskName1, taskDescription1);
+				/*need to fix*/					
+					//String thisUser = (String) request.getAttribute("WorkingUserID");
+					//System.out.println("user id is - "+thisUser);
+					 
+					/*Task newTask = new Task(thisUser, taskName1, taskDescription1);
 					request.setAttribute("TasksLists", HibernateToDoListDAO.Instance().getTasksForUser(thisUser));
 					*/
 					Task newTask = new Task(123, taskName1, taskDescription1);
@@ -106,6 +121,8 @@ public class ProgramController extends HttpServlet {
 		catch(Exception e)
 		{
 			e.printStackTrace();
+			dispatcher = getServletContext().getRequestDispatcher("/errorpage.jsp");
+			dispatcher.forward(request, response);
 		}
 		/*
 			//adding the user-agent to the DB also		
