@@ -7,5 +7,6 @@ import org.junit.runners.Suite.SuiteClasses;
 @RunWith(Suite.class)
 @SuiteClasses({ TestingController.class, TestingModle.class })
 public class AllTests {
-
+	
+	
 }

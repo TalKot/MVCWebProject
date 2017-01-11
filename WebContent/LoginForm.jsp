@@ -92,7 +92,7 @@
 		if (request.getAttribute("RequestDeleteAnswer")!=null)
 			out.print("<h1>"+request.getAttribute("RequestDeleteAnswer")+"</h1>");
 	%>
-	<h6><jsp:include page="FileEnding.jsp" /></h6>
-	</div>
+	<jsp:include page="FileEnding.jsp" />
+</div>
 </body>
 </html>

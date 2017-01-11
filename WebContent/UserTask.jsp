@@ -7,7 +7,6 @@
 <html>
 <head>
 	<meta http-equiv="Content-Type" content="text/html; charset=windows-1255">
-	<meta charset="utf-8">
  	<meta name="viewport" content="width=device-width, initial-scale=1">
   	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
  	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
@@ -36,16 +35,17 @@
 <%
 	out.print("<p><h1>User informaiton</h1></p>");
 %>
-
-<blockquote>
-<%
-	User user = (User)request.getAttribute("MyUser");
-	out.print("<br> The ID is -"+user.getId());
-	out.print("<br> Name -"+user.getLastName()+" "+user.getFirstName());
-	out.print("<br> The email adress is -"+user.getEmail());
-	out.print("<br> The phone is -"+user.getPhoneNumber());
-%>
-</blockquote>
+	<div class="well">
+		<blockquote>
+		<%
+			User user = (User)request.getAttribute("MyUser");
+			out.print("<br> The ID is -"+user.getId());
+			out.print("<br> Name -"+user.getLastName()+" "+user.getFirstName());
+			out.print("<br> The email adress is -"+user.getEmail());
+			out.print("<br> The phone is -"+user.getPhoneNumber());
+		%>
+		</blockquote>
+	</div>
 <%
 	out.print("<h1>Tasks Data</h1><br>");
 	List<Task> tasks = (List)request.getAttribute("TasksLists");
@@ -71,35 +71,34 @@
 
 
 	  
-<div class="container">
-  <div class="row">
-    <div class="col-sm-4">
-      <h3>Adding Task To List:</h3>
-		<form method="get" action="AddingTasks.jsp">
-		<br><lable>Task Name: </lable><input class="form-control" type="text" name="taskname"/><br>
-		<br><br><lable>Task Description:</lable><input class="form-control" type="text" name="taskdescription"/><br>
-		<br><br><br><input type="submit">
-		</form>    </div>
-    <div class="col-sm-4">
-      <h3>Changing Task From List:</h3>
-		<form method="get" action="ChangingTasks.jsp">
-		<br><lable>Task Number:  </lable><input class="form-control" type="text" name="taskNumber"/><br>
-		<br><br><lable>Task Name:  </lable><input class="form-control" type="text" name="taskname"/><br>
-		<br><br><lable>Task Description:  </lable><input class="form-control" type="text" name="taskdescription"/><br>
-		<br><br><input type="submit">
-		</form>
-    </div>
-    <div class="col-sm-4">
-      <h3>Delete Task From List:</h3>        
-		<form method="get" action="DeleteTasks.jsp">
-		<br><lable>Task Number:  </lable><br><input class="form-control" type="text" name="taskNumber"/><br>
-		<br><br><input type="submit">
-		</form>
+	<div class="container">
+	  <div class="row">
+	    <div class="col-sm-4">
+	      <h3>Adding Task To List:</h3>
+			<form method="get" action="AddingTasks.jsp">
+			<br><lable>Task Name: </lable><input class="form-control" type="text" name="taskname"/><br>
+			<br><br><lable>Task Description:</lable><input class="form-control" type="text" name="taskdescription"/><br>
+			<br><br><br><input type="submit">
+			</form>    </div>
+	    <div class="col-sm-4">
+	      <h3>Changing Task From List:</h3>
+			<form method="get" action="ChangingTasks.jsp">
+			<br><lable>Task Number:  </lable><input class="form-control" type="text" name="taskNumber"/><br>
+			<br><br><lable>Task Name:  </lable><input class="form-control" type="text" name="taskname"/><br>
+			<br><br><lable>Task Description:  </lable><input class="form-control" type="text" name="taskdescription"/><br>
+			<br><br><input type="submit">
+			</form>
 	    </div>
-  </div>
-</div>
-
-	<h3><jsp:include page="FileEnding.jsp"/></h3>
+	    <div class="col-sm-4">
+	      <h3>Delete Task From List:</h3>        
+			<form method="get" action="DeleteTasks.jsp">
+			<br><lable>Task Number:  </lable><br><input class="form-control" type="text" name="taskNumber"/><br>
+			<br><br><input type="submit">
+			</form>
+		    </div>
+	  </div>
 	</div>
+	<jsp:include page="FileEnding.jsp"/>
+</div>
 </body>
 </html>
