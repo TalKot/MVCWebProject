@@ -7,30 +7,14 @@
 <html>
 <head>
 	<meta http-equiv="Content-Type" content="text/html; charset=windows-1255">
+	<meta charset="utf-8">
+ 	<meta name="viewport" content="width=device-width, initial-scale=1">
+  	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+ 	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
+  	<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+	
 	<title>TODO List</title>
 	<style>
-	.DivFirstForm 
-	{
-		width: 295px;
-		float: left;
-		margin-right: 40px;
-	}
-	.h3
-	{
-		font-size:130%;
-	}
-	table, th, td {
-    border: 1px solid black;
-    width:500px;
-    border-collapse: collapse;
-	}
-	th, td {
-    padding: 10px;
-	}
-	lable
-	{
-	 	float:left;
-	}
 	input
 	{
 		float:right;
@@ -45,14 +29,24 @@
 	</style>
 </head>
 <body>
+	<div class="jumbotron text-center">
+	  <h1>Manage Your Tasks</h1>
+	</div>
+	
+	<div class="container">
 <%
 	out.print("<p><h1>User informaiton</h1></p>");
+%>
+<blockquote>
+<%
 	User user = (User)request.getAttribute("MyUser");
-	out.print("<br>The ID is - "+user.getId());
-	out.print("<br>Name - "+user.getLastName()+" "+user.getFirstName());
-	out.print("<br>The email adress is - "+user.getEmail());
-	out.print("<br>The phone is - "+user.getPhoneNumber());
-	
+	out.print("<br> The ID is -"+user.getId());
+	out.print("<br> Name -"+user.getLastName()+" "+user.getFirstName());
+	out.print("<br> The email adress is -"+user.getEmail());
+	out.print("<br> The phone is -"+user.getPhoneNumber());
+%>
+</blockquote>
+<%
 	out.print("<h1>Tasks Data</h1><br>");
 	List<Task> tasks = (List)request.getAttribute("TasksLists");
 	if (tasks.isEmpty())
@@ -61,45 +55,51 @@
 	}
 	else
 	{
-		out.print("<table>");
+
+		out.print("<table class=table table-hover><thead>");
 		out.print("<caption>Tasks Managment</caption>");
 		out.print("<tr><th>Task Number</th><th>Task Name</th><th>Task Description</th></tr>");
 		for(Task tsk:tasks)
 		{
-			out.print("<tr><th>"+tsk.getTaskNumber()+".</th><th>"+tsk.getTask()+"</th><th>"+tsk.getDescription()+"</th> </tr>");
+			out.print("<tr><th>"+tsk.getTaskNumber()+".</th><th>"+tsk.getTask()+"</th><th>"+tsk.getDescription()+"</th> </tr> </thead><tbody>");
 		}
-		out.print("</table>");
+		out.print(" </tbody></table>");
 	}
 	request.setAttribute("WorkingUserID",user.getId());
 %>
-	<br><br>
-	<div class="DivFirstForm">
-		<h3>Adding Task To List:</h3>
+
+
+
+	  
+<div class="container">
+  <div class="row">
+    <div class="col-sm-4">
+      <h3>Adding Task To List:</h3>
 		<form method="get" action="AddingTasks.jsp">
 		<br><lable>Task Name: </lable><input type="text" name="taskname"/><br>
 		<br><lable>Task Description:</lable><input type="text" name="taskdescription"/><br>
 		<br><input type="submit">
+		</form>    </div>
+    <div class="col-sm-4">
+      <h3>Changing Task From List:</h3>
+		<form method="get" action="ChangingTasks.jsp">
+		<br><lable>Task Number:  </lable><input type="text" name="taskNumber"/><br>
+		<br><lable>Task Name:  </lable><input type="text" name="taskname"/><br>
+		<br><lable>Task Description:  </lable><input type="text" name="taskdescription"/><br>
+		<br><input type="submit">
 		</form>
+    </div>
+    <div class="col-sm-4">
+      <h3>Delete Task From List:</h3>        
+		<form method="get" action="DeleteTasks.jsp">
+		<br><lable>Task Number:  </lable><input type="text" name="taskNumber"/><br>
+		<br><input type="submit">
+		</form>
+	    </div>
+  </div>
+</div>
+
+	<h3><jsp:include page="FileEnding.jsp"/></h3>
 	</div>
-	
-	<div class="DivFirstForm">
-	<h3>Changing Task From List:</h3>
-	<form method="get" action="ChangingTasks.jsp">
-	<br><lable>Task Number:  </lable><input type="text" name="taskNumber"/><br>
-	<br><lable>Task Name:  </lable><input type="text" name="taskname"/><br>
-	<br><lable>Task Description:  </lable><input type="text" name="taskdescription"/><br>
-	<br><input type="submit">
-	</form>
-	</div>
-	
-	<div class="DivFirstForm">
-	<h3>Delete Task From List:</h3>
-	<form method="get" action="DeleteTasks.jsp">
-	<br><lable>Task Number:  </lable><input type="text" name="taskNumber"/><br>
-	<br><input type="submit">
-	</form>
-	</div>
-	<br><br><br><br><br><br><br><br><br><br><br><br><br><br>
-	<jsp:include page="FileEnding.jsp" />
 </body>
 </html>
