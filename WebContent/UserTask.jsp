@@ -1,9 +1,5 @@
-<%@page import="org.apache.jasper.tagplugins.jstl.core.ForEach"%>
-<%@page import="com.shenkar.model.User"%>
-<%@page import="com.shenkar.model.Task"%>
-<%@ page language="java" contentType="text/html; charset=windows-1255" import="java.util.*" import="com.shenkar.controller.ProgramController"
-    pageEncoding="windows-1255"%>
-<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<%@ page language="java" contentType="text/html; charset=windows-1255"  import="org.apache.jasper.tagplugins.jstl.core.ForEach" import="com.shenkar.model.User" import="com.shenkar.model.Task" import="java.util.*" import="com.shenkar.controller.ProgramController"
+    pageEncoding="windows-1255" isErrorPage="false" errorPage="errorpage.jsp"%>
 <html>
 <head>
 	<meta http-equiv="Content-Type" content="text/html; charset=windows-1255">
@@ -13,17 +9,17 @@
   	<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
 	<title>User & Task</title>
 	<style>
-	input
-	{
-		float:right;
-	}
-	input[type=submit]
-	{
-		float: none;
-		margin: 0 auto;
-		display:block;
-		margin-top: 10px;
-	}
+		input
+		{
+			float:right;
+		}
+		input[type=submit]
+		{
+			float: none;
+			margin: 0 auto;
+			display:block;
+			margin-top: 10px;
+		}
 	</style>
 </head>
 <body>
@@ -32,21 +28,21 @@
 	</div>
 	
 	<div class="container">
-<%
+	<%
 	out.print("<p><h1>User informaiton</h1></p>");
-%>
+	%>
 	<div class="well">
 		<blockquote>
 		<%
 			User user = (User)request.getAttribute("MyUser");
-			out.print("<br> The ID is -"+user.getId());
-			out.print("<br> Name -"+user.getLastName()+" "+user.getFirstName());
-			out.print("<br> The email adress is -"+user.getEmail());
-			out.print("<br> The phone is -"+user.getPhoneNumber());
+			out.print("<br> ID -<b>"+user.getId()+"</b>");
+			out.print("<br> Name -<b>"+user.getLastName()+" "+user.getFirstName()+"</b>");
+			out.print("<br> Email Adress -<b>"+user.getEmail()+"</b>");
+			out.print("<br> Phone Number -<b>0"+user.getPhoneNumber()+"</b>");
 		%>
 		</blockquote>
 	</div>
-<%
+	<%
 	out.print("<h1>Tasks Data</h1><br>");
 	List<Task> tasks = (List)request.getAttribute("TasksLists");
 	if (tasks.isEmpty())
@@ -57,7 +53,6 @@
 	{
 
 		out.print("<table class=table><thead>");
-		//out.print("<h4 style=margin-right:60px;>Tasks Managment</h4>");
 		out.print("<tr><th>Task Number</th><th>Task Name</th><th>Task Description</th></tr>");
 		for(Task tsk:tasks)
 		{
@@ -66,10 +61,7 @@
 		out.print(" </tbody></table>");
 	}
 	request.setAttribute("WorkingUserID",user.getId());
-%>
-
-
-
+	%>
 	  
 	<div class="container">
 	  <div class="row">
@@ -100,6 +92,6 @@
 	  </div>
 	</div>
 	<jsp:include page="FileEnding.jsp"/>
-</div>
+	</div>
 </body>
 </html>

@@ -1,5 +1,5 @@
 <%@ page language="java" contentType="text/html; charset=windows-1255" import="java.util.*" import="com.shenkar.controller.ProgramController"
-    pageEncoding="windows-1255"%>
+    pageEncoding="windows-1255" isErrorPage="false" errorPage="errorpage.jsp"%>
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>
 <head>
@@ -60,7 +60,7 @@
 	<div class="container">
 	  <div class="row">
 	    <div class="col-sm-4">
-	     	<h3>Loggin <span class="glyphicon glyphicon-check"></span></h3>
+	     	<h3>Login <span class="glyphicon glyphicon-check"></span></h3>
 			<form method="post" action="controller/UserTask.jsp" onsubmit="return validate()">
 			<br><lable>User ID: </lable><input class="form-control" type="text" id="UserID" name="UserID"/><br>
 			<br><lable>Password: </lable><input class="form-control" type="text" id="Password" name="Password"/><br>

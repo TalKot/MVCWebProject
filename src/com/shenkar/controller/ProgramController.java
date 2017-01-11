@@ -21,22 +21,19 @@ public class ProgramController extends HttpServlet {
 	protected void doGet(HttpServletRequest request,HttpServletResponse response) throws ServletException, IOException {
 			
 		String path = request.getPathInfo();
-		
-		if(path.contains("controller"))
-		{
-			path=path.substring(11,path.length()-4);
-			//System.out.println("after change - Path is - "+path);
-		}
 		if (path.contains("ChangingTasks"))path = "/ChangingTasks";
-		if (path.contains("AddingTasks"))path = "/AddingTasks";
-		
+		else if (path.contains("AddingTasks"))path = "/AddingTasks";
+		else if (path.contains("DeleteTasks"))path = "/DeleteTasks";
+		else if (path.contains("Register"))path = "/Register";
+		else if (path.contains("LoginForm"))path = "/LoginForm";
+		else if (path.contains("UserTask"))path = "/UserTask";
+		else if (path.contains("clientList"))path = "/clientList";
+		else if (path.contains("DeleteAccount"))path = "/DeleteAccount";
 		/*
-		if (path.contains("LoginForm")  )path = "/LoginForm";
-		else if (path.contains("UserTask")||path.contains("AddingTasks"))path = "/UserTask";
-		//else path = "/clientList";
-		 *
-		 */
+		String thisUser = (String) request.getAttribute("WorkingUserID");
+		System.out.println("user id is - "+thisUser);
 		System.out.println("path is - "+path);
+*/
 		try{
 			switch (path) 
 			{
