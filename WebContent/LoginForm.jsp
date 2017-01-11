@@ -10,7 +10,7 @@
  	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
   	<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
 	
-	<title>TODO List Form</title>
+	<title>TODO Login</title>
 	<style>
 	lable
 	{
@@ -62,36 +62,37 @@
 	    <div class="col-sm-4">
 	      <h3>Loggin</h3>
 			<form method="post" action="controller/UserTask.jsp" onsubmit="return validate()">
-			<br><lable>User ID: </lable><input type="text" id="UserID" name="UserID"/><br>
-			<br><lable>Password: </lable><input type="text" id="Password" name="Password"/><br>
+			<br><lable>User ID: </lable><input class="form-control" type="text" id="UserID" name="UserID"/><br>
+			<br><lable>Password: </lable><input class="form-control" type="text" id="Password" name="Password"/><br>
 			<input type="submit" onclick="validate()">
 			</form>	    </div>
 	    <div class="col-sm-4">
 	      <h3>Sign In</h3>
 			<form method="post" action="controller/Register.jsp" onsubmit="return validate()">
-			<br><lable>ID: <input type="text" name="UserID"/><br>
-			<br><lable>Password:</lable> <input type="text"  name="Password"/><br>
-			<br><lable>First Name:</lable> <input type="text" name="FirstName"/><br>
-			<br><lable>Last Name: </lable><input type="text" name="LastName"/><br>
-			<br><lable>PhoneNumber: </lable><input type="text" name="PhoneNumber"/><br>
-			<br><lable>Email: </lable><input type="text" name="Email"/><br>
+			<br><lable>ID: <input class="form-control" type="text" name="UserID"/><br>
+			<br><lable>Password:</lable> <input class="form-control" type="text"  name="Password"/><br>
+			<br><lable>First Name:</lable> <input class="form-control" type="text" name="FirstName"/><br>
+			<br><lable>Last Name: </lable><input class="form-control" type="text" name="LastName"/><br>
+			<br><lable>PhoneNumber: </lable><input class="form-control" type="text" name="PhoneNumber"/><br>
+			<br><lable>Email: </lable><input class="form-control" type="text" name="Email"/><br>
 			<br><lable><input type="submit" onclick="validate()">
 			</form>	    </div>
 	    <div class="col-sm-4">
 	      <h3>Delete Account</h3>        
 		<form method="post" action="controller/DeleteAccount.jsp" onsubmit="return validate()">
-		<br><lable>User ID: </lable><input type="text" name="UserID"/><br>
-		<br><lable>Password: </lable><input type="text" name="Password"/><br>
+		<br><lable>User ID: </lable><input class="form-control" type="text" name="UserID"/><br>
+		<br><lable>Password: </lable><input class="form-control" type="text" name="Password"/><br>
 		<input type="submit" onclick="validate()">
 		</form>
 	    </div>
 	  </div>
-	</div>
+	
 
 	<%
 		if (request.getAttribute("RequestDeleteAnswer")!=null)
 			out.print("<h1>"+request.getAttribute("RequestDeleteAnswer")+"</h1>");
 	%>
-	<h3><jsp:include page="FileEnding.jsp" /></h3>
+	<h6><jsp:include page="FileEnding.jsp" /></h6>
+	</div>
 </body>
 </html>

@@ -12,8 +12,7 @@
   	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
  	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
   	<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
-	
-	<title>TODO List</title>
+	<title>User & Task</title>
 	<style>
 	input
 	{
@@ -37,6 +36,7 @@
 <%
 	out.print("<p><h1>User informaiton</h1></p>");
 %>
+
 <blockquote>
 <%
 	User user = (User)request.getAttribute("MyUser");
@@ -56,8 +56,8 @@
 	else
 	{
 
-		out.print("<table class=table table-hover><thead>");
-		out.print("<caption>Tasks Managment</caption>");
+		out.print("<table class=table><thead>");
+		//out.print("<h4 style=margin-right:60px;>Tasks Managment</h4>");
 		out.print("<tr><th>Task Number</th><th>Task Name</th><th>Task Description</th></tr>");
 		for(Task tsk:tasks)
 		{
@@ -76,24 +76,24 @@
     <div class="col-sm-4">
       <h3>Adding Task To List:</h3>
 		<form method="get" action="AddingTasks.jsp">
-		<br><lable>Task Name: </lable><input type="text" name="taskname"/><br>
-		<br><lable>Task Description:</lable><input type="text" name="taskdescription"/><br>
-		<br><input type="submit">
+		<br><lable>Task Name: </lable><input class="form-control" type="text" name="taskname"/><br>
+		<br><br><lable>Task Description:</lable><input class="form-control" type="text" name="taskdescription"/><br>
+		<br><br><br><input type="submit">
 		</form>    </div>
     <div class="col-sm-4">
       <h3>Changing Task From List:</h3>
 		<form method="get" action="ChangingTasks.jsp">
-		<br><lable>Task Number:  </lable><input type="text" name="taskNumber"/><br>
-		<br><lable>Task Name:  </lable><input type="text" name="taskname"/><br>
-		<br><lable>Task Description:  </lable><input type="text" name="taskdescription"/><br>
-		<br><input type="submit">
+		<br><lable>Task Number:  </lable><input class="form-control" type="text" name="taskNumber"/><br>
+		<br><br><lable>Task Name:  </lable><input class="form-control" type="text" name="taskname"/><br>
+		<br><br><lable>Task Description:  </lable><input class="form-control" type="text" name="taskdescription"/><br>
+		<br><br><input type="submit">
 		</form>
     </div>
     <div class="col-sm-4">
       <h3>Delete Task From List:</h3>        
 		<form method="get" action="DeleteTasks.jsp">
-		<br><lable>Task Number:  </lable><input type="text" name="taskNumber"/><br>
-		<br><input type="submit">
+		<br><lable>Task Number:  </lable><br><input class="form-control" type="text" name="taskNumber"/><br>
+		<br><br><input type="submit">
 		</form>
 	    </div>
   </div>
