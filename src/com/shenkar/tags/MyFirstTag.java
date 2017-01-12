@@ -1,4 +1,4 @@
-package com.shenkar.model;
+package com.shenkar.tags;
 
 import javax.servlet.jsp.*;
 import javax.servlet.jsp.tagext.*;

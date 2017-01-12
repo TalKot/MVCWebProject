@@ -51,18 +51,17 @@
 	</script>
 </head>
 <body>
-<%@ taglib uri="/WEB-INF/tlds/mytld.tld" prefix="test" %>
-
+<%@ taglib uri="/WEB-INF/tlds/mytld.tld" prefix="MyTags" %>
 	<div class="jumbotron text-center">
-		<test:example/>	
-		<test:Second/>
+		<MyTags:First/>	
+		<MyTags:Second/>
 	</div>
  
 	<div class="container">
 	  <div class="row">
 	    <div class="col-sm-4">
 	     	<h3>Login <span class="glyphicon glyphicon-check"></span></h3>
-			<form method="post" action="controller/UserTask.jsp" onsubmit="return validate()">
+			<form method="post" action="controller/UserTask" onsubmit="return validate()">
 			<br><lable>User ID: </lable><input class="form-control" type="text" id="UserID" name="UserID"/><br>
 			<br><lable>Password: </lable><input class="form-control" type="text" id="Password" name="Password"/><br>
 			<input class="btn btn-info" type="submit" onclick="validate()">
@@ -70,7 +69,7 @@
 		</div>
 	    <div class="col-sm-4">
 	      	<h3>Sign In<span class="glyphicon glyphicon-ok"></span></h3>
-			<form method="post" action="controller/Register.jsp">
+			<form method="post" action="controller/Register">
 			<br><lable>ID: <input class="form-control" type="text" name="UserID"/><br>
 			<br><lable>Password:</lable> <input class="form-control" type="text"  name="Password"/><br>
 			<br><lable>First Name:</lable> <input class="form-control" type="text" name="FirstName"/><br>
@@ -82,7 +81,7 @@
 		</div>
 	    <div class="col-sm-4">
 	      	<h3>Delete Account <span class="glyphicon glyphicon-remove"></span></h3>        
-			<form method="post" action="controller/DeleteAccount.jsp" onsubmit="return validate()">
+			<form method="post" action="controller/DeleteAccount" onsubmit="return validate()">
 			<br><lable>User ID: </lable><input class="form-control" type="text" name="UserID"/><br>
 			<br><lable>Password: </lable><input class="form-control" type="text" name="Password"/><br>
 			<input class="btn btn-info" type="submit" onclick="validate()">
@@ -90,12 +89,12 @@
 	    </div>
 	    
 	  </div>
-
+	  
 		<%
 			if (request.getAttribute("RequestDeleteAnswer")!=null)
-				out.print("<h1>"+request.getAttribute("RequestDeleteAnswer")+"</h1>");
+				out.print("<h2 style=color:red>"+request.getAttribute("RequestDeleteAnswer")+"</h2>");
 		%>
-
+		
 		<jsp:include page="FileEnding.jsp" />
 	</div>
 </body>

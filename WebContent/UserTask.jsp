@@ -47,7 +47,7 @@
 	List<Task> tasks = (List)request.getAttribute("TasksLists");
 	if (tasks.isEmpty())
 	{
-		out.print("No tasks in DB for this client<br><br><br>");
+		out.print("<h3 style=color:red>No tasks in DB for this client</h3><br><br><br>");
 	}
 	else
 	{
@@ -60,14 +60,13 @@
 		}
 		out.print(" </tbody></table>");
 	}
-	request.setAttribute("WorkingUserID",user.getId());
 	%>
 	  
 	<div class="container">
 	  <div class="row">
 	    <div class="col-sm-4">
 	      	<h3>Adding Task To List:</h3>
-			<form method="get" action="controller/AddingTasks.jsp">
+			<form method="get" action="controller/AddingTasks">
 			<br><lable>Task Name: </lable><input class="form-control" type="text" name="taskname"/><br>
 			<br><br><lable>Task Description:</lable><input class="form-control" type="text" name="taskdescription"/><br>
 			<br><input class="btn btn-info" type="submit">
@@ -75,7 +74,7 @@
 		</div>
 	    <div class="col-sm-4">
 	      	<h3>Changing Task From List:</h3>
-			<form method="get" action="controller/ChangingTasks.jsp">
+			<form method="get" action="controller/ChangingTasks">
 			<br><lable>Task Number:  </lable><input class="form-control" type="text" name="taskNumber"/><br>
 			<br><br><lable>Task Name:  </lable><input class="form-control" type="text" name="taskname"/><br>
 			<br><br><lable>Task Description:  </lable><input class="form-control" type="text" name="taskdescription"/><br>
@@ -84,7 +83,7 @@
 	    </div>
 	    <div class="col-sm-4">
 	      	<h3>Delete Task From List:</h3>        
-			<form method="get" action="controller/DeleteTasks.jsp">
+			<form method="get" action="controller/DeleteTasks">
 			<br><lable>Task Number:  </lable><br><input class="form-control" type="text" name="taskNumber"/><br>
 			<br><input class="btn btn-info" type="submit">
 			</form>

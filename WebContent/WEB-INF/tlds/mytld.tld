@@ -7,16 +7,16 @@ version="2.0">
  <tlib-version>1.0</tlib-version>
  <short-name>mytaglib</short-name>
  <tag>
- 	<description>My Example tag</description>
- 	<name>example</name>
- 	<tag-class>com.shenkar.model.MyFirstTag</tag-class>
+ 	<description>My First tag</description>
+ 	<name>First</name>
+ 	<tag-class>com.shenkar.tags.MyFirstTag</tag-class>
  	<body-content>empty</body-content>
  </tag>
  
  <tag>
  	<description>My Second tag</description>
  	<name>Second</name>
- 	<tag-class>com.shenkar.model.MySecondTag</tag-class>
+ 	<tag-class>com.shenkar.tags.MySecondTag</tag-class>
  	<body-content>empty</body-content>
  </tag>
 
