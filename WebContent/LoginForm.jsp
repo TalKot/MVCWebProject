@@ -1,16 +1,15 @@
-<%@ page language="java" contentType="text/html; charset=windows-1255" import="java.util.*" import="com.shenkar.controller.ProgramController"
+<%@ page language="java" contentType="text/html; charset=windows-1255" 
+	import="java.util.*" import="com.shenkar.controller.ProgramController"
     pageEncoding="windows-1255" isErrorPage="false" errorPage="errorpage.jsp"%>
-<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>
 <head>
+	<title>TODO Login</title>
 	<meta http-equiv="Content-Type" content="text/html; charset=windows-1255">
-	<meta charset="utf-8">
  	<meta name="viewport" content="width=device-width, initial-scale=1">
   	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
  	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
   	<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
 	
-	<title>TODO Login</title>
 	<style>
 	lable
 	{
@@ -52,9 +51,11 @@
 	</script>
 </head>
 <body>
+<%@ taglib uri="/WEB-INF/tlds/mytld.tld" prefix="test" %>
+
 	<div class="jumbotron text-center">
-	  <h1>Java Web application that implements MVC architecture that allows the private end user to manage his personal TO-DO list.</h1>
-	  <p>This project implements MVC-Programing using Hibernate as modle,Servelet as the controller and JSP pages as the view. </p> 
+		<test:example/>	
+		<test:Second/>
 	</div>
  
 	<div class="container">

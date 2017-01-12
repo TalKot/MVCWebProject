@@ -6,6 +6,7 @@ import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 
 import org.apache.catalina.Session;
 
@@ -30,10 +31,12 @@ public class ProgramController extends HttpServlet {
 		else if (path.contains("clientList"))path = "/clientList";
 		else if (path.contains("DeleteAccount"))path = "/DeleteAccount";
 		/*
+		HttpSession session = request.getSession();
+		session.get
 		String thisUser = (String) request.getAttribute("WorkingUserID");
 		System.out.println("user id is - "+thisUser);
 		System.out.println("path is - "+path);
-*/
+	*/
 		try{
 			switch (path) 
 			{
@@ -48,6 +51,8 @@ public class ProgramController extends HttpServlet {
 					String Email = (String)request.getParameter("Email");
 					int phoneNumer = Integer.parseInt(request.getParameter("PhoneNumber"));
 					int id = Integer.parseInt(request.getParameter("UserID"));
+					HttpSession session = request.getSession();
+					session.setAttribute("thisUser", id);
 					User userReg = new User(firstName, lastName, id, phoneNumer, Email, password);
 					HibernateToDoListDAO.Instance().addUser(userReg);
 					
@@ -57,6 +62,8 @@ public class ProgramController extends HttpServlet {
 					dispatcher = getServletContext().getRequestDispatcher("/UserTask.jsp");
 					String Pawword = request.getParameter("Password");				
 					int userid = Integer.parseInt(request.getParameter("UserID"));
+					session = request.getSession();
+					session.setAttribute("thisUser", userid);
 					if (HibernateToDoListDAO.Instance().CheckUserInDB(userid,Pawword)==false)
 					{
 						dispatcher = getServletContext().getRequestDispatcher("/LoginForm.jsp");				
@@ -73,6 +80,8 @@ public class ProgramController extends HttpServlet {
 					dispatcher = getServletContext().getRequestDispatcher("/LoginForm.jsp");
 					String Pawword1 = request.getParameter("Password");				
 					int userid1 = Integer.parseInt(request.getParameter("UserID"));
+					session = request.getSession();
+					session.setAttribute("thisUser", userid1);
 					String answer = HibernateToDoListDAO.Instance().deleteUser(userid1, Pawword1);
 					request.setAttribute("RequestDeleteAnswer",answer);
 					dispatcher.forward(request, response);
@@ -82,14 +91,12 @@ public class ProgramController extends HttpServlet {
 					String taskName1 = (String)request.getParameter("taskname");
 					String taskDescription1 = (String)request.getParameter("taskdescription");
 				/*need to fix*/					
+					session = request.getSession();
+					int thisUser  = (int) session.getAttribute("thisUser");
 					//String thisUser = (String) request.getAttribute("WorkingUserID");
 					//System.out.println("user id is - "+thisUser);
-					 
-					/*Task newTask = new Task(thisUser, taskName1, taskDescription1);
+					Task newTask = new Task(thisUser, taskName1, taskDescription1);
 					request.setAttribute("TasksLists", HibernateToDoListDAO.Instance().getTasksForUser(thisUser));
-					*/
-					Task newTask = new Task(123, taskName1, taskDescription1);
-					request.setAttribute("TasksLists", HibernateToDoListDAO.Instance().getTasksForUser(123));	
 					HibernateToDoListDAO.Instance().addTask(newTask);
 					dispatcher.forward(request, response);
 					break;	
