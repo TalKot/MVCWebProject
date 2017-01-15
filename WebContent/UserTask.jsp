@@ -51,7 +51,6 @@
 	}
 	else
 	{
-
 		out.print("<table class=table><thead>");
 		out.print("<tr><th>Task Number</th><th>Task Name</th><th>Task Description</th></tr>");
 		for(Task tsk:tasks)

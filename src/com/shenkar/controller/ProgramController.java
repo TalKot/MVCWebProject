@@ -7,22 +7,34 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
-
+import org.apache.log4j.Logger;
 import org.apache.catalina.Session;
-
+import org.apache.log4j.BasicConfigurator;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
 
-public class ProgramController extends HttpServlet {
+
+public class ProgramController extends javax.servlet.http.HttpServlet implements javax.servlet.Servlet 
+{
 	private static final long serialVersionUID = 1L;
-	private RequestDispatcher dispatcher = null;	
+	static Logger log = Logger.getLogger(ProgramController.class);
 
 	protected void doGet(HttpServletRequest request,HttpServletResponse response) throws ServletException, IOException {
-			
-		String path = request.getPathInfo();
+		log.debug("debug message");
+		log.info("info message");
+		log.warn("warn message");
+		log.error("error message");
+		log.fatal("fatal message");
+		/*
+		BasicConfigurator.configure();//log4j
+		//logger.AddAppender(new FileAppender(new SimpleLayout(),"log.txt"));	
+		logger.info("Log file was created");
+		*/
 
+		/*
+		String path = request.getPathInfo();
 		System.out.println("Path before change - "+path);
 		if (path.contains("ChangingTasks"))path = "/ChangingTasks";
 		else if (path.contains("AddingTasks"))path = "/AddingTasks";
@@ -33,6 +45,40 @@ public class ProgramController extends HttpServlet {
 		else if (path.contains("clientList"))path = "/clientList";
 		else if (path.contains("DeleteAccount"))path = "/DeleteAccount";
 		System.out.println("Path after change - "+path);
+		*/
+		RequestDispatcher dispatcher = null;
+		String path = request.getParameter("action");//checking the next URL from form
+		System.out.println("");
+		System.out.println("the path before change is - "+path);
+		if (path==null)
+			{
+				path = request.getPathInfo();//check URL from browser
+				System.out.println("Path before change - "+path);
+				if (path.contains("ChangingTasks"))path = "/ChangingTasks";
+				else if (path.contains("AddingTasks"))path = "/AddingTasks";
+				else if (path.contains("DeleteTasks"))path = "/DeleteTasks";
+				else if (path.contains("Register"))path = "/Register";
+				else if (path.contains("LoginForm"))path = "/LoginForm";
+				else if (path.contains("UserTask"))path = "/UserTask";
+				else if (path.contains("clientList"))path = "/clientList";
+				else if (path.contains("DeleteAccount"))path = "/DeleteAccount";
+				else path="";
+			}
+		else{
+			if(path.equals("Delete"))path = "/DeleteTasks";
+			else if (path.equals("SignIn"))path = "/Register";
+			else if (path.equals("Login"))path = "/UserTask";
+			else if (path.contains("DeleteAccount"))path = "/DeleteAccount";
+			else if (path.contains("AddingTasks"))path = "/AddingTasks";
+			else if (path.contains("DeleteTasks"))path = "/DeleteTasks";
+			else if (path.contains("Register"))path = "/Register";
+			else if (path.contains("LoginForm"))path = "/LoginForm";
+			else if (path.contains("UserTask"))path = "/UserTask";
+			else if (path.contains("clientList"))path = "/clientList";
+			else if (path.contains("ChangingTasks"))path = "/ChangingTasks";
+		} 
+		System.out.println("The path after change is - "+path);
+		System.out.println("");
 
 		HttpSession session = request.getSession();
 
@@ -52,16 +98,15 @@ public class ProgramController extends HttpServlet {
 					int id = Integer.parseInt(request.getParameter("UserID"));
 					session.setAttribute("thisUser", id);
 					User userReg = new User(firstName, lastName, id, phoneNumer, Email, password);
-					HibernateToDoListDAO.Instance().addUser(userReg);
-					
+					HibernateToDoListDAO.Instance().addUser(userReg);		
 					request.setAttribute("MyUser",userReg);
 					request.setAttribute("TasksLists",new ArrayList<Task>()); //HibernateToDoListDAO.Instance().getTasksForUser(userReg.getId()));
 			case "/UserTask":			
 					dispatcher = getServletContext().getRequestDispatcher("/UserTask.jsp");
 					String Pawword = request.getParameter("Password");				
 					int userid = Integer.parseInt(request.getParameter("UserID"));
-					session = request.getSession();
-					session.setAttribute("thisUser", userid);
+					log.info("Clinet number - "+ userid+" has connected to his account.");
+
 					if (HibernateToDoListDAO.Instance().CheckUserInDB(userid,Pawword)==false)
 					{
 						dispatcher = getServletContext().getRequestDispatcher("/LoginForm.jsp");				

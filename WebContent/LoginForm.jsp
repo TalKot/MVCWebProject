@@ -9,7 +9,6 @@
   	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
  	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
   	<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
-	
 	<style>
 	lable
 	{
@@ -27,7 +26,6 @@
 		margin-top: 10px;
 	}
 	</style>
-	
 	<script>
 	function validate()
 	{
@@ -60,31 +58,33 @@
 	<div class="container">
 	  <div class="row">
 	    <div class="col-sm-4">
-	     	<h3>Login <span class="glyphicon glyphicon-check"></span></h3>
-			<form method="post" action="controller/UserTask" onsubmit="return validate()">
+	     	<h3>Login<span class="glyphicon glyphicon-check"></span></h3>
+			<form method="post" action="UserTask" onsubmit="return validate()">
 			<br><lable>User ID: </lable><input class="form-control" type="text" id="UserID" name="UserID"/><br>
-			<br><lable>Password: </lable><input class="form-control" type="text" id="Password" name="Password"/><br>
-			<input class="btn btn-info" type="submit" onclick="validate()">
+			<br><lable>Password: </lable><input class="form-control" type="text" id="Password" name="Password"/><br><br>
+			<br><br><input class="btn btn-info" type="submit" name="action"   value="Login" onclick="validate()">
 			</form>	    
 		</div>
+		
 	    <div class="col-sm-4">
 	      	<h3>Sign In<span class="glyphicon glyphicon-ok"></span></h3>
-			<form method="post" action="controller/Register">
-			<br><lable>ID: <input class="form-control" type="text" name="UserID"/><br>
+			<form method="post" action="controller/">
+			<br><lable>ID:<input class="form-control" type="text" name="UserID"/><br>
 			<br><lable>Password:</lable> <input class="form-control" type="text"  name="Password"/><br>
 			<br><lable>First Name:</lable> <input class="form-control" type="text" name="FirstName"/><br>
-			<br><lable>Last Name: </lable><input class="form-control" type="text" name="LastName"/><br>
-			<br><lable>PhoneNumber: </lable><input class="form-control" type="text" name="PhoneNumber"/><br>
-			<br><lable>Email: </lable><input class="form-control" type="text" name="Email"/>
-			<br><input class="btn btn-info" type="submit">
+			<br><lable>Last Name:</lable><input class="form-control" type="text" name="LastName"/><br>
+			<br><lable>PhoneNumber:</lable><input class="form-control" type="text" name="PhoneNumber"/><br>
+			<br><lable>Email: </lable><input class="form-control" type="text" name="Email"/><br><br><br>
+			<input class="btn btn-info" name="action" value="SignIn" type="submit">
 			</form>	    
 		</div>
+		
 	    <div class="col-sm-4">
 	      	<h3>Delete Account <span class="glyphicon glyphicon-remove"></span></h3>        
-			<form method="post" action="controller/DeleteAccount" onsubmit="return validate()">
-			<br><lable>User ID: </lable><input class="form-control" type="text" name="UserID"/><br>
-			<br><lable>Password: </lable><input class="form-control" type="text" name="Password"/><br>
-			<input class="btn btn-info" type="submit" onclick="validate()">
+			<form method="post" action="controller/" onsubmit="return validate()">
+			<br><lable>User ID:</lable><input class="form-control" type="text" name="UserID"/><br>
+			<br><lable>Password:</lable><input class="form-control" type="text" name="Password"/><br><br>
+			<br><br><input class="btn btn-info" type="submit" name="action" value="DeleteAccount" onclick="validate()">
 			</form>
 	    </div>
 	    

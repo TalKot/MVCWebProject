@@ -9,13 +9,23 @@
     <welcome-file>default.htm</welcome-file>
     <welcome-file>default.jsp</welcome-file>
   </welcome-file-list>
+  	<servlet>
+		<servlet-name>Log4JTester</servlet-name>
+		<servlet-class>com.shenkar.controller.Log4JTeaster</servlet-class>
+		<init-param>
+			<param-name>log4j-properties-location</param-name>
+			<param-value>WEB-INF/log4j.properties</param-value>
+		</init-param>
+		<load-on-startup>1</load-on-startup>
+	</servlet>
+	<servlet-mapping>
+		<servlet-name>Log4JTester</servlet-name>
+		<url-pattern>/test/*</url-pattern>
+	</servlet-mapping>
+	
   	 <servlet>
-	<servlet-name>bogo</servlet-name>
-	<servlet-class>com.shenkar.controller.ProgramController</servlet-class>
-	<init-param>
-		<param-name>college</param-name>
-		 <param-value>shenkar</param-value>
-	</init-param>
+		<servlet-name>bogo</servlet-name>
+		<servlet-class>com.shenkar.controller.ProgramController</servlet-class>
 	</servlet>
   	<servlet-mapping>
 		<servlet-name>bogo</servlet-name>
