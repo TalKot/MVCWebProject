@@ -7,3 +7,4 @@
 
 Now, the user is in the "Manage Tasks" screen and the user can manage his tasks from there.
 The user can add/change/delete tasks as he wants.
+![capture2](https://cloud.githubusercontent.com/assets/16664563/22012871/d90f9028-dc9e-11e6-9cf1-bd84c4eb1784.PNG)
