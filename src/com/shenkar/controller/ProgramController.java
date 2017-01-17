@@ -29,12 +29,7 @@ public class ProgramController extends javax.servlet.http.HttpServlet implements
 			log.error("error message");
 			log.fatal("fatal message");
 		*/
-		/*
-		BasicConfigurator.configure();//log4j
-		//logger.AddAppender(new FileAppender(new SimpleLayout(),"log.txt"));	
-		logger.info("Log file was created");
-		*/
-
+	
 		/*
 		String path = request.getPathInfo();
 		System.out.println("Path before change - "+path);
@@ -112,6 +107,7 @@ public class ProgramController extends javax.servlet.http.HttpServlet implements
 					log.info("Clinet number - "+ userid+" has connected to his account.");
 					if (HibernateToDoListDAO.Instance().CheckUserInDB(userid,Pawword)==false)
 					{
+						log.debug("Clinet number - "+ userid+" is not in the db.");
 						dispatcher = getServletContext().getRequestDispatcher("/LoginForm.jsp");				
 						request.setAttribute("RequestDeleteAnswer","User ID or Password are wrong");
 						dispatcher.forward(request, response);
@@ -119,18 +115,23 @@ public class ProgramController extends javax.servlet.http.HttpServlet implements
 					}
 					com.shenkar.model.User user = HibernateToDoListDAO.Instance().getUser(userid,Pawword);
 					request.setAttribute("MyUser",user);
+					log.info("Clinet number - "+ userid+" is in the db.");
 					request.setAttribute("TasksLists", HibernateToDoListDAO.Instance().getTasksForUser(user.getId()));
 					request.setAttribute("TasksListsClosed",HibernateToDoListDAO.Instance().getTasksForUserClosed(user.getId())); 
+					log.info("Clinet number - "+ userid+" after adding 2 lists of tasks - changing page to UserTask.");
 					dispatcher.forward(request, response);
 					break;				
 			case "/DeleteAccount":
 					dispatcher = getServletContext().getRequestDispatcher("/LoginForm.jsp");
 					String Pawword1 = request.getParameter("Password");				
 					int userid1 = Integer.parseInt(request.getParameter("UserID"));
+					log.info("Clinet number - "+ userid1+" got info form form.");
 					session = request.getSession();
 					session.setAttribute("thisUser", userid1);
+					log.info("Clinet number - "+ userid1+" Fininshed setAttrebute.");
 					String answer = HibernateToDoListDAO.Instance().deleteUser(userid1, Pawword1);
 					request.setAttribute("RequestDeleteAnswer",answer);
+					log.info("Clinet number - "+ userid1+" was deleted - change page to loginForm.");
 					dispatcher.forward(request, response);
 					break;
 			case "/AddingTasks":
@@ -142,12 +143,14 @@ public class ProgramController extends javax.servlet.http.HttpServlet implements
 					Task newTask = new Task(thisUser, taskName1, taskDescription1,"Open");
 					request.setAttribute("TasksLists", HibernateToDoListDAO.Instance().getTasksForUser(thisUser));
 					HibernateToDoListDAO.Instance().addTask(newTask);
+					log.info("Clinet number - "+ thisUser+" Finished adding task for this client.");
 					dispatcher.forward(request, response);
 					break;	
 			case "/clientList":
 					dispatcher = getServletContext().getRequestDispatcher("/clientList.jsp");
 					List vec = HibernateToDoListDAO.Instance().getUsers();
 					request.setAttribute("UsersList", vec);
+					log.info("Accessed admin space - got full client list.");
 					dispatcher.forward(request, response);
 					break;
 			case "/ChangingTasks":
@@ -156,6 +159,7 @@ public class ProgramController extends javax.servlet.http.HttpServlet implements
 					String taskName = (String)request.getParameter("taskname");
 					String description = (String)request.getParameter("taskdescription");
 					HibernateToDoListDAO.Instance().updateTask(taskNumber, taskName, description);
+					log.info(taskNumber+" was cahgned.");
 					dispatcher.forward(request, response);
 					break;	
 			case "/DeleteTasks":
@@ -163,12 +167,14 @@ public class ProgramController extends javax.servlet.http.HttpServlet implements
 					int taskNumber1 = Integer.parseInt((String)request.getParameter("taskNumber"));
 					//HibernateToDoListDAO.Instance().deleteTask(taskNumber1);					
 					HibernateToDoListDAO.Instance().ChangeStatus(taskNumber1);
+					log.info(taskNumber1+" was cahgned to complete or done.");
 					dispatcher.forward(request, response);
 					break;				
 			}
 		}
 		catch(Exception e)
 		{
+			log.fatal(e.getCause() + e.getMessage());
 			e.printStackTrace();
 			dispatcher = getServletContext().getRequestDispatcher("/errorpage.jsp");
 			dispatcher.forward(request, response);
