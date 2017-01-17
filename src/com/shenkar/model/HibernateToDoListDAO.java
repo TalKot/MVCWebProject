@@ -156,13 +156,61 @@ public class HibernateToDoListDAO implements IToDoListDAO {
 		}
 	}
 	
+	
+
+	public void ChangeStatus(int TaskNumber)
+	{
+		try{
+			session = factoryTask.openSession();
+			Task ob = (Task)session.load(Task.class, new Integer(TaskNumber));
+			session.beginTransaction();
+			ob.setStatus("Close");
+			session.update(ob);
+			session.getTransaction().commit();
+		}
+		catch (HibernateException e)
+		{
+			e.printStackTrace();
+	    	if ( session.getTransaction() != null )
+	    	session.getTransaction().rollback();
+		}
+		finally
+		{
+			session.close();
+		}
+		
+	}
+	
 	public List<Task> getTasksForUser(int id)
 	{
 		List list = null;
 		try{
 			session = factoryTask.openSession();
-			Query query = session.createQuery("from Task where ClientID= :code ");
+			Query query = session.createQuery("from Task where ClientID= :code and Status = :stat");
 			query.setParameter("code",id);
+			query.setParameter("stat","Open");
+			list = query.list();
+		}
+		catch (HibernateException e)
+		{
+	    	if ( session.getTransaction() != null )
+	    	session.getTransaction().rollback();
+		}
+		finally
+		{
+			session.close();
+			return list;
+		}
+	}
+	
+	public List<Task> getTasksForUserClosed(int id)
+	{
+		List list = null;
+		try{
+			session = factoryTask.openSession();
+			Query query = session.createQuery("from Task where ClientID= :code and Status = :stat");
+			query.setParameter("code",id);
+			query.setParameter("stat","Close");
 			list = query.list();
 		}
 		catch (HibernateException e)

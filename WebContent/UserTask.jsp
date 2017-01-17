@@ -52,10 +52,10 @@
 	else
 	{
 		out.print("<table class=table><thead>");
-		out.print("<tr><th>Task Number</th><th>Task Name</th><th>Task Description</th></tr>");
+		out.print("<tr><th>Task Number</th><th>Task Name</th><th>Task Description</th><th>Status</th></tr>");
 		for(Task tsk:tasks)
 		{
-			out.print("<tr><th>"+tsk.getTaskNumber()+".</th><th>"+tsk.getTask()+"</th><th>"+tsk.getDescription()+"</th> </tr> </thead><tbody>");
+			out.print("<tr><th>"+tsk.getTaskNumber()+".</th><th>"+tsk.getTask()+"</th><th>"+tsk.getDescription()+"</th><th>"+tsk.getStatus()+" </th></tr> </thead><tbody>");
 		}
 		out.print(" </tbody></table>");
 	}
@@ -81,12 +81,53 @@
 			</form>
 	    </div>
 	    <div class="col-sm-4">
-	      	<h3>Delete Task From List:</h3>        
+	      	<h3>Change Status To Complete:</h3>        
 			<form method="get" action="controller/DeleteTasks">
 			<br><lable>Task Number:  </lable><br><input class="form-control" type="text" name="taskNumber"/><br>
 			<br><input class="btn btn-info" type="submit">
 			</form>
 		</div>
+		<div class="col-sm-4">
+	      	<h3>Get Complete Tasks:</h3>        
+			<form method="get" action="controller/DeleteTasks">
+			<br><lable>Click bellow to get complete tasks list for this user</lable><br>
+			<button type="button" class="btn btn-info btn-lg" data-toggle="modal" data-target="#myModal">Open Modal</button>
+			</form>
+		</div>
+	  <div class="modal fade" id="myModal" role="dialog">
+	    <div class="modal-dialog">
+	
+	      <div class="modal-content">
+	        <div class="modal-header">
+	          <button type="button" class="close" data-dismiss="modal">&times;</button>
+	          <h4 class="modal-title">Closed Tasks List</h4>
+	        </div>
+		        <div class="modal-body">
+					<%
+					out.print("<h1>Tasks Data</h1><br>");
+					List<Task> ClosedTasks = (List)request.getAttribute("TasksListsClosed");
+					if (ClosedTasks.isEmpty())
+					{
+						out.print("<h3 style=color:red>No tasks in DB for this client</h3><br><br><br>");
+					}
+					else
+					{
+						out.print("<table class=table><thead>");
+						out.print("<tr><th>Task Number</th><th>Task Name</th><th>Task Description</th><th>Status</th></tr>");
+						for(Task ClosedTask:ClosedTasks)
+						{
+							out.print("<tr><th>"+ClosedTask.getTaskNumber()+".</th><th>"+ClosedTask.getTask()+"</th><th>"+ClosedTask.getDescription()+"</th><th>"+ClosedTask.getStatus()+" </th></tr> </thead><tbody>");
+						}
+						out.print(" </tbody></table>");
+					}
+					%>          
+		        </div>
+		        <div class="modal-footer">
+		          <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+		        </div>
+		      </div>
+	    </div>
+	  </div>	
 	  </div>
 	</div>
 	<jsp:include page="FileEnding.jsp"/>

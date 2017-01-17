@@ -16,5 +16,8 @@
 		<property name="description">
 			<column name="Description"/>
 		</property>
+		<property name="status">
+			<column name="Status"/>
+		</property>
 	</class>
 </hibernate-mapping>

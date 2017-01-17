@@ -22,11 +22,13 @@ public class ProgramController extends javax.servlet.http.HttpServlet implements
 	static Logger log = Logger.getLogger(ProgramController.class);
 
 	protected void doGet(HttpServletRequest request,HttpServletResponse response) throws ServletException, IOException {
-		log.debug("debug message");
-		log.info("info message");
-		log.warn("warn message");
-		log.error("error message");
-		log.fatal("fatal message");
+		/*
+			log.debug("debug message");
+			log.info("info message");
+			log.warn("warn message");
+			log.error("error message");
+			log.fatal("fatal message");
+		*/
 		/*
 		BasicConfigurator.configure();//log4j
 		//logger.AddAppender(new FileAppender(new SimpleLayout(),"log.txt"));	
@@ -101,12 +103,13 @@ public class ProgramController extends javax.servlet.http.HttpServlet implements
 					HibernateToDoListDAO.Instance().addUser(userReg);		
 					request.setAttribute("MyUser",userReg);
 					request.setAttribute("TasksLists",new ArrayList<Task>()); //HibernateToDoListDAO.Instance().getTasksForUser(userReg.getId()));
+					request.setAttribute("TasksListsClosed",new ArrayList<Task>()); 
+
 			case "/UserTask":			
 					dispatcher = getServletContext().getRequestDispatcher("/UserTask.jsp");
 					String Pawword = request.getParameter("Password");				
 					int userid = Integer.parseInt(request.getParameter("UserID"));
 					log.info("Clinet number - "+ userid+" has connected to his account.");
-
 					if (HibernateToDoListDAO.Instance().CheckUserInDB(userid,Pawword)==false)
 					{
 						dispatcher = getServletContext().getRequestDispatcher("/LoginForm.jsp");				
@@ -117,6 +120,7 @@ public class ProgramController extends javax.servlet.http.HttpServlet implements
 					com.shenkar.model.User user = HibernateToDoListDAO.Instance().getUser(userid,Pawword);
 					request.setAttribute("MyUser",user);
 					request.setAttribute("TasksLists", HibernateToDoListDAO.Instance().getTasksForUser(user.getId()));
+					request.setAttribute("TasksListsClosed",HibernateToDoListDAO.Instance().getTasksForUserClosed(user.getId())); 
 					dispatcher.forward(request, response);
 					break;				
 			case "/DeleteAccount":
@@ -135,7 +139,7 @@ public class ProgramController extends javax.servlet.http.HttpServlet implements
 					String taskDescription1 = (String)request.getParameter("taskdescription");
 					session = request.getSession();
 					int thisUser  = (int) session.getAttribute("thisUser");
-					Task newTask = new Task(thisUser, taskName1, taskDescription1);
+					Task newTask = new Task(thisUser, taskName1, taskDescription1,"Open");
 					request.setAttribute("TasksLists", HibernateToDoListDAO.Instance().getTasksForUser(thisUser));
 					HibernateToDoListDAO.Instance().addTask(newTask);
 					dispatcher.forward(request, response);
@@ -157,7 +161,8 @@ public class ProgramController extends javax.servlet.http.HttpServlet implements
 			case "/DeleteTasks":
 					dispatcher = getServletContext().getRequestDispatcher("/UserTask.jsp");
 					int taskNumber1 = Integer.parseInt((String)request.getParameter("taskNumber"));
-					HibernateToDoListDAO.Instance().deleteTask(taskNumber1);
+					//HibernateToDoListDAO.Instance().deleteTask(taskNumber1);					
+					HibernateToDoListDAO.Instance().ChangeStatus(taskNumber1);
 					dispatcher.forward(request, response);
 					break;				
 			}
