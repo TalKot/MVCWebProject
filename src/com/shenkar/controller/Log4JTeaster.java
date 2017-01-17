@@ -1,6 +1,9 @@
 package com.shenkar.controller;
 import java.io.File;
+import java.io.FileNotFoundException;
 import java.io.IOException;
+import java.io.PrintWriter;
+import java.util.Scanner;
 
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletConfig;
@@ -43,11 +46,27 @@ public class Log4JTeaster extends HttpServlet {
 	}
 	
 	protected void doGet(HttpServletRequest request,HttpServletResponse response) throws ServletException, IOException {
-		String path = request.getPathInfo();
-		System.out.println("Path before change - "+path);
+		PrintWriter out = response.getWriter();
 		
-		RequestDispatcher dispatcher = getServletContext().getRequestDispatcher("/logsPage.jsp");
-		dispatcher.forward(request, response);
+		out.println("<h1>Logs File -<h1><br><br>");
+		try{
+			 Scanner KB = new Scanner(new File("C:\\logs\\Log4jWebDemo.log"));
+	         while (KB.hasNext()) 
+	         {
+	        	 out.print(KB.nextLine());
+	         }
+		}
+ 		catch(FileNotFoundException e)
+ 		{
+ 			out.println(e.getMessage());
+ 			e.printStackTrace();
+ 		}
+ 		catch(Exception e)
+ 		{
+ 			out.println(e.getMessage());
+ 			e.printStackTrace();
+ 		}
+ 		
 	}
 		
 }
