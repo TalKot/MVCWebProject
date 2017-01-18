@@ -60,8 +60,16 @@
 	    <div class="col-sm-4">
 	     	<h3>Login<span class="glyphicon glyphicon-check"></span></h3>
 			<form method="post" action="UserTask" onsubmit="return validate()">
-			<br><lable>User ID: </lable><input class="form-control" type="text" id="UserID" name="UserID"/><br>
-			<br><lable>Password: </lable><input class="form-control" type="text" id="Password" name="Password"/><br><br>
+			<br><lable>User ID: </lable><br>
+			  <div class="input-group">
+			    <span class="input-group-addon"><i class="glyphicon glyphicon-user"></i></span>
+				<input class="form-control" placeholder="UserID" type="text" id="UserID" name="UserID"/><br>
+			  </div>
+			<br><lable>Password: </lable><br>
+			<div class="input-group">
+		      <span class="input-group-addon"><i class="glyphicon glyphicon-lock"></i></span>
+			  <input type="password" class="form-control" placeholder="Password" type="text" id="Password" name="Password"/><br>
+    		</div>
 			<br><br><input class="btn btn-info" type="submit" name="action"   value="Login" onclick="validate()">
 			</form>	    
 		</div>
@@ -69,21 +77,58 @@
 	    <div class="col-sm-4">
 	      	<h3>Sign In<span class="glyphicon glyphicon-ok"></span></h3>
 			<form method="post" action="controller/">
-			<br><lable>ID:<input class="form-control" type="text" name="UserID"/><br>
-			<br><lable>Password:</lable> <input class="form-control" type="text"  name="Password"/><br>
-			<br><lable>First Name:</lable> <input class="form-control" type="text" name="FirstName"/><br>
-			<br><lable>Last Name:</lable><input class="form-control" type="text" name="LastName"/><br>
-			<br><lable>PhoneNumber:</lable><input class="form-control" type="text" name="PhoneNumber"/><br>
-			<br><lable>Email: </lable><input class="form-control" type="text" name="Email"/><br><br><br>
+			<br><lable>User ID: </lable><br>
+			<div class="input-group">
+			    <span class="input-group-addon"><i class="glyphicon glyphicon-user"></i></span>
+				<input class="form-control" placeholder="UserID" type="text" id="UserID" name="UserID"/><br>
+			  </div>
+			<br><lable>Password: </lable><br>
+			<div class="input-group">
+		      <span class="input-group-addon"><i class="glyphicon glyphicon-lock"></i></span>
+			  <input type="password" class="form-control" placeholder="Password" type="text" id="Password" name="Password"/><br>
+    		</div>	
+    				
+			<br><lable>First Name:</lable><br>
+			<div class="input-group">
+		      <span class="input-group-addon"><i class="glyphicon glyphicon-user"></i></span>
+			  <input class="form-control" type="text" placeholder="First Name" name="FirstName"/><br>
+		    </div>
+		    
+		    <br><lable>Last Name:</lable><br>
+			<div class="input-group">
+		      <span class="input-group-addon"><i class="glyphicon glyphicon-user"></i></span>
+			  <input class="form-control" type="text" placeholder="Last Name" name="LastName"/><br>
+		    </div>
+	
+		    <br><lable>PhoneNumber:</lable><br>
+			<div class="input-group">
+		      <span class="input-group-addon"><i class="glyphicon glyphicon-earphone"></i></span>
+			  <input class="form-control" type="text" placeholder="Phone Number" name="PhoneNumber"/><br>
+		    </div>		    
+			
+			<br><lable>Email:</lable><br>
+			<div class="input-group">
+		      <span class="input-group-addon"><i class="glyphicon glyphicon-inbox"></i></span>
+			  <input class="form-control" type="text" placeholder="Email" name="Email"/><br>
+		    </div>	
+			<br><br>
 			<input class="btn btn-info" name="action" value="SignIn" type="submit">
 			</form>	    
 		</div>
 		
 	    <div class="col-sm-4">
 	      	<h3>Delete Account <span class="glyphicon glyphicon-remove"></span></h3>        
-			<form method="post" action="controller/" onsubmit="return validate()">
-			<br><lable>User ID:</lable><input class="form-control" type="text" name="UserID"/><br>
-			<br><lable>Password:</lable><input class="form-control" type="text" name="Password"/><br><br>
+			<form method="post" action="controller/" onsubmit="return validate()">			
+			<br><lable>User ID: </lable><br>
+			  <div class="input-group">
+			    <span class="input-group-addon"><i class="glyphicon glyphicon-user"></i></span>
+				<input class="form-control" type="text" placeholder="UserID" id="UserID" name="UserID"/><br>
+			  </div>
+			<br><lable>Password: </lable><br>
+			<div class="input-group">
+		      <span class="input-group-addon"><i class="glyphicon glyphicon-lock"></i></span>
+			  <input type="password" class="form-control" type="text" placeholder="Password" id="Password" name="Password"/><br>
+    		</div>
 			<br><br><input class="btn btn-info" type="submit" name="action" value="DeleteAccount" onclick="validate()">
 			</form>
 	    </div>

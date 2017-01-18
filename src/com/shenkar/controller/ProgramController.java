@@ -22,27 +22,9 @@ public class ProgramController extends javax.servlet.http.HttpServlet implements
 	static Logger log = Logger.getLogger(ProgramController.class);
 
 	protected void doGet(HttpServletRequest request,HttpServletResponse response) throws ServletException, IOException {
-		/*
-			log.debug("debug message");
-			log.info("info message");
-			log.warn("warn message");
-			log.error("error message");
-			log.fatal("fatal message");
-		*/
+
 	
-		/*
-		String path = request.getPathInfo();
-		System.out.println("Path before change - "+path);
-		if (path.contains("ChangingTasks"))path = "/ChangingTasks";
-		else if (path.contains("AddingTasks"))path = "/AddingTasks";
-		else if (path.contains("DeleteTasks"))path = "/DeleteTasks";
-		else if (path.contains("Register"))path = "/Register";
-		else if (path.contains("LoginForm"))path = "/LoginForm";
-		else if (path.contains("UserTask"))path = "/UserTask";
-		else if (path.contains("clientList"))path = "/clientList";
-		else if (path.contains("DeleteAccount"))path = "/DeleteAccount";
-		System.out.println("Path after change - "+path);
-		*/
+
 		RequestDispatcher dispatcher = null;
 		String path = request.getParameter("action");//checking the next URL from form
 		System.out.println("");

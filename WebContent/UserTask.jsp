@@ -91,7 +91,7 @@
 		      	<h3>Get Complete Tasks:</h3>        
 				<form method="get" action="controller/DeleteTasks">
 				<br><lable>Click bellow to get complete tasks list for this user</lable><br>
-				<button type="button" class="btn btn-info" data-toggle="modal" data-target="#myModal">Full List</button>
+				<br><button style="margin-left:110px;"type="button" class="btn btn-info" data-toggle="modal" data-target="#myModal">Full List</button>
 				</form>
 			</div>
 		</div>
