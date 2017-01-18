@@ -58,6 +58,8 @@
 			out.print("<tr><th>"+tsk.getTaskNumber()+".</th><th>"+tsk.getTask()+"</th><th>"+tsk.getDescription()+"</th><th>"+tsk.getStatus()+" </th></tr> </thead><tbody>");
 		}
 		out.print(" </tbody></table>");
+		
+		session.setAttribute("userid", user.getId());
 	}
 	%>
 	  
@@ -91,7 +93,7 @@
 		      	<h3>Get Complete Tasks:</h3>        
 				<form method="get" action="controller/DeleteTasks">
 				<br><lable>Click bellow to get complete tasks list for this user</lable><br>
-				<br><button style="margin-left:110px;"type="button" class="btn btn-info" data-toggle="modal" data-target="#myModal">Full List</button>
+				<button type="button" class="btn btn-info" data-toggle="modal" data-target="#myModal">Full List</button>
 				</form>
 			</div>
 		</div>
