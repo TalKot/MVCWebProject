@@ -22,31 +22,12 @@ public class ProgramController extends javax.servlet.http.HttpServlet implements
 	static Logger log = Logger.getLogger(ProgramController.class);
 
 	protected void doGet(HttpServletRequest request,HttpServletResponse response) throws ServletException, IOException {
-		/*
-			log.debug("debug message");
-			log.info("info message");
-			log.warn("warn message");
-			log.error("error message");
-			log.fatal("fatal message");
-		*/
 	
-		/*
-		String path = request.getPathInfo();
-		System.out.println("Path before change - "+path);
-		if (path.contains("ChangingTasks"))path = "/ChangingTasks";
-		else if (path.contains("AddingTasks"))path = "/AddingTasks";
-		else if (path.contains("DeleteTasks"))path = "/DeleteTasks";
-		else if (path.contains("Register"))path = "/Register";
-		else if (path.contains("LoginForm"))path = "/LoginForm";
-		else if (path.contains("UserTask"))path = "/UserTask";
-		else if (path.contains("clientList"))path = "/clientList";
-		else if (path.contains("DeleteAccount"))path = "/DeleteAccount";
-		System.out.println("Path after change - "+path);
-		*/
 		RequestDispatcher dispatcher = null;
 		String path = request.getParameter("action");//checking the next URL from form
 		System.out.println("");
 		System.out.println("the path before change is - "+path);
+		
 		if (path==null)
 			{
 				path = request.getPathInfo();//check URL from browser
@@ -59,24 +40,24 @@ public class ProgramController extends javax.servlet.http.HttpServlet implements
 				else if (path.contains("UserTask"))path = "/UserTask";
 				else if (path.contains("clientList"))path = "/clientList";
 				else if (path.contains("DeleteAccount"))path = "/DeleteAccount";
-				else path="";
 			}
 		else{
-			if(path.equals("Delete"))path = "/DeleteTasks";
-			else if (path.equals("SignIn"))path = "/Register";
-			else if (path.equals("Login"))path = "/UserTask";
-			else if (path.contains("DeleteAccount"))path = "/DeleteAccount";
-			else if (path.contains("AddingTasks"))path = "/AddingTasks";
-			else if (path.contains("DeleteTasks"))path = "/DeleteTasks";
-			else if (path.contains("Register"))path = "/Register";
-			else if (path.contains("LoginForm"))path = "/LoginForm";
-			else if (path.contains("UserTask"))path = "/UserTask";
-			else if (path.contains("clientList"))path = "/clientList";
-			else if (path.contains("ChangingTasks"))path = "/ChangingTasks";
-		} 
+				if(path.equals("Delete"))path = "/DeleteTasks";
+				else if (path.equals("SignIn"))path = "/Register";
+				else if (path.equals("Login"))path = "/UserTask";
+				else if (path.contains("DeleteAccount"))path = "/DeleteAccount";
+				else if (path.contains("AddingTasks"))path = "/AddingTasks";
+				else if (path.contains("DeleteTasks"))path = "/DeleteTasks";
+				else if (path.contains("Register"))path = "/Register";
+				else if (path.contains("LoginForm"))path = "/LoginForm";
+				else if (path.contains("UserTask"))path = "/UserTask";
+				else if (path.contains("clientList"))path = "/clientList";
+				else if (path.contains("ChangingTasks"))path = "/ChangingTasks";
+			} 
+			
 		System.out.println("The path after change is - "+path);
 		System.out.println("");
-
+		log.info("The path after change is - "+path);
 		HttpSession session = request.getSession();
 
 		try{
@@ -86,7 +67,7 @@ public class ProgramController extends javax.servlet.http.HttpServlet implements
 					dispatcher = getServletContext().getRequestDispatcher("/LoginForm.jsp");
 					dispatcher.forward(request, response);
 					break;
-			case "/Register":
+	/*works*/case "/Register":
 					String firstName = (String)request.getParameter("FirstName");
 					String lastName = (String)request.getParameter("LastName");
 					String password = (String)request.getParameter("Password");
@@ -100,8 +81,9 @@ public class ProgramController extends javax.servlet.http.HttpServlet implements
 					request.setAttribute("TasksLists",new ArrayList<Task>()); //HibernateToDoListDAO.Instance().getTasksForUser(userReg.getId()));
 					request.setAttribute("TasksListsClosed",new ArrayList<Task>()); 
 
-			case "/UserTask":			
+	/*works*/case "/UserTask":			
 					dispatcher = getServletContext().getRequestDispatcher("/UserTask.jsp");
+					/*
 					String Pawword = request.getParameter("Password");				
 					int userid = Integer.parseInt(request.getParameter("UserID"));
 					log.info("Clinet number - "+ userid+" has connected to his account.");
@@ -119,32 +101,57 @@ public class ProgramController extends javax.servlet.http.HttpServlet implements
 					request.setAttribute("TasksLists", HibernateToDoListDAO.Instance().getTasksForUser(user.getId()));
 					request.setAttribute("TasksListsClosed",HibernateToDoListDAO.Instance().getTasksForUserClosed(user.getId())); 
 					log.info("Clinet number - "+ userid+" after adding 2 lists of tasks - changing page to UserTask.");
+					*/
 					dispatcher.forward(request, response);
 					break;				
 			case "/DeleteAccount":
+					log.info("delete account section");
 					dispatcher = getServletContext().getRequestDispatcher("/LoginForm.jsp");
 					String Pawword1 = request.getParameter("Password");				
 					int userid1 = Integer.parseInt(request.getParameter("UserID"));
-					log.info("Clinet number - "+ userid1+" got info form form.");
-					session = request.getSession();
-					session.setAttribute("thisUser", userid1);
-					log.info("Clinet number - "+ userid1+" Fininshed setAttrebute.");
-					String answer = HibernateToDoListDAO.Instance().deleteUser(userid1, Pawword1);
-					request.setAttribute("RequestDeleteAnswer",answer);
-					log.info("Clinet number - "+ userid1+" was deleted - change page to loginForm.");
+					
+					if(HibernateToDoListDAO.Instance().CheckUserInDB(userid1, Pawword1)==true)
+					{
+						for(Task tsk:HibernateToDoListDAO.Instance().getTasksForUser(userid1))
+						{
+							HibernateToDoListDAO.Instance().deleteTask(tsk.getTaskNumber());
+						}
+						String str = HibernateToDoListDAO.Instance().deleteUser(userid1, Pawword1);
+						log.info("Clinet number - "+ userid1+" was deleted.");
+						request.setAttribute("RequestDeleteAnswer",str);
+					}
+					else{
+						request.setAttribute("RequestDeleteAnswer","User Cannot Be Found!");
+
+					}
 					dispatcher.forward(request, response);
 					break;
 			case "/AddingTasks":
 					dispatcher = getServletContext().getRequestDispatcher("/UserTask.jsp");
+					/*
 					String taskName1 = (String)request.getParameter("taskname");
 					String taskDescription1 = (String)request.getParameter("taskdescription");
+					/*
 					session = request.getSession();
 					int thisUser  = (int) session.getAttribute("userid");
 					log.info("the user id is - "+thisUser);
+					
 					Task newTask = new Task(thisUser, taskName1, taskDescription1,"Open");
-					request.setAttribute("TasksLists", HibernateToDoListDAO.Instance().getTasksForUser(thisUser));
 					HibernateToDoListDAO.Instance().addTask(newTask);
-					log.info("Clinet number - "+ thisUser+" Finished adding task for this client.");
+					request.setAttribute("TasksLists", HibernateToDoListDAO.Instance().getTasksForUser(thisUser));
+					log.info("creating task");
+					*/
+					/*
+					Task newTask = new Task(123, taskName1, taskDescription1,"Open");
+					log.info("task created");
+					HibernateToDoListDAO.Instance().addTask(newTask);
+					log.info("task added to client");
+					log.info("start set attrebute");
+					request.setAttribute("TasksLists", HibernateToDoListDAO.Instance().getTasksForUser(123));
+					
+					log.info("calling the dispacher");
+					//log.info("Clinet number - "+ thisUser+" Finished adding task for this client.");
+					*/
 					dispatcher.forward(request, response);
 					break;	
 			case "/clientList":
@@ -156,11 +163,13 @@ public class ProgramController extends javax.servlet.http.HttpServlet implements
 					break;
 			case "/ChangingTasks":
 					dispatcher = getServletContext().getRequestDispatcher("/UserTask.jsp");
+					/*
 					int taskNumber = Integer.parseInt((String)request.getParameter("taskNumber"));
 					String taskName = (String)request.getParameter("taskname");
 					String description = (String)request.getParameter("taskdescription");
 					HibernateToDoListDAO.Instance().updateTask(taskNumber, taskName, description);
 					log.info(taskNumber+" was cahgned.");
+					*/
 					dispatcher.forward(request, response);
 					break;	
 			case "/DeleteTasks":

@@ -27,11 +27,10 @@ public class HibernateToDoListDAO implements IToDoListDAO {
 	}
 	
 	public static HibernateToDoListDAO Instance()
-	{
-	    if (DAO == null) 
-	    {
-	    	return new HibernateToDoListDAO();
-	    }
+	{	if (DAO ==null)
+		{
+			return new HibernateToDoListDAO();
+		}
 	    return DAO;
 	}
 /*********************************Users methods*********************************/
@@ -112,28 +111,35 @@ public class HibernateToDoListDAO implements IToDoListDAO {
 	}
 	
 	public String deleteUser(int userID, String Password) {
+			String str = null;
 		try{
 			session = factory.openSession();
+			
             session.beginTransaction();
 			User ob = (User)session.load(User.class, new Integer(userID));
 			if (ob.getPassword().equals(Password))
 			{
     			session.delete(ob);
     			session.getTransaction().commit();
-    			List<Task> taskList2Delete = getTasksForUser(ob.getId());
-    			if (!taskList2Delete.isEmpty()){
-    			for (Task task : taskList2Delete) {
-    				deleteTask(task.getTaskNumber());
-				}}
-    			return "User has been deleted from DB";
+    			str= "User has been deleted from DB";
 			}
 			else return "Wrong password for this user - cannnot delete";
         }
-        catch (HibernateException e) {
+        catch (HibernateException e) 
+		{
             e.printStackTrace();
             session.getTransaction().rollback();
+            str= "User cannot be found in DB";
         }
-		return "User cannot be found in DB";
+		catch(Exception e)
+		{
+			e.printStackTrace();
+		}
+		finally
+		{
+			session.close();
+			return str;
+		}
 	}
 
 /*********************************Tasks methods*********************************/
@@ -193,12 +199,13 @@ public class HibernateToDoListDAO implements IToDoListDAO {
 		}
 		catch (HibernateException e)
 		{
+			e.printStackTrace();
 	    	if ( session.getTransaction() != null )
 	    	session.getTransaction().rollback();
 		}
 		finally
 		{
-			session.close();
+			//session.close();
 			return list;
 		}
 	}
@@ -265,7 +272,7 @@ public class HibernateToDoListDAO implements IToDoListDAO {
 		}
 		finally
 		{
-			session.close();
+			//session.close();
 		}
 	}	
 }

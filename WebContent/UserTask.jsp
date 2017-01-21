@@ -1,5 +1,5 @@
 <%@ page language="java" contentType="text/html; charset=windows-1255"  import="org.apache.jasper.tagplugins.jstl.core.ForEach" import="com.shenkar.model.User" import="com.shenkar.model.Task" import="java.util.*" import="com.shenkar.controller.ProgramController"
-    pageEncoding="windows-1255" isErrorPage="false" errorPage="errorpage.jsp"%>
+    pageEncoding="windows-1255"%>
 <html>
 <head>
 	<title>User & Task</title>
@@ -34,15 +34,19 @@
 	<div class="well">
 		<blockquote>
 		<%
+			/*
 			User user = (User)request.getAttribute("MyUser");
 			out.print("<br> ID -<b>"+user.getId()+"</b>");
 			out.print("<br> Name -<b>"+user.getLastName()+" "+user.getFirstName()+"</b>");
 			out.print("<br> Email Adress -<b>"+user.getEmail()+"</b>");
 			out.print("<br> Phone Number -<b>0"+user.getPhoneNumber()+"</b>");
+			session.setAttribute("userid", user.getId());
+			*/
 		%>
 		</blockquote>
 	</div>
 	<%
+	/*
 	out.print("<h1>Tasks Data</h1><br>");
 	List<Task> tasks = (List)request.getAttribute("TasksLists");
 	if (tasks.isEmpty())
@@ -59,15 +63,16 @@
 		}
 		out.print(" </tbody></table>");
 		
-		session.setAttribute("userid", user.getId());
 	}
+	*/
+	
 	%>
 	  
 	<div class="container">
 		  <div class="row">
 		    <div class="col-sm-4">
 		      	<h3>Adding Task To List:</h3>
-				<form method="get" action="controller/AddingTasks">
+				<form method="get" action="/MVCProject-UsersANDTasks/controller/AddingTasks">
 				<br><lable>Task Name: </lable><input class="form-control" type="text" name="taskname"/><br>
 				<br><br><lable>Task Description:</lable><input class="form-control" type="text" name="taskdescription"/><br>
 				<br><input class="btn btn-info" type="submit">
@@ -75,7 +80,7 @@
 			</div>
 		    <div class="col-sm-4">
 		      	<h3>Changing Task From List:</h3>
-				<form method="get" action="controller/ChangingTasks">
+				<form method="get" action="/MVCProject-UsersANDTasks/controller/ChangingTasks">
 				<br><lable>Task Number:  </lable><input class="form-control" type="text" name="taskNumber"/><br>
 				<br><br><lable>Task Name:  </lable><input class="form-control" type="text" name="taskname"/><br>
 				<br><br><lable>Task Description:  </lable><input class="form-control" type="text" name="taskdescription"/><br>
@@ -84,14 +89,14 @@
 		    </div>
 		    <div class="col-sm-4">
 		      	<h3>Change Status To Complete:</h3>        
-				<form method="get" action="controller/DeleteTasks">
+				<form method="get" action="/MVCProject-UsersANDTasks/controller/DeleteTasks">
 				<br><lable>Task Number:  </lable><br><input class="form-control" type="text" name="taskNumber"/><br>
 				<br><input class="btn btn-info" type="submit">
 				</form>
 			</div>
 			<div class="col-sm-4">
 		      	<h3>Get Complete Tasks:</h3>        
-				<form method="get" action="controller/DeleteTasks">
+				<form>
 				<br><lable>Click bellow to get complete tasks list for this user</lable><br>
 				<button type="button" class="btn btn-info" data-toggle="modal" data-target="#myModal">Full List</button>
 				</form>
@@ -106,6 +111,7 @@
 		        </div>
 			        <div class="modal-body">
 						<%
+						/*
 						out.print("<h1>Tasks Data</h1><br>");
 						List<Task> ClosedTasks = (List)request.getAttribute("TasksListsClosed");
 						if (ClosedTasks.isEmpty())
@@ -122,6 +128,7 @@
 							}
 							out.print(" </tbody></table>");
 						}
+						*/
 						%>          
 			        </div>
 			        <div class="modal-footer">

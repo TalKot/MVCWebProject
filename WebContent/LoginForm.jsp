@@ -59,7 +59,7 @@
 	  <div class="row">
 	    <div class="col-sm-4">
 	     	<h3>Login<span class="glyphicon glyphicon-check"></span></h3>
-			<form method="post" action="UserTask" onsubmit="return validate()">
+			<form method="post" action="/MVCProject-UsersANDTasks/controller/" onsubmit="return validate()">
 			<br><lable>User ID: </lable><br>
 			  <div class="input-group">
 			    <span class="input-group-addon"><i class="glyphicon glyphicon-user"></i></span>
@@ -76,7 +76,7 @@
 		
 	    <div class="col-sm-4">
 	      	<h3>Sign In<span class="glyphicon glyphicon-ok"></span></h3>
-			<form method="post" action="controller/">
+			<form method="post"  action="/MVCProject-UsersANDTasks/controller/" >
 			<br><lable>User ID: </lable><br>
 			<div class="input-group">
 			    <span class="input-group-addon"><i class="glyphicon glyphicon-user"></i></span>
@@ -87,25 +87,21 @@
 		      <span class="input-group-addon"><i class="glyphicon glyphicon-lock"></i></span>
 			  <input type="password" class="form-control" placeholder="Password" type="text" id="Password" name="Password"/><br>
     		</div>	
-    				
 			<br><lable>First Name:</lable><br>
 			<div class="input-group">
 		      <span class="input-group-addon"><i class="glyphicon glyphicon-user"></i></span>
 			  <input class="form-control" type="text" placeholder="First Name" name="FirstName"/><br>
 		    </div>
-		    
 		    <br><lable>Last Name:</lable><br>
 			<div class="input-group">
 		      <span class="input-group-addon"><i class="glyphicon glyphicon-user"></i></span>
 			  <input class="form-control" type="text" placeholder="Last Name" name="LastName"/><br>
 		    </div>
-	
 		    <br><lable>PhoneNumber:</lable><br>
 			<div class="input-group">
 		      <span class="input-group-addon"><i class="glyphicon glyphicon-earphone"></i></span>
 			  <input class="form-control" type="text" placeholder="Phone Number" name="PhoneNumber"/><br>
-		    </div>		    
-			
+		    </div>		    	
 			<br><lable>Email:</lable><br>
 			<div class="input-group">
 		      <span class="input-group-addon"><i class="glyphicon glyphicon-inbox"></i></span>
@@ -118,7 +114,7 @@
 		
 	    <div class="col-sm-4">
 	      	<h3>Delete Account <span class="glyphicon glyphicon-remove"></span></h3>        
-			<form method="post" action="controller/" onsubmit="return validate()">			
+			<form method="post"  action="/MVCProject-UsersANDTasks/controller/"  onsubmit="return validate()">			
 			<br><lable>User ID: </lable><br>
 			  <div class="input-group">
 			    <span class="input-group-addon"><i class="glyphicon glyphicon-user"></i></span>
