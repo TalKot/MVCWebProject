@@ -26,27 +26,27 @@
 	<div class="jumbotron text-center">
 	  <h1>Manage Your Tasks</h1>
 	</div>
-	
+		
 	<div class="container">
 	<%
 	out.print("<p><h1>User informaiton</h1></p>");
 	%>
-	<div class="well">
+	<div class="well">	
 		<blockquote>
 		<%
-			/*
+			
 			User user = (User)request.getAttribute("MyUser");
 			out.print("<br> ID -<b>"+user.getId()+"</b>");
 			out.print("<br> Name -<b>"+user.getLastName()+" "+user.getFirstName()+"</b>");
 			out.print("<br> Email Adress -<b>"+user.getEmail()+"</b>");
 			out.print("<br> Phone Number -<b>0"+user.getPhoneNumber()+"</b>");
 			session.setAttribute("userid", user.getId());
-			*/
+			
 		%>
 		</blockquote>
 	</div>
 	<%
-	/*
+	
 	out.print("<h1>Tasks Data</h1><br>");
 	List<Task> tasks = (List)request.getAttribute("TasksLists");
 	if (tasks.isEmpty())
@@ -64,7 +64,7 @@
 		out.print(" </tbody></table>");
 		
 	}
-	*/
+	
 	
 	%>
 	  
@@ -111,7 +111,7 @@
 		        </div>
 			        <div class="modal-body">
 						<%
-						/*
+						
 						out.print("<h1>Tasks Data</h1><br>");
 						List<Task> ClosedTasks = (List)request.getAttribute("TasksListsClosed");
 						if (ClosedTasks.isEmpty())
@@ -128,7 +128,7 @@
 							}
 							out.print(" </tbody></table>");
 						}
-						*/
+						
 						%>          
 			        </div>
 			        <div class="modal-footer">

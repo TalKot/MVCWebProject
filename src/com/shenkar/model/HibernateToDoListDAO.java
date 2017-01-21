@@ -93,7 +93,21 @@ public class HibernateToDoListDAO implements IToDoListDAO {
         }
 		return null;
 	}
-	
+
+	public User getUserWithourPassword(int userID) {
+		try {
+			session = factory.openSession();
+            session.beginTransaction();
+            User DBUser = (User) session.get(User.class, userID);
+            session.getTransaction().commit();
+            return DBUser;
+        }
+        catch (HibernateException e) {
+            e.printStackTrace();
+            session.getTransaction().rollback();
+        }
+		return null;
+	}
 	public boolean CheckUserInDB(int userID, String Password)
 	{
 		session = factory.openSession();
