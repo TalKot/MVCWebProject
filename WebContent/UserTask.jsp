@@ -21,13 +21,51 @@
 			margin-top: 10px;
 		}
 	</style>
+	       <script>
+        BootstrapDialog.show({
+            title: 'Say-hello dialog',
+            message: 'Hi Apple!'
+        });
+        </script>
+	
 </head>
 <body>
+
+
 	<div class="jumbotron text-center">
 	  <h1>Manage Your Tasks</h1>
 	</div>
 		
 	<div class="container">
+	<script type="text/javascript">
+	$( document ).ready( function() {
+	    $( '#teste' ).modal( 'toggle' );
+	});
+	</script>	
+	<div class="modal fade in" id="teste" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+	  <div class="modal-dialog">
+	    <div class="modal-content">
+	      <div class="modal-header">
+	        <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+	        <h1 class="modal-title" id="myModalLabel">Welcome!</h1>
+	      </div>
+	      <div class="modal-body">
+	        <%
+			User user = (User)request.getAttribute("MyUser");
+			out.print("<br> Dear "+user.getLastName()+" "+user.getFirstName()+",</b>");
+			out.print("<br> Our DB showed that ,Your account ID -<b>"+user.getId()+"</b>");
+			out.print("<br> Email Adress -<b>"+user.getEmail()+"</b>");
+			out.print("<br> Phone Number -<b>0"+user.getPhoneNumber()+"</b>");
+			out.print("<br><br><b>Here below you can manage your task and your tasks only.<br>You can choose to add/change/close any task as you like and after it you can get a list of all complete tasks that you worked on before.<br><br><h3>Good luck! :)</h3></b>");
+	        %>
+	      </div>
+	      <div class="modal-footer">
+	        <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+	      </div>
+	    </div><!-- /.modal-content -->
+	  </div><!-- /.modal-dialog -->
+	</div><!-- /.modal -->
+	
 	<%
 	out.print("<p><h1>User informaiton</h1></p>");
 	%>
@@ -35,7 +73,7 @@
 		<blockquote>
 		<%
 			
-			User user = (User)request.getAttribute("MyUser");
+		//	User user = (User)request.getAttribute("MyUser");
 			out.print("<br> ID -<b>"+user.getId()+"</b>");
 			out.print("<br> Name -<b>"+user.getLastName()+" "+user.getFirstName()+"</b>");
 			out.print("<br> Email Adress -<b>"+user.getEmail()+"</b>");

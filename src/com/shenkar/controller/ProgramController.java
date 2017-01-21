@@ -60,6 +60,7 @@ public class ProgramController extends javax.servlet.http.HttpServlet implements
 					dispatcher.forward(request, response);
 					break;
 		case "/Register":
+			try{
 					String firstName = (String)request.getParameter("FirstName");
 					String lastName = (String)request.getParameter("LastName");
 					String password = (String)request.getParameter("Password");
@@ -68,12 +69,29 @@ public class ProgramController extends javax.servlet.http.HttpServlet implements
 					int id = Integer.parseInt(request.getParameter("UserID"));
 					User CreationNewUser = new User(firstName, lastName, id, phoneNumer, Email, password);
 					log.info("user - "+CreationNewUser.getId() +"was created");
+					if (HibernateToDoListDAO.Instance().CheckUserInDB(id,password))
+					{
+						log.debug("Clinet "+ id+" is already in the db.Please choose another ID number.");
+						dispatcher = getServletContext().getRequestDispatcher("/LoginForm.jsp");				
+						request.setAttribute("RequestDeleteAnswer","Clinet "+ id+" is already in the db.Please choose another ID number.");
+						dispatcher.forward(request, response);
+						break;
+					}
 					HibernateToDoListDAO.Instance().addUser(CreationNewUser);		
 					request.setAttribute("MyUser",CreationNewUser);
 					request.setAttribute("TasksLists",new ArrayList<Task>()); 
 					request.setAttribute("TasksListsClosed",new ArrayList<Task>()); 
+				}
+				catch(Exception e)
+				{
+					dispatcher = getServletContext().getRequestDispatcher("/LoginForm.jsp");				
+					request.setAttribute("RequestDeleteAnswer",e.getMessage());
+					dispatcher.forward(request, response);
+					break;				
+				}
 					//there is no break, UserTask section will start automatically
 		case "/UserTask":			
+			try{
 					dispatcher = getServletContext().getRequestDispatcher("/UserTask.jsp");
 					String Pawword = request.getParameter("Password");				
 					int userid = Integer.parseInt(request.getParameter("UserID"));
@@ -91,8 +109,17 @@ public class ProgramController extends javax.servlet.http.HttpServlet implements
 					request.setAttribute("TasksLists", HibernateToDoListDAO.Instance().getTasksForUser(userid));
 					request.setAttribute("TasksListsClosed",HibernateToDoListDAO.Instance().getTasksForUserClosed(userid)); 
 					dispatcher.forward(request, response);
+					break;		
+				}
+				catch(Exception e)
+				{
+					dispatcher = getServletContext().getRequestDispatcher("/LoginForm.jsp");				
+					request.setAttribute("RequestDeleteAnswer",e.getMessage());
+					dispatcher.forward(request, response);
 					break;				
+				}
 			case "/DeleteAccount":
+				try{
 					log.info("delete account section");
 					dispatcher = getServletContext().getRequestDispatcher("/LoginForm.jsp");
 					String Pawword1 = request.getParameter("Password");				
@@ -112,6 +139,14 @@ public class ProgramController extends javax.servlet.http.HttpServlet implements
 					}
 					dispatcher.forward(request, response);
 					break;
+				}
+				catch(Exception e)
+				{
+					dispatcher = getServletContext().getRequestDispatcher("/LoginForm.jsp");				
+					request.setAttribute("RequestDeleteAnswer",e.getMessage());
+					dispatcher.forward(request, response);
+					break;				
+				}
 			case "/AddingTasks":
 					dispatcher = getServletContext().getRequestDispatcher("/UserTask.jsp");
 					String taskName1 = request.getParameter("taskname");
@@ -145,6 +180,7 @@ public class ProgramController extends javax.servlet.http.HttpServlet implements
 					int taskNumber1 = Integer.parseInt((String)request.getParameter("taskNumber"));
 					HibernateToDoListDAO.Instance().ChangeStatus(taskNumber1);
 					log.info(taskNumber1+" was cahgned to complete or done.");
+					//return information
 					session = request.getSession();
 					int thisUser11  = (int) session.getAttribute("userid");
 					request.setAttribute("TasksLists", HibernateToDoListDAO.Instance().getTasksForUser(thisUser11));
