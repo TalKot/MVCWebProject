@@ -95,9 +95,8 @@
 				</form>
 			</div>
 			<div class="col-sm-4">
-		      	<h3>Get Complete Tasks:</h3>        
+		      	<h3>Complete Tasks List:</h3>        
 				<form>
-				<br><lable>Click bellow to get complete tasks list for this user</lable><br>
 				<button type="button" class="btn btn-info" data-toggle="modal" data-target="#myModal">Full List</button>
 				</form>
 			</div>
