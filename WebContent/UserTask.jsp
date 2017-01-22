@@ -113,7 +113,7 @@
 				<form method="get" action="/MVCProject-UsersANDTasks/controller/AddingTasks">
 				<br><lable>Task Name: </lable><input class="form-control" type="text" name="taskname"/><br>
 				<br><br><lable>Task Description:</lable><input class="form-control" type="text" name="taskdescription"/><br>
-				<br><input class="btn btn-info" type="submit">
+				<br><br><input class="btn btn-info" type="submit">
 				</form>    
 			</div>
 		    <div class="col-sm-4">
@@ -148,7 +148,6 @@
 		        </div>
 			        <div class="modal-body">
 						<%
-						
 						out.print("<h1>Tasks Data</h1><br>");
 						List<Task> ClosedTasks = (List)request.getAttribute("TasksListsClosed");
 						if (ClosedTasks.isEmpty())
@@ -164,8 +163,7 @@
 								out.print("<tr><th>"+ClosedTask.getTaskNumber()+".</th><th>"+ClosedTask.getTask()+"</th><th>"+ClosedTask.getDescription()+"</th><th>"+ClosedTask.getStatus()+" </th></tr> </thead><tbody>");
 							}
 							out.print(" </tbody></table>");
-						}
-						
+						}						
 						%>          
 			        </div>
 			        <div class="modal-footer">
@@ -174,10 +172,10 @@
 			      </div>
 		    </div>
 		  </div>
-		<%
-			if (request.getAttribute("queryAnswer")!=null)
-				out.print("<h2 style=color:red>"+request.getAttribute("queryAnswer")+"</h2>");
-		%>	
+			<%
+				if (request.getAttribute("queryAnswer")!=null)
+					out.print("<h2 style=color:red>"+request.getAttribute("queryAnswer")+"</h2>");
+			%>	
 	<jsp:include page="FileEnding.jsp"/>
 </body>
 </html>

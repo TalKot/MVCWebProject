@@ -28,7 +28,6 @@ public class ProgramController extends javax.servlet.http.HttpServlet implements
 		if (path==null)
 			{
 				path = request.getPathInfo();//check URL from browser
-				System.out.println("Path before change - "+path);
 				if (path.contains("ChangingTasks"))path = "/ChangingTasks";
 				else if (path.contains("AddingTasks"))path = "/AddingTasks";
 				else if (path.contains("DeleteTasks"))path = "/DeleteTasks";
@@ -73,7 +72,7 @@ public class ProgramController extends javax.servlet.http.HttpServlet implements
 					{
 						log.debug("Clinet "+ id+" is already in the db.Please choose another ID number.");
 						dispatcher = getServletContext().getRequestDispatcher("/LoginForm.jsp");				
-						request.setAttribute("RequestDeleteAnswer","Clinet "+ id+" is already in the db.Please choose another ID number.");
+						request.setAttribute("queryAnswerLoginform","Clinet "+ id+" is already in the db.Please choose another ID number.");
 						dispatcher.forward(request, response);
 						break;
 					}
@@ -85,7 +84,7 @@ public class ProgramController extends javax.servlet.http.HttpServlet implements
 				catch(Exception e)
 				{
 					dispatcher = getServletContext().getRequestDispatcher("/LoginForm.jsp");				
-					request.setAttribute("RequestDeleteAnswer",e.getMessage());
+					request.setAttribute("queryAnswerLoginform",e.getMessage());
 					dispatcher.forward(request, response);
 					break;				
 				}
@@ -99,7 +98,7 @@ public class ProgramController extends javax.servlet.http.HttpServlet implements
 					{
 						log.debug("Clinet number - "+ userid+" is not in the db.");
 						dispatcher = getServletContext().getRequestDispatcher("/LoginForm.jsp");				
-						request.setAttribute("RequestDeleteAnswer","User ID or Password are wrong");
+						request.setAttribute("queryAnswerLoginform","User ID or Password are wrong");
 						dispatcher.forward(request, response);
 						break;
 					}
@@ -114,7 +113,7 @@ public class ProgramController extends javax.servlet.http.HttpServlet implements
 				catch(Exception e)
 				{
 					dispatcher = getServletContext().getRequestDispatcher("/LoginForm.jsp");				
-					request.setAttribute("RequestDeleteAnswer",e.getMessage());
+					request.setAttribute("queryAnswerLoginform",e.getMessage());
 					dispatcher.forward(request, response);
 					break;				
 				}
@@ -124,18 +123,22 @@ public class ProgramController extends javax.servlet.http.HttpServlet implements
 					dispatcher = getServletContext().getRequestDispatcher("/LoginForm.jsp");
 					String Pawword1 = request.getParameter("Password");				
 					int userid1 = Integer.parseInt(request.getParameter("UserID"));
-					if(HibernateToDoListDAO.Instance().CheckUserInDB(userid1, Pawword1)==true)
+					if(HibernateToDoListDAO.Instance().CheckUserInDB(userid1, Pawword1))
 					{
 						for(Task tsk:HibernateToDoListDAO.Instance().getTasksForUser(userid1))
 						{
 							HibernateToDoListDAO.Instance().deleteTask(tsk.getTaskNumber());
 						}
+						for(Task tsk:HibernateToDoListDAO.Instance().getTasksForUserClosed(userid1))
+						{
+							HibernateToDoListDAO.Instance().deleteTask(tsk.getTaskNumber());
+						}
 						String str = HibernateToDoListDAO.Instance().deleteUser(userid1, Pawword1);
 						log.info("Clinet number - "+ userid1+" was deleted.");
-						request.setAttribute("RequestDeleteAnswer",str);
+						request.setAttribute("queryAnswerLoginform",str);
 					}
 					else{
-						request.setAttribute("RequestDeleteAnswer","User Cannot Be Found!");
+						request.setAttribute("queryAnswerLoginform","User Cannot Be Found!");
 					}
 					dispatcher.forward(request, response);
 					break;
@@ -143,7 +146,7 @@ public class ProgramController extends javax.servlet.http.HttpServlet implements
 				catch(Exception e)
 				{
 					dispatcher = getServletContext().getRequestDispatcher("/LoginForm.jsp");				
-					request.setAttribute("RequestDeleteAnswer",e.getMessage());
+					request.setAttribute("queryAnswerLoginform",e.getMessage());
 					dispatcher.forward(request, response);
 					break;				
 				}
@@ -168,7 +171,8 @@ public class ProgramController extends javax.servlet.http.HttpServlet implements
 					//checking that the task is for this client
 					session = request.getSession();
 					int checkingClientIDforTask  = (int) session.getAttribute("userid");
-					if(HibernateToDoListDAO.Instance().getTask(taskNumber).getClientID()==checkingClientIDforTask)
+					Task tempTask = HibernateToDoListDAO.Instance().getTask(taskNumber);
+					if(tempTask!=null&&tempTask.getClientID()==checkingClientIDforTask)
 					{
 						HibernateToDoListDAO.Instance().updateTask(taskNumber, taskName, description);
 						log.info(taskNumber+" was changed.");

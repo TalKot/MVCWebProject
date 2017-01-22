@@ -132,8 +132,8 @@
 	  </div>
 	  
 		<%
-			if (request.getAttribute("RequestDeleteAnswer")!=null)
-				out.print("<h2 style=color:red>"+request.getAttribute("RequestDeleteAnswer")+"</h2>");
+			if (request.getAttribute("queryAnswerLoginform")!=null)
+				out.print("<h2 style=color:red>"+request.getAttribute("queryAnswerLoginform")+"</h2>");
 		%>
 		
 		<jsp:include page="FileEnding.jsp" />
