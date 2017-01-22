@@ -15,7 +15,8 @@ import org.hibernate.cfg.AnnotationConfiguration;
 
 public class HibernateToDoListDAO implements IToDoListDAO {
 	
-	private static HibernateToDoListDAO DAO;
+/*********************************Singleton*********************************/
+	private static final HibernateToDoListDAO DAO = new HibernateToDoListDAO();
 	private Session session = null;
 	private SessionFactory factory;
 	private SessionFactory factoryTask;
@@ -27,10 +28,7 @@ public class HibernateToDoListDAO implements IToDoListDAO {
 	}
 	
 	public static HibernateToDoListDAO Instance()
-	{	if (DAO ==null)
-		{
-			return new HibernateToDoListDAO();
-		}
+	{
 	    return DAO;
 	}
 /*********************************Users methods*********************************/
@@ -289,4 +287,19 @@ public class HibernateToDoListDAO implements IToDoListDAO {
 			//session.close();
 		}
 	}	
+	
+	public Task getTask(int taskID) {
+		try {
+			session = factoryTask.openSession();
+            session.beginTransaction();
+            Task DBTask = (Task) session.get(Task.class, taskID);
+            session.getTransaction().commit();
+            return DBTask;
+        }
+        catch (HibernateException e) {
+            e.printStackTrace();
+            session.getTransaction().rollback();
+        }
+		return null;
+	}
 }

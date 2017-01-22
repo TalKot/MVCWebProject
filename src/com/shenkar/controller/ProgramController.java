@@ -61,10 +61,10 @@ public class ProgramController extends javax.servlet.http.HttpServlet implements
 					break;
 		case "/Register":
 			try{
-					String firstName = (String)request.getParameter("FirstName");
-					String lastName = (String)request.getParameter("LastName");
-					String password = (String)request.getParameter("Password");
-					String Email = (String)request.getParameter("Email");
+					String firstName = request.getParameter("FirstName");
+					String lastName = request.getParameter("LastName");
+					String password = request.getParameter("Password");
+					String Email = request.getParameter("Email");
 					int phoneNumer = Integer.parseInt(request.getParameter("PhoneNumber"));
 					int id = Integer.parseInt(request.getParameter("UserID"));
 					User CreationNewUser = new User(firstName, lastName, id, phoneNumer, Email, password);
@@ -165,14 +165,23 @@ public class ProgramController extends javax.servlet.http.HttpServlet implements
 					int taskNumber = Integer.parseInt(request.getParameter("taskNumber"));
 					String taskName = request.getParameter("taskname");
 					String description = request.getParameter("taskdescription");
-					HibernateToDoListDAO.Instance().updateTask(taskNumber, taskName, description);
-					log.info(taskNumber+" was changed.");
-					//return information
+					//checking that the task is for this client
 					session = request.getSession();
-					int changedTaskForThisUser  = (int) session.getAttribute("userid");
-					request.setAttribute("TasksLists", HibernateToDoListDAO.Instance().getTasksForUser(changedTaskForThisUser));
-					request.setAttribute("MyUser",HibernateToDoListDAO.Instance().getUserWithourPassword(changedTaskForThisUser));
-					request.setAttribute("TasksListsClosed",HibernateToDoListDAO.Instance().getTasksForUserClosed(changedTaskForThisUser)); 
+					int checkingClientIDforTask  = (int) session.getAttribute("userid");
+					if(HibernateToDoListDAO.Instance().getTask(taskNumber).getClientID()==checkingClientIDforTask)
+					{
+						HibernateToDoListDAO.Instance().updateTask(taskNumber, taskName, description);
+						log.info(taskNumber+" was changed.");
+					}
+					else
+					{
+						request.setAttribute("queryAnswer","This task isn't for this client - cannot be changed");
+						log.info("Client number "+ checkingClientIDforTask + "tried to change a task that isn't his.");
+					}
+					//return information
+					request.setAttribute("TasksLists", HibernateToDoListDAO.Instance().getTasksForUser(checkingClientIDforTask));
+					request.setAttribute("MyUser",HibernateToDoListDAO.Instance().getUserWithourPassword(checkingClientIDforTask));
+					request.setAttribute("TasksListsClosed",HibernateToDoListDAO.Instance().getTasksForUserClosed(checkingClientIDforTask)); 
 					dispatcher.forward(request, response);
 					break;	
 			case "/DeleteTasks":

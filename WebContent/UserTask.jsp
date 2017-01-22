@@ -62,9 +62,9 @@
 	      <div class="modal-footer">
 	        <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
 	      </div>
-	    </div><!-- /.modal-content -->
-	  </div><!-- /.modal-dialog -->
-	</div><!-- /.modal -->
+	    </div>
+	  </div>
+	</div>
 	
 	<%
 	out.print("<p><h1>User informaiton</h1></p>");
@@ -173,7 +173,11 @@
 			        </div>
 			      </div>
 		    </div>
-		  </div>	
+		  </div>
+		<%
+			if (request.getAttribute("queryAnswer")!=null)
+				out.print("<h2 style=color:red>"+request.getAttribute("queryAnswer")+"</h2>");
+		%>	
 	<jsp:include page="FileEnding.jsp"/>
 </body>
 </html>
