@@ -21,13 +21,7 @@
 			margin-top: 10px;
 		}
 	</style>
-	       <script>
-        BootstrapDialog.show({
-            title: 'Say-hello dialog',
-            message: 'Hi Apple!'
-        });
-        </script>
-	
+
 </head>
 <body>
 
@@ -51,6 +45,11 @@
 	      </div>
 	      <div class="modal-body">
 	        <%
+			Cookie[] cook = request.getCookies();
+			for(Cookie ck:cook)
+			{
+				out.print("the cookie is -" + ck.getName() + " with value of " + ck.getValue()+"<br>");
+			}
 			User user = (User)request.getAttribute("MyUser");
 			out.print("<br> Dear "+user.getLastName()+" "+user.getFirstName()+",</b>");
 			out.print("<br> Our DB showed that ,Your account ID -<b>"+user.getId()+"</b>");
@@ -72,8 +71,8 @@
 	<div class="well">	
 		<blockquote>
 		<%
-			
-		//	User user = (User)request.getAttribute("MyUser");
+		//User user = (User)request.getAttribute("MyUser");
+
 			out.print("<br> ID -<b>"+user.getId()+"</b>");
 			out.print("<br> Name -<b>"+user.getLastName()+" "+user.getFirstName()+"</b>");
 			out.print("<br> Email Adress -<b>"+user.getEmail()+"</b>");
@@ -110,7 +109,7 @@
 		  <div class="row">
 		    <div class="col-sm-4">
 		      	<h3>Adding Task To List:</h3>
-				<form method="get" action="/MVCProject-UsersANDTasks/controller/AddingTasks">
+				<form method="get" action="/UsersAndTasks/controller/AddingTasks">
 				<br><lable>Task Name: </lable><input class="form-control" type="text" name="taskname"/><br>
 				<br><br><lable>Task Description:</lable><input class="form-control" type="text" name="taskdescription"/><br>
 				<br><br><input class="btn btn-info" type="submit">
@@ -118,7 +117,7 @@
 			</div>
 		    <div class="col-sm-4">
 		      	<h3>Changing Task From List:</h3>
-				<form method="get" action="/MVCProject-UsersANDTasks/controller/ChangingTasks">
+				<form method="get" action="/UsersAndTasks/controller/ChangingTasks">
 				<br><lable>Task Number:  </lable><input class="form-control" type="text" name="taskNumber"/><br>
 				<br><br><lable>Task Name:  </lable><input class="form-control" type="text" name="taskname"/><br>
 				<br><br><lable>Task Description:  </lable><input class="form-control" type="text" name="taskdescription"/><br>
@@ -127,7 +126,7 @@
 		    </div>
 		    <div class="col-sm-4">
 		      	<h3>Change Status To Complete:</h3>        
-				<form method="get" action="/MVCProject-UsersANDTasks/controller/DeleteTasks">
+				<form method="get" action="/UsersAndTasks/controller/DeleteTasks">
 				<br><lable>Task Number:  </lable><br><input class="form-control" type="text" name="taskNumber"/><br>
 				<br><input class="btn btn-info" type="submit">
 				</form>
@@ -172,10 +171,10 @@
 			      </div>
 		    </div>
 		  </div>
-			<%
-				if (request.getAttribute("queryAnswer")!=null)
-					out.print("<h2 style=color:red>"+request.getAttribute("queryAnswer")+"</h2>");
-			%>	
+		<%
+			if (request.getAttribute("queryAnswer")!=null)
+				out.print("<h2 style=color:red>"+request.getAttribute("queryAnswer")+"</h2>");
+		%>	
 	<jsp:include page="FileEnding.jsp"/>
 </body>
 </html>

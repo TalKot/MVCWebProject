@@ -59,7 +59,7 @@
 	  <div class="row">
 	    <div class="col-sm-4">
 	     	<h3>Login<span class="glyphicon glyphicon-check"></span></h3>
-			<form method="post" action="/MVCProject-UsersANDTasks/controller/" onsubmit="return validate()">
+			<form method="post" action="/UsersAndTasks/controller/" onsubmit="return validate()">
 			<br><lable>User ID: </lable><br>
 			  <div class="input-group">
 			    <span class="input-group-addon"><i class="glyphicon glyphicon-user"></i></span>
@@ -76,7 +76,7 @@
 		
 	    <div class="col-sm-4">
 	      	<h3>Sign In<span class="glyphicon glyphicon-ok"></span></h3>
-			<form method="post"  action="/MVCProject-UsersANDTasks/controller/" >
+			<form method="post"  action="/UsersAndTasks/controller/" >
 			<br><lable>User ID: </lable><br>
 			<div class="input-group">
 			    <span class="input-group-addon"><i class="glyphicon glyphicon-user"></i></span>
@@ -114,7 +114,7 @@
 		
 	    <div class="col-sm-4">
 	      	<h3>Delete Account <span class="glyphicon glyphicon-remove"></span></h3>        
-			<form method="post"  action="/MVCProject-UsersANDTasks/controller/"  onsubmit="return validate()">			
+			<form method="post"  action="/UsersAndTasks/controller/"  onsubmit="return validate()">			
 			<br><lable>User ID: </lable><br>
 			  <div class="input-group">
 			    <span class="input-group-addon"><i class="glyphicon glyphicon-user"></i></span>

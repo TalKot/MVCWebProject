@@ -1,15 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <web-app xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns="http://java.sun.com/xml/ns/javaee" xsi:schemaLocation="http://java.sun.com/xml/ns/javaee http://java.sun.com/xml/ns/javaee/web-app_2_5.xsd" id="WebApp_ID" version="2.5">
-  <display-name>MVCWebProject</display-name>
-  <welcome-file-list>
-    <welcome-file>index.html</welcome-file>
-    <welcome-file>index.htm</welcome-file>
-    <welcome-file>index.jsp</welcome-file>
-    <welcome-file>default.html</welcome-file>
-    <welcome-file>default.htm</welcome-file>
-    <welcome-file>default.jsp</welcome-file>
-  </welcome-file-list>
-  	<servlet>
+
+     <servlet>
 		<servlet-name>Log4JTester</servlet-name>
 		<servlet-class>com.shenkar.controller.Log4JTeaster</servlet-class>
 		<init-param>
@@ -31,4 +23,35 @@
 		<servlet-name>bogo</servlet-name>
 		<url-pattern>/controller/*</url-pattern>
 	</servlet-mapping>
+	
+	
+	 <servlet>
+  	<servlet-name>Usersandtasks Application</servlet-name>
+  	<servlet-class>com.vaadin.server.VaadinServlet</servlet-class>
+  	<init-param>
+  		<description>Vaadin UI class to use</description>
+  		<param-name>UI</param-name>
+  		<param-value>com.shenkar.clientListVaadin.clientList</param-value>
+  	</init-param>
+  	<init-param>
+  		<description>
+  		Legacy mode to return the value of the property as a string from AbstractProperty.toString()</description>
+  		<param-name>legacyPropertyToString</param-name>
+  		<param-value>false</param-value>
+  	</init-param>
+  </servlet>
+  <servlet-mapping>
+  	<servlet-name>Usersandtasks Application</servlet-name>
+  	<url-pattern>/clientList/*</url-pattern>
+  </servlet-mapping>
+  
+    <servlet-mapping>
+    <servlet-name>Usersandtasks Application</servlet-name>
+    <url-pattern>/UI/*</url-pattern>
+  </servlet-mapping>
+  
+   <servlet-mapping>
+    <servlet-name>Usersandtasks Application</servlet-name>
+    <url-pattern>/VAADIN/*</url-pattern>
+  </servlet-mapping>
 </web-app>
