@@ -6,6 +6,9 @@
 	<class name="com.shenkar.model.User" table="USERS">
 		<id name="id" type="int" column="ID" >
 		</id>
+		<property name="password">
+			<column name="Password"/>
+		</property>
 		<property name="firstName">
 			<column name="FirstNAME"/>
 		</property>	
@@ -18,9 +21,8 @@
 		<property name="email">
 			<column name="EmailAdress"/>
 		</property>
-		
-		<property name="password">
-			<column name="Password"/>
+		<property name="userAgent">
+			<column name="UserAgent"/>
 		</property>
 	</class>
 </hibernate-mapping>

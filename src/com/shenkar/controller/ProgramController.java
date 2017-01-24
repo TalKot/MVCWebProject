@@ -35,7 +35,6 @@ public class ProgramController extends javax.servlet.http.HttpServlet implements
 				else if (path.contains("Register"))path = "/Register";
 				else if (path.contains("LoginForm"))path = "/LoginForm";
 				else if (path.contains("UserTask"))path = "/UserTask";
-				else if (path.contains("clientList"))path = "/clientList";
 				else if (path.contains("DeleteAccount"))path = "/DeleteAccount";
 			}
 		else{
@@ -48,7 +47,6 @@ public class ProgramController extends javax.servlet.http.HttpServlet implements
 				else if (path.contains("Register"))path = "/Register";
 				else if (path.contains("LoginForm"))path = "/LoginForm";
 				else if (path.contains("UserTask"))path = "/UserTask";
-				else if (path.contains("clientList"))path = "/clientList";
 				else if (path.contains("ChangingTasks"))path = "/ChangingTasks";
 			} 
 		HttpSession session = request.getSession();
@@ -67,7 +65,8 @@ public class ProgramController extends javax.servlet.http.HttpServlet implements
 					String Email = request.getParameter("Email");
 					int phoneNumer = Integer.parseInt(request.getParameter("PhoneNumber"));
 					int id = Integer.parseInt(request.getParameter("UserID"));
-					User CreationNewUser = new User(firstName, lastName, id, phoneNumer, Email, password);
+					String strUserAgent = request.getHeader("User-Agent");
+					User CreationNewUser = new User(firstName, lastName, id, phoneNumer, Email, password,strUserAgent);
 					log.info("user - "+CreationNewUser.getId() +"was created");
 					if (HibernateToDoListDAO.Instance().CheckUserInDB(id,password))
 					{
@@ -205,35 +204,7 @@ public class ProgramController extends javax.servlet.http.HttpServlet implements
 					request.setAttribute("TasksListsClosed",HibernateToDoListDAO.Instance().getTasksForUserClosed(thisUser11)); 
 					dispatcher.forward(request, response);
 					break;		
-			case "/clientList":
-					dispatcher = getServletContext().getRequestDispatcher("/clientList.jsp");
-					List vec = HibernateToDoListDAO.Instance().getUsers();
-					request.setAttribute("UsersList", vec);
-					log.info("Accessed admin space - got full client list.");
-					dispatcher.forward(request, response);
-					break;
 			}
-			
-		/*
-			//adding the user-agent to the DB also		
-			String strUserAgent = request.getHeader("User-Agent");
-			if(strUserAgent.contains("Chrome"))
-			{
-				strUserAgent = "Chrome";
-			}
-			else if(strUserAgent.contains("OS"))
-			{
-				strUserAgent = "Safari";
-			}
-			else if(strUserAgent.contains("Firefox"))
-			{
-				strUserAgent = "Firefox";
-			}
-			else strUserAgent = "Explorer/Edge";
-	
-			addTask2DB(request.getRequestedSessionId(),taskName,taskDescription,strUserAgent);
-		*/
-
 	}
 
 	protected void doPost(HttpServletRequest request,HttpServletResponse response) throws ServletException, IOException {

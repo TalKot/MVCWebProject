@@ -8,16 +8,20 @@ public class User {
 	private int phoneNumber;
 	private String email;
 	private String password;
+	private String userAgent;
 	
+
+
 	public User(){}
 
-	public User(String firstName, String lastName, int id, int phoneNumber, String email, String password) {
+	public User(String firstName, String lastName, int id, int phoneNumber, String email, String password,String userAgent) {
 		this.firstName = firstName;
 		this.lastName = lastName;
 		this.id = id;
 		this.phoneNumber = phoneNumber;
 		this.email = email;
 		this.password = password;
+		this.setUserAgent(userAgent);
 	}
 
 
@@ -60,11 +64,19 @@ public class User {
 	public void setPassword(String password) {
 		this.password = password;
 	}
+
+	public String getUserAgent() {
+		return userAgent;
+	}
+
+	public void setUserAgent(String userAgent) {
+		this.userAgent = userAgent;
+	}
 	
 	@Override
 	public String toString() {
-		return firstName + " " + lastName + ", id=" + id + ", phoneNumber=" + phoneNumber + ", email=" + email;
+		return "User [firstName=" + firstName + ", lastName=" + lastName + ", id=" + id + ", phoneNumber=" + phoneNumber
+				+ ", email=" + email + ", password=" + password + ", userAgent=" + userAgent + "]";
 	}
-
 
 }

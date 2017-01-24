@@ -24,7 +24,7 @@ public class TestingModle {
 	
 	@Test
 	public void testAddingUser() {
-		User obj = new User("test", "test", 6666, 123, "test@test.com", "6666");
+		User obj = new User("test", "test", 6666, 123, "test@test.com", "6666","Chrome");
 		HibernateToDoListDAO.Instance().addUser(obj);
 		boolean test  = HibernateToDoListDAO.Instance().CheckUserInDB(6666, "6666");
 		assertEquals(true, test);
