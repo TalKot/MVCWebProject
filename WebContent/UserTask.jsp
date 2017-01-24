@@ -172,6 +172,9 @@
 		    </div>
 		  </div>
 		<%
+			//if (request.getAttribute("timer")!=null)
+				out.print("<h3>The time it took for this action is -"+request.getAttribute("timer")+" Second</h3>");
+
 			if (request.getAttribute("queryAnswer")!=null)
 				out.print("<h2 style=color:red>"+request.getAttribute("queryAnswer")+"</h2>");
 		%>	

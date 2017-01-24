@@ -14,6 +14,8 @@ import org.apache.log4j.BasicConfigurator;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Timer;
+import java.util.TimerTask;
 
 
 
@@ -21,9 +23,13 @@ public class ProgramController extends javax.servlet.http.HttpServlet implements
 {
 	private static final long serialVersionUID = 1L;
 	static Logger log = Logger.getLogger(ProgramController.class);
-
-	protected void doGet(HttpServletRequest request,HttpServletResponse response) throws ServletException, IOException {
+	int secondsPassed=0;
 	
+	protected void doGet(HttpServletRequest request,HttpServletResponse response) throws ServletException, IOException {
+		//set timer to check how much time it takes to get the response
+		long tStart = System.currentTimeMillis();
+
+		//checking what action needed
 		RequestDispatcher dispatcher = null;
 		String path = request.getParameter("action");//checking the next URL from form
 		if (path==null)
@@ -103,13 +109,16 @@ public class ProgramController extends javax.servlet.http.HttpServlet implements
 						break;
 					}
 					log.info("Clinet number - "+ userid+" has connected to his account.");
-					
 					//return information
 					Cookie cookUserID = new Cookie("UserID", String.valueOf(userid));
 					response.addCookie(cookUserID);
 					request.setAttribute("MyUser",HibernateToDoListDAO.Instance().getUserWithourPassword(userid));
 					request.setAttribute("TasksLists", HibernateToDoListDAO.Instance().getTasksForUser(userid));
 					request.setAttribute("TasksListsClosed",HibernateToDoListDAO.Instance().getTasksForUserClosed(userid)); 
+					long tEnd = System.currentTimeMillis();
+					long tDelta = tEnd - tStart;
+					double elapsedSeconds = tDelta / 1000.0;
+					request.setAttribute("timer", elapsedSeconds);
 					dispatcher.forward(request, response);
 					break;		
 				}
@@ -164,6 +173,10 @@ public class ProgramController extends javax.servlet.http.HttpServlet implements
 					request.setAttribute("TasksLists", HibernateToDoListDAO.Instance().getTasksForUser(AddingTaskForUser));
 					request.setAttribute("MyUser",HibernateToDoListDAO.Instance().getUserWithourPassword(AddingTaskForUser));
 					request.setAttribute("TasksListsClosed",HibernateToDoListDAO.Instance().getTasksForUserClosed(AddingTaskForUser)); 
+					long tEnd = System.currentTimeMillis();
+					long tDelta = tEnd - tStart;
+					double elapsedSeconds = tDelta / 1000.0;
+					request.setAttribute("timer", elapsedSeconds);
 					dispatcher.forward(request, response);
 					break;	
 			case "/ChangingTasks":
@@ -189,6 +202,10 @@ public class ProgramController extends javax.servlet.http.HttpServlet implements
 					request.setAttribute("TasksLists", HibernateToDoListDAO.Instance().getTasksForUser(checkingClientIDforTask));
 					request.setAttribute("MyUser",HibernateToDoListDAO.Instance().getUserWithourPassword(checkingClientIDforTask));
 					request.setAttribute("TasksListsClosed",HibernateToDoListDAO.Instance().getTasksForUserClosed(checkingClientIDforTask)); 
+					long tEnd1 = System.currentTimeMillis();
+					long tDelta1 = tEnd1 - tStart;
+					double elapsedSeconds1 = tDelta1 / 1000.0;
+					request.setAttribute("timer", elapsedSeconds1);
 					dispatcher.forward(request, response);
 					break;	
 			case "/DeleteTasks":
@@ -202,6 +219,10 @@ public class ProgramController extends javax.servlet.http.HttpServlet implements
 					request.setAttribute("TasksLists", HibernateToDoListDAO.Instance().getTasksForUser(thisUser11));
 					request.setAttribute("MyUser",HibernateToDoListDAO.Instance().getUserWithourPassword(thisUser11));
 					request.setAttribute("TasksListsClosed",HibernateToDoListDAO.Instance().getTasksForUserClosed(thisUser11)); 
+					long tEnd2 = System.currentTimeMillis();
+					long tDelta2 = tEnd2 - tStart;
+					double elapsedSeconds2 = tDelta2 / 1000.0;
+					request.setAttribute("timer", elapsedSeconds2);
 					dispatcher.forward(request, response);
 					break;		
 			}
