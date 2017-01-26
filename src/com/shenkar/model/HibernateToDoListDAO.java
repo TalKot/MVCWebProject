@@ -27,7 +27,8 @@ public class hibernateToDoListDAO implements IToDoListDAO {
 	    return hibernateObject;
 	}
 /*********************************Users methods*********************************/
-	public void addUser(user obj)
+	@Override
+	public void addUser(user obj)throws userAndTaskException
 	{
 		Session session = null;
 		try
@@ -46,8 +47,8 @@ public class hibernateToDoListDAO implements IToDoListDAO {
 			session.close();
 		}
 	}
-	
-	public List getUsers()
+	@Override
+	public List getUsers() throws userAndTaskException
 	{
 		Session session = null;
 		List users = null;
@@ -71,7 +72,7 @@ public class hibernateToDoListDAO implements IToDoListDAO {
 		return users;
 	}
 
-
+	@Override
 	public user getUser(int userID, String Password) throws userAndTaskException {
 		Session session = null;
 		try{
@@ -89,8 +90,9 @@ public class hibernateToDoListDAO implements IToDoListDAO {
         }
 		return null;
 	}
-
-	public user getUserWithourPassword(int userID) {
+	
+	@Override
+	public user getUserWithourPassword(int userID) throws userAndTaskException{
 		Session session = null;
 		try {
 			session = factory.openSession();
@@ -106,8 +108,8 @@ public class hibernateToDoListDAO implements IToDoListDAO {
 		return null;
 	}
 	
-	public boolean checkUserInDB (int userID, String Password)throws userAndTaskException
-	{
+	@Override
+	public boolean checkUserInDB (int userID, String Password)throws userAndTaskException{
 		Session session = null;
 		session = factory.openSession();
 		session.beginTransaction();
@@ -123,6 +125,7 @@ public class hibernateToDoListDAO implements IToDoListDAO {
 		return false;
 	}
 	
+	@Override
 	public String deleteUser(int userID, String Password)throws userAndTaskException {
 		Session session = null;
 			String str = null;
@@ -157,8 +160,8 @@ public class hibernateToDoListDAO implements IToDoListDAO {
 	}
 
 /*********************************Tasks methods*********************************/
-	public void addTask(task obj)throws userAndTaskException
-	{
+	@Override
+	public void addTask(task obj)throws userAndTaskException{
 		Session session = null;
 		try
 		{
@@ -178,9 +181,8 @@ public class hibernateToDoListDAO implements IToDoListDAO {
 	}
 	
 	
-
-	public void ChangeStatus(int TaskNumber)throws userAndTaskException
-	{
+	@Override
+	public void ChangeStatus(int TaskNumber)throws userAndTaskException{
 		Session session = null;
 		try{
 			session = factory.openSession();
@@ -200,11 +202,10 @@ public class hibernateToDoListDAO implements IToDoListDAO {
 		{
 			session.close();
 		}
-		
 	}
 	
-	public List<task> getTasksForUser(int id)throws userAndTaskException
-	{
+	@Override
+	public List<task> getTasksForUser(int id)throws userAndTaskException{
 		Session session = null;
 		List list = null;
 		try{
@@ -227,8 +228,8 @@ public class hibernateToDoListDAO implements IToDoListDAO {
 		}
 	}
 	
-	public List<task> getTasksForUserClosed(int id)throws userAndTaskException
-	{
+	@Override
+	public List<task> getTasksForUserClosed(int id)throws userAndTaskException{
 		Session session = null;
 		List list = null;
 		try{
@@ -249,7 +250,7 @@ public class hibernateToDoListDAO implements IToDoListDAO {
 			return list;
 		}
 	}
-	
+	@Override
 	public void updateTask(int taskNumber, String taskName, String description)throws userAndTaskException{
 		Session session = null;
 		try{
@@ -272,7 +273,7 @@ public class hibernateToDoListDAO implements IToDoListDAO {
 		}
 	}	
 	
-	
+	@Override
 	public void deleteTask(int taskNumber)throws userAndTaskException{
 		Session session = null;
 		try{
@@ -294,6 +295,7 @@ public class hibernateToDoListDAO implements IToDoListDAO {
 		}
 	}	
 	
+	@Override
 	public task getTask(int taskID)throws userAndTaskException {
 		Session session = null;
 		try {
