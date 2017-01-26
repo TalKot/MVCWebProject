@@ -9,14 +9,14 @@ version="2.0">
  <tag>
  	<description>My First tag</description>
  	<name>First</name>
- 	<tag-class>com.shenkar.tags.MyFirstTag</tag-class>
+ 	<tag-class>com.shenkar.view.firstTag</tag-class>
  	<body-content>empty</body-content>
  </tag>
  
  <tag>
  	<description>My Second tag</description>
  	<name>Second</name>
- 	<tag-class>com.shenkar.tags.MySecondTag</tag-class>
+ 	<tag-class>com.shenkar.view.secondTag</tag-class>
  	<body-content>empty</body-content>
  </tag>
 

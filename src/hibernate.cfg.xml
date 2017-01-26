@@ -16,5 +16,6 @@
 		<property name="hibernate.hbm2ddl.auto">update</property>
 		<!-- Mapping files -->
 		<mapping resource="storeinventory.hbm.xml"/>
+		<mapping resource="storeinventoryTask.hbm.xml"/>
 </session-factory>
 </hibernate-configuration>

@@ -1,5 +1,5 @@
 <%@ page language="java" contentType="text/html; charset=windows-1255" 
-	import="java.util.*" import="com.shenkar.controller.ProgramController"
+	import="java.util.*" import="com.shenkar.controller.programController"
     pageEncoding="windows-1255" isErrorPage="false" errorPage="errorpage.jsp"%>
 <html>
 <head>
@@ -135,8 +135,7 @@
 			if (request.getAttribute("queryAnswerLoginform")!=null)
 				out.print("<h2 style=color:red>"+request.getAttribute("queryAnswerLoginform")+"</h2>");
 		%>
-		
-		<jsp:include page="FileEnding.jsp" />
+		<jsp:include page="fileEnding.jsp" />
 	</div>
 </body>
 </html>

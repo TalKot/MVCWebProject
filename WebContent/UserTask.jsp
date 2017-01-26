@@ -1,5 +1,5 @@
-<%@ page language="java" contentType="text/html; charset=windows-1255"  import="org.apache.jasper.tagplugins.jstl.core.ForEach" import="com.shenkar.model.User" import="com.shenkar.model.Task" import="java.util.*" import="com.shenkar.controller.ProgramController"
-    pageEncoding="windows-1255"%>
+<%@ page language="java" contentType="text/html; charset=windows-1255"  import="org.apache.jasper.tagplugins.jstl.core.ForEach" import="com.shenkar.model.user" import="com.shenkar.model.task" import="java.util.*" import="com.shenkar.controller.programController"
+    pageEncoding="windows-1255" isErrorPage="false" errorPage="errorpage.jsp"%>
 <html>
 <head>
 	<title>User & Task</title>
@@ -21,71 +21,43 @@
 			margin-top: 10px;
 		}
 	</style>
-
 </head>
 <body>
-
-
 	<div class="jumbotron text-center">
 	  <h1>Manage Your Tasks</h1>
 	</div>
-		
-	<div class="container">
-	<script type="text/javascript">
-	$( document ).ready( function() {
-	    $( '#teste' ).modal( 'toggle' );
-	});
-	</script>	
-	<div class="modal fade in" id="teste" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
-	  <div class="modal-dialog">
-	    <div class="modal-content">
-	      <div class="modal-header">
-	        <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
-	        <h1 class="modal-title" id="myModalLabel">Welcome!</h1>
-	      </div>
-	      <div class="modal-body">
-	        <%
-			Cookie[] cook = request.getCookies();
-			for(Cookie ck:cook)
-			{
-				out.print("the cookie is -" + ck.getName() + " with value of " + ck.getValue()+"<br>");
-			}
-			User user = (User)request.getAttribute("MyUser");
-			out.print("<br> Dear "+user.getLastName()+" "+user.getFirstName()+",</b>");
-			out.print("<br> Our DB showed that ,Your account ID -<b>"+user.getId()+"</b>");
-			out.print("<br> Email Adress -<b>"+user.getEmail()+"</b>");
-			out.print("<br> Phone Number -<b>0"+user.getPhoneNumber()+"</b>");
-			out.print("<br><br><b>Here below you can manage your task and your tasks only.<br>You can choose to add/change/close any task as you like and after it you can get a list of all complete tasks that you worked on before.<br><br><h3>Good luck! :)</h3></b>");
-	        %>
-	      </div>
-	      <div class="modal-footer">
-	        <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-	      </div>
-	    </div>
-	  </div>
-	</div>
 	
+	<div class="container">
 	<%
 	out.print("<p><h1>User informaiton</h1></p>");
 	%>
-	<div class="well">	
+	<div class="well">
 		<blockquote>
 		<%
-		//User user = (User)request.getAttribute("MyUser");
+			Cookie[] cook = request.getCookies();
+			/*
+			int val=1;
+			for(Cookie ck:cook)
+			{
+				out.print("cookie number "+val + ck.getValue()+"<br>");
+				val++	;
+			}
+			*/
+			out.print("Welcome,<b>" + cook[1].getValue() + "</b><br>");
+			out.print("<h3>Your user information</h3>");
+			user userdb = (user)request.getAttribute("MyUser");
+			out.print("<br> ID -<b>"+userdb.getId()+"</b>");
+			out.print("<br> Email Adress -<b>"+userdb.getEmail()+"</b>");
+			out.print("<br> Phone Number -<b>0"+userdb.getPhoneNumber()+"</b>");
+			session.setAttribute("userid", userdb.getId());
 
-			out.print("<br> ID -<b>"+user.getId()+"</b>");
-			out.print("<br> Name -<b>"+user.getLastName()+" "+user.getFirstName()+"</b>");
-			out.print("<br> Email Adress -<b>"+user.getEmail()+"</b>");
-			out.print("<br> Phone Number -<b>0"+user.getPhoneNumber()+"</b>");
-			session.setAttribute("userid", user.getId());
-			
+
 		%>
 		</blockquote>
 	</div>
 	<%
-	
 	out.print("<h1>Tasks Data</h1><br>");
-	List<Task> tasks = (List)request.getAttribute("TasksLists");
+	List<task> tasks = (List)request.getAttribute("TasksLists");
 	if (tasks.isEmpty())
 	{
 		out.print("<h3 style=color:red>No tasks in DB for this client</h3><br><br><br>");
@@ -94,15 +66,12 @@
 	{
 		out.print("<table class=table><thead>");
 		out.print("<tr><th>Task Number</th><th>Task Name</th><th>Task Description</th><th>Status</th></tr>");
-		for(Task tsk:tasks)
+		for(task tsk:tasks)
 		{
 			out.print("<tr><th>"+tsk.getTaskNumber()+".</th><th>"+tsk.getTask()+"</th><th>"+tsk.getDescription()+"</th><th>"+tsk.getStatus()+" </th></tr> </thead><tbody>");
 		}
 		out.print(" </tbody></table>");
-		
 	}
-	
-	
 	%>
 	  
 	<div class="container">
@@ -140,44 +109,46 @@
 		</div>
 	</div>	
 		  <div class="modal fade" id="myModal" role="dialog">
-		    <div class="modal-dialog">
-		      <div class="modal-content">
-		        <div class="modal-header">
-		          <h4 class="modal-title">Closed Tasks List</h4>
-		        </div>
-			        <div class="modal-body">
-						<%
-						out.print("<h1>Tasks Data</h1><br>");
-						List<Task> ClosedTasks = (List)request.getAttribute("TasksListsClosed");
-						if (ClosedTasks.isEmpty())
+	    <div class="modal-dialog">
+	      <div class="modal-content">
+	        <div class="modal-header">
+	          <button type="button" class="close" data-dismiss="modal">&times;</button>
+	          <h4 class="modal-title">Closed Tasks List</h4>
+	        </div>
+		        <div class="modal-body">
+					<%
+					out.print("<h1>Tasks Data</h1><br>");
+					List<task> closedTasks = (List)request.getAttribute("TasksListsClosed");
+					if (closedTasks.isEmpty())
+					{
+						out.print("<h3 style=color:red>No tasks in DB for this client</h3><br><br><br>");
+					}
+					else
+					{
+						out.print("<table class=table><thead>");
+						out.print("<tr><th>Task Number</th><th>Task Name</th><th>Task Description</th><th>Status</th></tr>");
+						for(task ClosedTask:closedTasks)
 						{
-							out.print("<h3 style=color:red>No tasks in DB for this client</h3><br><br><br>");
+							out.print("<tr><th>"+ClosedTask.getTaskNumber()+".</th><th>"+ClosedTask.getTask()+"</th><th>"+ClosedTask.getDescription()+"</th><th>"+ClosedTask.getStatus()+" </th></tr> </thead><tbody>");
 						}
-						else
-						{
-							out.print("<table class=table><thead>");
-							out.print("<tr><th>Task Number</th><th>Task Name</th><th>Task Description</th><th>Status</th></tr>");
-							for(Task ClosedTask:ClosedTasks)
-							{
-								out.print("<tr><th>"+ClosedTask.getTaskNumber()+".</th><th>"+ClosedTask.getTask()+"</th><th>"+ClosedTask.getDescription()+"</th><th>"+ClosedTask.getStatus()+" </th></tr> </thead><tbody>");
-							}
-							out.print(" </tbody></table>");
-						}						
-						%>          
-			        </div>
-			        <div class="modal-footer">
-			          <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-			        </div>
-			      </div>
-		    </div>
-		  </div>
-		<%
+						out.print(" </tbody></table>");
+					}
+					%>          
+		        </div>
+		        <div class="modal-footer">
+		          <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+		        </div>
+		      </div>
+	    </div>
+	  </div>	
+			<%
 			//if (request.getAttribute("timer")!=null)
-				out.print("<h3>The time it took for this action is -"+request.getAttribute("timer")+" Second</h3>");
+				out.print("<h3><u>The time it took for this action is -</u> "+request.getAttribute("timer")+" Second</h3><br><br>");
 
 			if (request.getAttribute("queryAnswer")!=null)
 				out.print("<h2 style=color:red>"+request.getAttribute("queryAnswer")+"</h2>");
 		%>	
-	<jsp:include page="FileEnding.jsp"/>
+	<jsp:include page="fileEnding.jsp" />
+	</div>
 </body>
 </html>

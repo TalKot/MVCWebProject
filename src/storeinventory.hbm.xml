@@ -3,7 +3,7 @@
 "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
 "http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
 <hibernate-mapping>
-	<class name="com.shenkar.model.User" table="USERS">
+	<class name="com.shenkar.model.user" table="USERS">
 		<id name="id" type="int" column="ID" >
 		</id>
 		<property name="password">

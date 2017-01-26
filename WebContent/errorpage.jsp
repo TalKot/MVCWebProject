@@ -19,10 +19,12 @@
     <h1>Error Page!</h1>
     <footer>
 	<%
-		out.println("error has happened");
+		out.println("<h3>error has happened</h3>");
 		out.println("<br>");
-		if (exception==null) out.println("Basic URL error! <br>");
-		else out.println("message = "+exception.getMessage());
+		if (exception!=null)out.println("message = "+exception.getMessage());
+	
+		if (request.getAttribute("exceptionMessage")!=null)
+			out.print("<h3 style=color:red>"+request.getAttribute("exceptionMessage")+"</h3>");
 	%>
 	</footer>
 	  </blockquote>

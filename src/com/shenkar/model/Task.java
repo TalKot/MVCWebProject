@@ -1,15 +1,15 @@
 package com.shenkar.model;
 
-public class Task {
+public class task {
 	private int ClientID;
 	private String task;
 	private String description;
 	private int taskNumber;
 	private String status;
 	
-	public Task(){}
+	public task(){}
 	
-	public Task(int clientID, String task, String description,String status) {
+	public task(int clientID, String task, String description,String status) {
 		this.ClientID = clientID;
 		this.task = task;
 		this.description = description;

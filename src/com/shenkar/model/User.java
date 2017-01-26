@@ -1,6 +1,6 @@
 package com.shenkar.model;
 
-public class User {
+public class user {
 	
 	private String firstName;
 	private String lastName;
@@ -12,9 +12,9 @@ public class User {
 	
 
 
-	public User(){}
+	public user(){}
 
-	public User(String firstName, String lastName, int id, int phoneNumber, String email, String password,String userAgent) {
+	public user(String firstName, String lastName, int id, int phoneNumber, String email, String password,String userAgent) {
 		this.firstName = firstName;
 		this.lastName = lastName;
 		this.id = id;

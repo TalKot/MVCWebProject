@@ -1,10 +1,6 @@
 package com.shenkar.model;
 
 
-import java.sql.DriverManager;
-import java.sql.ResultSet;
-import java.util.ArrayList;
-import java.util.Iterator;
 import java.util.List;
 import org.hibernate.HibernateException;
 import org.hibernate.Query;
@@ -13,27 +9,27 @@ import org.hibernate.SessionFactory;
 import org.hibernate.cfg.AnnotationConfiguration;
 
 
-public class HibernateToDoListDAO implements IToDoListDAO {
+public class hibernateToDoListDAO implements IToDoListDAO {
 	
 /*********************************Singleton*********************************/
-	private static final HibernateToDoListDAO DAO = new HibernateToDoListDAO();
-	private Session session = null;
+	private static final hibernateToDoListDAO hibernateObject = new hibernateToDoListDAO();
+	//private Session session = null;
 	private SessionFactory factory;
-	private SessionFactory factoryTask;
 	
-	private HibernateToDoListDAO() 
+	
+	private hibernateToDoListDAO() 
 	{ 
 		factory = new AnnotationConfiguration().configure().buildSessionFactory();
-		factoryTask = new AnnotationConfiguration().configure("hibernateTask.cfg.xml").buildSessionFactory();
 	}
 	
-	public static HibernateToDoListDAO Instance()
+	public static hibernateToDoListDAO getInstance()
 	{
-	    return DAO;
+	    return hibernateObject;
 	}
 /*********************************Users methods*********************************/
-	public void addUser(User obj)
+	public void addUser(user obj)
 	{
+		Session session = null;
 		try
 		{
 			session = factory.openSession();
@@ -53,13 +49,14 @@ public class HibernateToDoListDAO implements IToDoListDAO {
 	
 	public List getUsers()
 	{
+		Session session = null;
 		List users = null;
 		try{
-		session = factory.openSession();
-		session.beginTransaction();
-		users = session.createQuery("from User").list();
-		session.getTransaction().commit();
-		return users;
+			session = factory.openSession();
+			session.beginTransaction();
+			users = session.createQuery("from user").list();
+			session.getTransaction().commit();
+			return users;
 		}
 		catch (HibernateException e)
 		{
@@ -75,11 +72,12 @@ public class HibernateToDoListDAO implements IToDoListDAO {
 	}
 
 
-	public User getUser(int userID, String Password) {
-		try {
+	public user getUser(int userID, String Password) throws userAndTaskException {
+		Session session = null;
+		try{
 			session = factory.openSession();
             session.beginTransaction();
-            User DBUser = (User) session.get(User.class, userID);
+            user DBUser = (user) session.get(user.class, userID);
             if (DBUser.getPassword().equals(Password)){
                 session.getTransaction().commit();
                 return DBUser;
@@ -92,11 +90,12 @@ public class HibernateToDoListDAO implements IToDoListDAO {
 		return null;
 	}
 
-	public User getUserWithourPassword(int userID) {
+	public user getUserWithourPassword(int userID) {
+		Session session = null;
 		try {
 			session = factory.openSession();
             session.beginTransaction();
-            User DBUser = (User) session.get(User.class, userID);
+            user DBUser = (user) session.get(user.class, userID);
             session.getTransaction().commit();
             return DBUser;
         }
@@ -106,11 +105,13 @@ public class HibernateToDoListDAO implements IToDoListDAO {
         }
 		return null;
 	}
-	public boolean CheckUserInDB(int userID, String Password)
+	
+	public boolean checkUserInDB (int userID, String Password)throws userAndTaskException
 	{
+		Session session = null;
 		session = factory.openSession();
 		session.beginTransaction();
-		User DBUser = (User)session.get(User.class, userID);
+		user DBUser = (user)session.get(user.class, userID);
 		if (DBUser==null) return false;
 		else{
 			if (DBUser.getPassword().equals(Password))
@@ -122,13 +123,14 @@ public class HibernateToDoListDAO implements IToDoListDAO {
 		return false;
 	}
 	
-	public String deleteUser(int userID, String Password) {
+	public String deleteUser(int userID, String Password)throws userAndTaskException {
+		Session session = null;
 			String str = null;
 		try{
 			session = factory.openSession();
 			
             session.beginTransaction();
-			User ob = (User)session.load(User.class, new Integer(userID));
+			user ob = (user)session.load(user.class, new Integer(userID));
 			if (ob.getPassword().equals(Password))
 			{
     			session.delete(ob);
@@ -155,11 +157,12 @@ public class HibernateToDoListDAO implements IToDoListDAO {
 	}
 
 /*********************************Tasks methods*********************************/
-	public void addTask(Task obj)
+	public void addTask(task obj)throws userAndTaskException
 	{
+		Session session = null;
 		try
 		{
-			session = factoryTask.openSession();
+			session = factory.openSession();
 			session.beginTransaction();
 			session.save(obj);
 			session.getTransaction().commit();
@@ -176,11 +179,12 @@ public class HibernateToDoListDAO implements IToDoListDAO {
 	
 	
 
-	public void ChangeStatus(int TaskNumber)
+	public void ChangeStatus(int TaskNumber)throws userAndTaskException
 	{
+		Session session = null;
 		try{
-			session = factoryTask.openSession();
-			Task ob = (Task)session.load(Task.class, new Integer(TaskNumber));
+			session = factory.openSession();
+			task ob = (task)session.load(task.class, new Integer(TaskNumber));
 			session.beginTransaction();
 			ob.setStatus("Close");
 			session.update(ob);
@@ -199,12 +203,13 @@ public class HibernateToDoListDAO implements IToDoListDAO {
 		
 	}
 	
-	public List<Task> getTasksForUser(int id)
+	public List<task> getTasksForUser(int id)throws userAndTaskException
 	{
+		Session session = null;
 		List list = null;
 		try{
-			session = factoryTask.openSession();
-			Query query = session.createQuery("from Task where ClientID= :code and Status = :stat");
+			session = factory.openSession();
+			Query query = session.createQuery("from task where ClientID= :code and Status = :stat");
 			query.setParameter("code",id);
 			query.setParameter("stat","Open");
 			list = query.list();
@@ -217,17 +222,18 @@ public class HibernateToDoListDAO implements IToDoListDAO {
 		}
 		finally
 		{
-			//session.close();
+			session.close();
 			return list;
 		}
 	}
 	
-	public List<Task> getTasksForUserClosed(int id)
+	public List<task> getTasksForUserClosed(int id)throws userAndTaskException
 	{
+		Session session = null;
 		List list = null;
 		try{
-			session = factoryTask.openSession();
-			Query query = session.createQuery("from Task where ClientID= :code and Status = :stat");
+			session = factory.openSession();
+			Query query = session.createQuery("from task where ClientID= :code and Status = :stat");
 			query.setParameter("code",id);
 			query.setParameter("stat","Close");
 			list = query.list();
@@ -244,12 +250,12 @@ public class HibernateToDoListDAO implements IToDoListDAO {
 		}
 	}
 	
-	public void updateTask(int taskNumber, String taskName, String description)
-	{
+	public void updateTask(int taskNumber, String taskName, String description)throws userAndTaskException{
+		Session session = null;
 		try{
-			session = factoryTask.openSession();	
+			session = factory.openSession();	
 			session.beginTransaction();
-			Task task = (Task)session.load(Task.class, new Integer (taskNumber));
+			task task = (task)session.load(task.class, new Integer (taskNumber));
 			task.setDescription(description);
 			task.setTask(taskName);
 			session.getTransaction().commit();
@@ -267,11 +273,11 @@ public class HibernateToDoListDAO implements IToDoListDAO {
 	}	
 	
 	
-	public void deleteTask(int taskNumber)
-	{
+	public void deleteTask(int taskNumber)throws userAndTaskException{
+		Session session = null;
 		try{
-			session = factoryTask.openSession();
-			Task ob = (Task)session.load(Task.class, new Integer(taskNumber));
+			session = factory.openSession();
+			task ob = (task)session.load(task.class, new Integer(taskNumber));
 			session.beginTransaction();
 			session.delete(ob);
 			session.getTransaction().commit();
@@ -284,15 +290,16 @@ public class HibernateToDoListDAO implements IToDoListDAO {
 		}
 		finally
 		{
-			//session.close();
+			session.close();
 		}
 	}	
 	
-	public Task getTask(int taskID) {
+	public task getTask(int taskID)throws userAndTaskException {
+		Session session = null;
 		try {
-			session = factoryTask.openSession();
+			session = factory.openSession();
             session.beginTransaction();
-            Task DBTask = (Task) session.get(Task.class, taskID);
+            task DBTask = (task) session.get(task.class, taskID);
             session.getTransaction().commit();
             return DBTask;
         }
