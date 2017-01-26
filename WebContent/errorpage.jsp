@@ -22,9 +22,8 @@
 		out.println("<h3>error has happened</h3>");
 		out.println("<br>");
 		if (exception!=null)out.println("message = "+exception.getMessage());
-	
-		if (request.getAttribute("exceptionMessage")!=null)
-			out.print("<h3 style=color:red>"+request.getAttribute("exceptionMessage")+"</h3>");
+		out.print("<h4><u><b>The Exception Reason:</u></b>");
+		if (request.getAttribute("exceptionMessage")!=null)out.print("<h4>"+request.getAttribute("exceptionMessage")+"</h4>");
 	%>
 	</footer>
 	  </blockquote>

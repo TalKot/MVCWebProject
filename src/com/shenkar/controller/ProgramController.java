@@ -253,9 +253,10 @@ public class programController extends javax.servlet.http.HttpServlet implements
 			case "/DeleteTasks":
 				try{
 					dispatcher = getServletContext().getRequestDispatcher("/userTask.jsp");
-					int taskNumber1 = Integer.parseInt((String)request.getParameter("taskNumber"));
+					if(request.getParameter("taskNumber").equals(""))throw new userAndTaskException("Please choose a task number that you want to change from open to close");
+					int taskNumber1 = Integer.parseInt(request.getParameter("taskNumber"));
 					hibernateToDoListDAO.getInstance().ChangeStatus(taskNumber1);
-					log.info(taskNumber1+" was cahgned to complete or done.");
+					log.info(taskNumber1+" was changed to complete or done.");
 					//return information
 					session = request.getSession();
 					int thisUser11  = (int) session.getAttribute("userid");
@@ -272,8 +273,8 @@ public class programController extends javax.servlet.http.HttpServlet implements
 				catch(userAndTaskException e)
 				{
 					log.fatal(e.getMessage());
-					dispatcher = getServletContext().getRequestDispatcher("/loginForm.jsp");				
-					request.setAttribute("queryAnswerLoginform",e.getMessage());
+					dispatcher = getServletContext().getRequestDispatcher("/errorpage.jsp");				
+					request.setAttribute("exceptionMessage",e.getMessage());
 					dispatcher.forward(request, response);
 					break;		
 				}
