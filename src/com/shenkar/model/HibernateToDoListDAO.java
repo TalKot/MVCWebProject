@@ -91,7 +91,6 @@ public class hibernateToDoListDAO implements IToDoListDAO {
 		return null;
 	}
 	
-	@Override
 	public user getUserWithourPassword(int userID) throws userAndTaskException{
 		Session session = null;
 		try {
@@ -182,7 +181,7 @@ public class hibernateToDoListDAO implements IToDoListDAO {
 	
 	
 	@Override
-	public void ChangeStatus(int TaskNumber)throws userAndTaskException{
+	public void changeStatus(int TaskNumber)throws userAndTaskException{
 		Session session = null;
 		try{
 			session = factory.openSession();
@@ -295,7 +294,6 @@ public class hibernateToDoListDAO implements IToDoListDAO {
 		}
 	}	
 	
-	@Override
 	public task getTask(int taskID)throws userAndTaskException {
 		Session session = null;
 		try {

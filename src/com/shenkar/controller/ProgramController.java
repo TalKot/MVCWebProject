@@ -54,12 +54,10 @@ public class programController extends javax.servlet.http.HttpServlet implements
 				else if (path.contains("ChangingTasks"))path = "/ChangingTasks";
 			} 
 		HttpSession session = request.getSession();
-		System.out.println("THe path is - "+path);
-		switch (path) 
-		{
+
+		switch (path) {
 		default:case "/LoginForm":
 			try{
-					System.out.println("i'm in the login form section");
 					dispatcher = getServletContext().getRequestDispatcher("/loginForm.jsp");
 					dispatcher.forward(request, response);
 					break;
@@ -70,6 +68,7 @@ public class programController extends javax.servlet.http.HttpServlet implements
 			}
 		case "/Register":
 			try{
+					//getting all data from Register form
 					String firstName = request.getParameter("FirstName");
 					String lastName = request.getParameter("LastName");
 					String password = request.getParameter("Password");
@@ -77,20 +76,18 @@ public class programController extends javax.servlet.http.HttpServlet implements
 					int phoneNumer = Integer.parseInt(request.getParameter("PhoneNumber"));
 					int id = Integer.parseInt(request.getParameter("UserID"));
 					String strUserAgent = request.getHeader("User-Agent");
-					user CreationNewUser = new user(firstName, lastName, id, phoneNumer, Email, password,strUserAgent);
-					log.info("user - "+CreationNewUser.getId() +"was created");
+					user CreationNewUser = new user(firstName, lastName, id, phoneNumer, Email, password,strUserAgent);//creation of the user object with the data form
+					log.info("user - "+CreationNewUser.getId() +"was created");//writing to log4j
+					//checking if the user already in the db with this username&password
 					if (hibernateToDoListDAO.getInstance().checkUserInDB(id,password))
 					{
-						log.debug("Clinet "+ id+" is already in the db.Please choose another ID number.");
+						log.debug("Clinet "+ id+" is already in the db.Please choose another ID number.");//writing data to log4j
 						dispatcher = getServletContext().getRequestDispatcher("/loginForm.jsp");				
-						request.setAttribute("queryAnswerLoginform","Clinet "+ id+" is already in the db.Please choose another ID number.");
+						request.setAttribute("queryAnswerLoginform","Clinet "+ id+" is already in the db.Please choose another ID number.");//message taht the client is already in the DB
 						dispatcher.forward(request, response);
 						break;
 					}
-					hibernateToDoListDAO.getInstance().addUser(CreationNewUser);		
-					request.setAttribute("MyUser",CreationNewUser);
-					request.setAttribute("TasksLists",new ArrayList<task>()); 
-					request.setAttribute("TasksListsClosed",new ArrayList<task>()); 
+					hibernateToDoListDAO.getInstance().addUser(CreationNewUser);//adding user to DB		
 				}
 				catch(userAndTaskException e)
 				{
@@ -100,23 +97,13 @@ public class programController extends javax.servlet.http.HttpServlet implements
 					dispatcher.forward(request, response);
 					break;		
 				}
-				catch(Exception e)
-				{
-					log.fatal(e.getMessage());
-					dispatcher = getServletContext().getRequestDispatcher("/loginForm.jsp");				
-					request.setAttribute("queryAnswerLoginform",e.getMessage());
-					dispatcher.forward(request, response);
-					break;				
-				}
-
 				//there is no break, UserTask section will start automatically
 		case "/UserTask":			
 			try{
 					dispatcher = getServletContext().getRequestDispatcher("/userTask.jsp");
 					String Pawword = request.getParameter("Password");				
 					int userid = Integer.parseInt(request.getParameter("UserID"));
-					task ta = new task(999, "a", "a", "Open");
-					hibernateToDoListDAO.getInstance().addTask(ta);
+					//checking that user is not in the DB
 					if (hibernateToDoListDAO.getInstance().checkUserInDB(userid,Pawword)==false)
 					{
 						log.debug("Clinet number - "+ userid+" is not in the db.");
@@ -135,10 +122,10 @@ public class programController extends javax.servlet.http.HttpServlet implements
 					long tEnd = System.currentTimeMillis();
 					long tDelta = tEnd - tStart;
 					double elapsedSeconds = tDelta / 1000.0;
-					request.setAttribute("timer", elapsedSeconds);
+					request.setAttribute("timer", elapsedSeconds);//how much time it took for this action
 					Cookie cookieFisrtName = new Cookie("Firstname",hibernateToDoListDAO.getInstance().getUserWithourPassword(userid).getLastName() + " " +hibernateToDoListDAO.getInstance().getUserWithourPassword(userid).getFirstName());
 					cookieFisrtName.setMaxAge(80000);
-					response.addCookie(cookieFisrtName);
+					response.addCookie(cookieFisrtName);//adding cookie to the response
 					dispatcher.forward(request, response);
 					break;		
 					
@@ -146,7 +133,7 @@ public class programController extends javax.servlet.http.HttpServlet implements
 				catch(Exception e)
 				{
 					dispatcher = getServletContext().getRequestDispatcher("/loginForm.jsp");				
-					request.setAttribute("queryAnswerLoginform",e.getMessage());
+					request.setAttribute("queryAnswerLoginform",e.getMessage());//reason for the action to fail
 					dispatcher.forward(request, response);
 					break;				
 				}
@@ -156,8 +143,10 @@ public class programController extends javax.servlet.http.HttpServlet implements
 					dispatcher = getServletContext().getRequestDispatcher("/loginForm.jsp");
 					String Pawword1 = request.getParameter("Password");				
 					int userid1 = Integer.parseInt(request.getParameter("UserID"));
+					//checking if user is in the DB
 					if(hibernateToDoListDAO.getInstance().checkUserInDB(userid1, Pawword1))
 					{
+						//user is in the DB - delete all tasks - open & close
 						for(task tsk:hibernateToDoListDAO.getInstance().getTasksForUser(userid1))
 						{
 							hibernateToDoListDAO.getInstance().deleteTask(tsk.getTaskNumber());
@@ -166,6 +155,7 @@ public class programController extends javax.servlet.http.HttpServlet implements
 						{
 							hibernateToDoListDAO.getInstance().deleteTask(tsk.getTaskNumber());
 						}
+						//now, delete the user itself
 						String str = hibernateToDoListDAO.getInstance().deleteUser(userid1, Pawword1);
 						log.info("Clinet number - "+ userid1+" was deleted.");
 						request.setAttribute("queryAnswerLoginform",str);
@@ -190,6 +180,7 @@ public class programController extends javax.servlet.http.HttpServlet implements
 					String taskDescription1 = request.getParameter("taskdescription");
 					session = request.getSession();
 					int AddingTaskForUser  = (int) session.getAttribute("userid");
+					//adding task to user
 					hibernateToDoListDAO.getInstance().addTask(new task(AddingTaskForUser, taskName1, taskDescription1,"Open"));
 					//return information
 					request.setAttribute("TasksLists", hibernateToDoListDAO.getInstance().getTasksForUser(AddingTaskForUser));
@@ -198,7 +189,7 @@ public class programController extends javax.servlet.http.HttpServlet implements
 					long tEnd = System.currentTimeMillis();
 					long tDelta = tEnd - tStart;
 					double elapsedSeconds = tDelta / 1000.0;
-					request.setAttribute("timer", elapsedSeconds);
+					request.setAttribute("timer", elapsedSeconds);//setting the timer right
 					dispatcher.forward(request, response);
 					break;	
 					}
@@ -213,15 +204,15 @@ public class programController extends javax.servlet.http.HttpServlet implements
 			case "/ChangingTasks":
 				try{
 					dispatcher = getServletContext().getRequestDispatcher("/userTask.jsp");
-					if (request.getParameter("taskNumber").equals(""))throw new userAndTaskException("please chose a task number!");
+					if (request.getParameter("taskNumber").equals(""))throw new userAndTaskException("please chose a task number!");//checking that there is a number of task to change
 					int taskNumber = Integer.parseInt(request.getParameter("taskNumber"));
 					String taskName = request.getParameter("taskname");
 					String description = request.getParameter("taskdescription");
 					//checking that the task is for this client
 					session = request.getSession();
 					int checkingClientIDforTask  = (int) session.getAttribute("userid");
-					task tempTask = hibernateToDoListDAO.getInstance().getTask(taskNumber);
-					if(tempTask!=null&&tempTask.getClientID()==checkingClientIDforTask)
+					task tempTask = hibernateToDoListDAO.getInstance().getTask(taskNumber);//getting task object from DB
+					if(tempTask!=null&&tempTask.getClientID()==checkingClientIDforTask)//making sure that the task is for this client
 					{
 						hibernateToDoListDAO.getInstance().updateTask(taskNumber, taskName, description);
 						log.info(taskNumber+" was changed.");
@@ -255,14 +246,25 @@ public class programController extends javax.servlet.http.HttpServlet implements
 					dispatcher = getServletContext().getRequestDispatcher("/userTask.jsp");
 					if(request.getParameter("taskNumber").equals(""))throw new userAndTaskException("Please choose a task number that you want to change from open to close");
 					int taskNumber1 = Integer.parseInt(request.getParameter("taskNumber"));
-					hibernateToDoListDAO.getInstance().ChangeStatus(taskNumber1);
-					log.info(taskNumber1+" was changed to complete or done.");
-					//return information
+					///
 					session = request.getSession();
-					int thisUser11  = (int) session.getAttribute("userid");
-					request.setAttribute("TasksLists", hibernateToDoListDAO.getInstance().getTasksForUser(thisUser11));
-					request.setAttribute("MyUser",hibernateToDoListDAO.getInstance().getUserWithourPassword(thisUser11));
-					request.setAttribute("TasksListsClosed",hibernateToDoListDAO.getInstance().getTasksForUserClosed(thisUser11)); 
+					int changeTaskToCloseUserID  = (int) session.getAttribute("userid");
+					task taskToClose = hibernateToDoListDAO.getInstance().getTask(taskNumber1);//getting task object from DB
+					if(taskToClose!=null&&taskToClose.getClientID()==changeTaskToCloseUserID)//making sure that the task is for this client
+					{
+						hibernateToDoListDAO.getInstance().changeStatus(taskNumber1);
+						log.info(taskNumber1+" was changed to complete or done.");
+					}
+					else
+					{
+						request.setAttribute("queryAnswer","This task isn't for this client - cannot be changed");
+						log.info("Client number "+ changeTaskToCloseUserID + "tried to change a task that isn't his.");
+					}
+					///
+					//return information
+					request.setAttribute("TasksLists", hibernateToDoListDAO.getInstance().getTasksForUser(changeTaskToCloseUserID));
+					request.setAttribute("MyUser",hibernateToDoListDAO.getInstance().getUserWithourPassword(changeTaskToCloseUserID));
+					request.setAttribute("TasksListsClosed",hibernateToDoListDAO.getInstance().getTasksForUserClosed(changeTaskToCloseUserID)); 
 					long tEnd2 = System.currentTimeMillis();
 					long tDelta2 = tEnd2 - tStart;
 					double elapsedSeconds2 = tDelta2 / 1000.0;
