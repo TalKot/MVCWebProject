@@ -26,8 +26,11 @@
 	<div class="jumbotron text-center">
 	  <h1>Manage Your Tasks</h1>
 	</div>
-	
 	<div class="container">
+		<form method="post" action="/UsersAndTasks/controller/" >
+			<input class="btn btn-info" type="submit" name="action" value="Logout" style="float: right;">	
+		</form>	 
+			
 	<%
 	out.print("<p><h1>User informaiton</h1></p>");
 	%>
@@ -44,9 +47,9 @@
 			}
 			*/
 			out.print("Welcome,<b>" + cook[1].getValue() + "</b><br>");
-			out.print("<h3>Your user information</h3>");
+			out.print("<h3><b><u>Your user information</b></u></h3>");
 			user userdb = (user)request.getAttribute("MyUser");
-			out.print("<br> ID -<b>"+userdb.getId()+"</b>");
+			out.print("ID -<b>"+userdb.getId()+"</b>");
 			out.print("<br> Email Adress -<b>"+userdb.getEmail()+"</b>");
 			out.print("<br> Phone Number -<b>0"+userdb.getPhoneNumber()+"</b>");
 			session.setAttribute("userid", userdb.getId());

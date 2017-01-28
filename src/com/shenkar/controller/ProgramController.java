@@ -40,11 +40,13 @@ public class programController extends javax.servlet.http.HttpServlet implements
 				else if (path.contains("LoginForm"))path = "/LoginForm";
 				else if (path.contains("UserTask"))path = "/UserTask";
 				else if (path.contains("DeleteAccount"))path = "/DeleteAccount";
+
 			}
 		else{
 				if(path.equals("Delete"))path = "/DeleteTasks";
 				else if (path.equals("SignIn"))path = "/Register";
 				else if (path.equals("Login"))path = "/UserTask";
+				else if (path.equals("Logout"))path = "/LoginForm";
 				else if (path.contains("DeleteAccount"))path = "/DeleteAccount";
 				else if (path.contains("AddingTasks"))path = "/AddingTasks";
 				else if (path.contains("DeleteTasks"))path = "/DeleteTasks";
