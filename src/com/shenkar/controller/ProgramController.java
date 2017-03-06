@@ -99,6 +99,14 @@ public class programController extends javax.servlet.http.HttpServlet implements
 					dispatcher.forward(request, response);
 					break;		
 				}
+				catch(NumberFormatException e)
+				{
+					log.fatal(e.getMessage());
+					dispatcher = getServletContext().getRequestDispatcher("/loginForm.jsp");				
+					request.setAttribute("queryAnswerLoginform","Please enter valid number to the phone number");
+					dispatcher.forward(request, response);
+					break;		
+				}
 				//there is no break, UserTask section will start automatically
 		case "/UserTask":			
 			try{
